@@ -15,6 +15,12 @@ public class Interface {
 //            System.out.println(A6.new_price);    //can't access as variable in this class is not static bydefault
 
             System.out.println(obj.getPrice());
+
+            obj.myFunction();
+
+            printable.newFunction();
+
+//            A6.newFunction();           //not possible
         }
         catch (Exception ex)
         {
@@ -29,6 +35,16 @@ interface printable
     int price = 10;     //bydefault public
 
     void print();       //bydefault public, static, final
+
+    default void myFunction()
+    {
+        System.out.println("Implemented default method");
+    }
+
+    static void newFunction()
+    {
+        System.out.println("Implemented static method");
+    }
 }
 
 class A6 implements printable
