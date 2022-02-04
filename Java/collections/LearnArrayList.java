@@ -10,7 +10,7 @@ public class LearnArrayList
         {
             List<Integer> list = new ArrayList<>();             //way 1
 
-            ArrayList<Integer> list1 = new ArrayList<>();      //way 2
+            ArrayList<Integer> list1 = new ArrayList<>();       //way 2
 
             list1.add(1);
 
@@ -50,15 +50,15 @@ public class LearnArrayList
 
             System.out.println(n);
 
-            System.out.println(list.contains(9));               //returns true or false
+            System.out.println(list.contains(9));                  //returns true or false
 
             System.out.println(list.indexOf(101));                 //finds index of value
 
-//            System.out.println(list.lastIndexOf(5));         //finds last index of value 5
+//            System.out.println(list.lastIndexOf(5));            //finds last index of value 5
 
             System.out.println("\n-----Iterations-----");
 
-            java.util.Iterator<Integer> it = list.iterator();
+            Iterator<Integer> it = list.iterator();     //iterator. Can iterate only in forward direction
 
             while(it.hasNext())                     //way 1 of iteration
             {
@@ -83,7 +83,7 @@ public class LearnArrayList
 
             System.out.println("\n\n");
 
-            ListIterator listIt = list.listIterator();
+            ListIterator listIt = list.listIterator();      //in iterate in both direction
 
             System.out.println(listIt.next());
 
