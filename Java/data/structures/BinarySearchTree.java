@@ -210,7 +210,7 @@ public class BinarySearchTree
         {
             if (node == null)
             {
-                return 0;
+                return -1;
             }
 
 //            if (treeHeight(node.leftChild) > treeHeight(node.rightChild))
@@ -345,6 +345,22 @@ public class BinarySearchTree
 
     }
 
+    void levelOrderTraversal()
+    {
+        try
+        {
+            for (int i = 0; i <= treeHeight(); i++)
+            {
+                nodeKDistance(i);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+
     public static void main(String[] args)
     {
         try
@@ -425,6 +441,10 @@ public class BinarySearchTree
             System.out.println("\nNodes at distance 2 from the tree.");
 
             tree.nodeKDistance(2);
+
+            System.out.println("\nLevel order traversal:");
+
+            tree.levelOrderTraversal();
         }
         catch (Exception ex)
         {
