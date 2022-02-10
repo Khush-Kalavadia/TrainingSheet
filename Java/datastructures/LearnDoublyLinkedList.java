@@ -12,6 +12,8 @@ public class LearnDoublyLinkedList
 
             dll.insertFirst(2);
 
+            dll.insertFirst(1);
+
             dll.insertFirst(3);
 
             System.out.println("Print doubly linked list");
@@ -32,9 +34,34 @@ public class LearnDoublyLinkedList
 
             dll.insertAfter(4,5);
 
-            System.out.println("After inserting 5 after node having value 4");
+            System.out.println("After inserting 5 after node having data 4");
 
             dll.show();
+
+            dll.deleteValue(1);
+
+            System.out.println("Value 1 deleted");
+
+            dll.show();
+
+            dll.deleteValue(3);
+
+            System.out.println("Value 3 deleted");
+
+            dll.show();
+
+            dll.deleteIndex(1);
+
+            System.out.println("Index 1 deleted");
+
+            dll.show();
+
+            dll.deleteIndex(0);
+
+            System.out.println("Index 0 deleted");
+
+            dll.show();
+
 
         }
         catch (Exception ex)
