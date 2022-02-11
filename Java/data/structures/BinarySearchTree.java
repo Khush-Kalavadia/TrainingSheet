@@ -342,7 +342,6 @@ public class BinarySearchTree
         {
             ex.printStackTrace();
         }
-
     }
 
     void levelOrderTraversal()
@@ -436,7 +435,7 @@ public class BinarySearchTree
 //             8                20
 //        11      9
 
-            System.out.println("Tree validation: " + tree.validate(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+            System.out.println("Tree validation: " + tree.validate() );
 
             System.out.println("\nNodes at distance 2 from the tree.");
 

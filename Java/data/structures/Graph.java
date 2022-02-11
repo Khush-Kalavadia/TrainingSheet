@@ -56,7 +56,6 @@ public class Graph
         }
     }
 
-
     public void print()
     {
         try
@@ -135,6 +134,116 @@ public class Graph
         }
     }
 
+    public void traverseDepthFirstRec(int root)
+    {
+        if (nodes.containsKey(root))
+        {
+            traverseDepthFirstRec(nodes.get(root), new HashSet<>());
+        }
+        else
+        {
+            System.out.println("Node does exist");
+        }
+    }
+
+    private void traverseDepthFirstRec(Node root, Set<Node> visited)
+    {
+        try
+        {
+            System.out.println(root);
+
+            visited.add(root);
+
+            for (Node connectedNode : adjacencyList.get(root))
+            {
+                if (!visited.contains(connectedNode))
+                {
+                    traverseDepthFirstRec(connectedNode, visited);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+//    public void traverseDepthFirstIte(int root)
+//    {
+//        Stack<Node> stack = new Stack<>();
+//
+//        Set<Node> visited = new HashSet<>();
+//
+//        stack.push(nodes.get(root));
+//
+//        while (!stack.isEmpty())
+//        {
+//            Node current = stack.pop();
+//
+//            if (visited.contains(current))
+//            {
+//                continue;
+//            }
+//
+//            System.out.println(current);
+//
+//            visited.add(current);
+//
+//            for (Node neighbour : adjacencyList.get(current))
+//            {
+//                if (!visited.contains(neighbour))
+//                    stack.push(neighbour);
+//            }
+//        }
+//    }
+
+    public void traverseBreadthFirst(int root)
+    {
+        try
+        {
+            if (!nodes.containsKey(root))
+            {
+                System.out.println("Root Node not present");
+            }
+            else
+            {
+                Node node = nodes.get(root);
+
+                Set<Node> visited = new HashSet<>();
+
+                Queue<Node> queue = new ArrayDeque<>();
+
+                queue.add(node);
+
+                while (!queue.isEmpty())
+                {
+                    Node current = queue.remove();
+
+                    if (visited.contains(current))
+                    {
+                        continue;
+                    }
+
+                    System.out.println(current);
+
+                    visited.add(current);
+
+                    for (Node neighbour : adjacencyList.get(current))
+                    {
+                        if (!visited.contains(neighbour))
+                        {
+                            queue.add(neighbour);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String[] args)
     {
         try
@@ -157,7 +266,25 @@ public class Graph
 
             graph.addEdge(4, 3);
 
+            graph.addEdge(4, 2);
+
             graph.print();
+
+            System.out.println("Traverse Breadth First from root 1");
+
+            graph.traverseBreadthFirst(1);
+
+            System.out.println("Traverse Depth First from root 1");
+
+            graph.traverseDepthFirstRec(1);
+
+            System.out.println("Traverse Depth First from root 2 using iterative approach");
+
+            graph.traverseDepthFirstRec(2);
+
+            System.out.println("Traverse Depth First from root 5");
+
+            graph.traverseDepthFirstRec(5);
 
             System.out.println("\nRemove node 2");
 
