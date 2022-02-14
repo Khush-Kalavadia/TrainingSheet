@@ -30,7 +30,7 @@ public class DaemonThread
 
         t1.setDaemon(true);
 
-        t1.setDaemon(false);        //if we set this then it goes on till we do not terminate it manually
+//        t1.setDaemon(false);        //if we set this then it goes on till we do not terminate it manually
 
         t1.start();
 

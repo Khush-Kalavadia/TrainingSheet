@@ -1,13 +1,9 @@
 package com.java.concurrency;
 
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
-/**
- * Created by khush on 12/2/22.
- */
+import java.util.Calendar;
+
 public class ImplementRunnableAnonymusClass
 {
     public static void main(String[] args)
