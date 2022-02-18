@@ -78,7 +78,7 @@ public class MultipleInheritanceInterface implements Interface1, Interface2
         {
             MultipleInheritanceInterface obj = new MultipleInheritanceInterface();
 
-            System.out.println(cont);              //this class inherits Interface1 and hence it's constant values
+            System.out.println(cont);              //this class inherits Interface1 and hence it is constant value
 
             System.out.println(Interface1.cont);   //cont is public,static,final
 
@@ -93,6 +93,8 @@ public class MultipleInheritanceInterface implements Interface1, Interface2
             newObj.sameMethod();              //MultipleInheritanceInterface overrides method in interface1
 
             Interface1.methodStatic();     //static can be directly called
+
+//            obj.methodStatic();             //child class does not inherit static methods from interface
 
         }
 
