@@ -1,7 +1,5 @@
 package com.java.concurrency;
 
-import sun.misc.VM;
-
 import java.util.concurrent.ForkJoinPool;
 
 import java.util.concurrent.RecursiveTask;

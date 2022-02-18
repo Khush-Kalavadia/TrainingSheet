@@ -6,6 +6,7 @@ public class MixedSynchronizationMain
     {
         try
         {
+
             MixedSynchronization mixedSynchronization = new MixedSynchronization();
 
             Thread thread1 = new Thread(new Runnable()

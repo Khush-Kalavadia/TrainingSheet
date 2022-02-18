@@ -24,19 +24,11 @@ public class RunnableSemaphore implements Runnable
     {
         try
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-            Calendar cal;
-
-            cal = Calendar.getInstance();
-
-            System.out.println(sdf.format(cal.getTime())+" "+Thread.currentThread().getName() + " waiting to acquire");
+            System.out.println(TimeUtil.showTime()+" "+Thread.currentThread().getName() + " waiting to acquire");
 
             semaphore.acquire();
 
-            cal = Calendar.getInstance();
-
-            System.out.println(sdf.format(cal.getTime())+" "+Thread.currentThread().getName() + " acquired");
+            System.out.println(TimeUtil.showTime()+" "+Thread.currentThread().getName() + " acquired");
 
             //work
             for (int i = 0; i < 10; i++)
@@ -48,15 +40,11 @@ public class RunnableSemaphore implements Runnable
 
             semaphore.release();
 
-            cal = Calendar.getInstance();
-
-            System.out.println(sdf.format(cal.getTime())+" "+Thread.currentThread().getName() + " released");
+            System.out.println(TimeUtil.showTime()+" "+Thread.currentThread().getName() + " released");
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
-
-
     }
 }

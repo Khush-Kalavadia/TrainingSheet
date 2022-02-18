@@ -16,8 +16,10 @@ public class SemaphoreMain
 //
 //            Counter counter2 = new Counter();
 
-            Counter counter = new Counter();        //this case as well as above blocks the third thread
-                                                    // as limit is 2 and same SEMAPHORE is passed.
+            Counter counter = new Counter();   // This case as well as the above one blocks the third
+                                               // thread and once available permits in semaphore is >0
+                                               // it allows it to execute because limit is 2 and
+                                               // same SEMAPHORE is passed.
 
             Counter counter1 = counter;
 

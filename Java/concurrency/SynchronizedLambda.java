@@ -16,8 +16,7 @@ public class SynchronizedLambda
         consumer.accept(object);
 
         Consumer consumer1 = new Consumer()      //this consumer1 is different from consumer
-                                                // as accept method of consumer was only overidden
-        {
+        {                                        // as accept method of consumer was only overidden
             @Override
             public void accept(Object o)
             {

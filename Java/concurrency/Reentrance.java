@@ -7,7 +7,7 @@ public class Reentrance
     //Both methods are synchronized on the same object.
     //It is the same thread that calls both object.
     // Monitor Object holding incAndGet is allowed to enter a new synchornized block which is
-    // synchronized on the same monitor object.
+    // synchronized on the same monitor object i.e. inc().
 
     public synchronized void inc()
     {

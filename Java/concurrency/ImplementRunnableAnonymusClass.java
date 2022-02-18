@@ -10,19 +10,13 @@ public class ImplementRunnableAnonymusClass
     {
         try
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
             Runnable myRunnable = new Runnable()
 
             {
                 @Override
                 public void run()
                 {
-                    Calendar cal = Calendar.getInstance();
-
-                    System.out.println(sdf.format(cal.getTime()));
-
-                    System.out.println("myRunnable running: "+Thread.currentThread().getName());
+                    System.out.println(TimeUtil.showTime()+" myRunnable running: "+Thread.currentThread().getName());
 
                     try
                     {
@@ -33,11 +27,7 @@ public class ImplementRunnableAnonymusClass
                         e.printStackTrace();
                     }
 
-                    cal = Calendar.getInstance();
-
-                    System.out.println(sdf.format(cal.getTime()));
-
-                    System.out.println("myRunnable finished");
+                    System.out.println(TimeUtil.showTime()+" myRunnable finished");
                 }
             };
 
@@ -50,11 +40,7 @@ public class ImplementRunnableAnonymusClass
                 @Override
                 public void run()
                 {
-                    Calendar cal = Calendar.getInstance();
-
-                    System.out.println(sdf.format(cal.getTime()));
-
-                    System.out.println("newRunnable running: "+Thread.currentThread().getName());
+                    System.out.println(TimeUtil.showTime()+" newRunnable running: "+Thread.currentThread().getName());
 
                     try
                     {
@@ -65,11 +51,7 @@ public class ImplementRunnableAnonymusClass
                         e.printStackTrace();
                     }
 
-                    cal = Calendar.getInstance();
-
-                    System.out.println(sdf.format(cal.getTime()));
-
-                    System.out.println("newRunnable finished");
+                    System.out.println(TimeUtil.showTime()+" newRunnable finished");
                 }
             };
 

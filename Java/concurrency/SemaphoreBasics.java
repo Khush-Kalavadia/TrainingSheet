@@ -2,9 +2,6 @@ package com.java.concurrency;
 
 import java.util.concurrent.Semaphore;
 
-/**
- * Created by khush on 16/2/22.
- */
 public class SemaphoreBasics
 {
     public static void main(String[] args)

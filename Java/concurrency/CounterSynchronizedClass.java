@@ -8,25 +8,17 @@ public class CounterSynchronizedClass
 {
     private long count = 0;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-    Calendar cal;
-
     public long incAndGet()
     {
         try
         {
             synchronized (CounterSynchronizedClass.class)   //way to specify the adding and returning as one atomic operation
             {
-                cal = Calendar.getInstance();
-
-                System.out.println(sdf.format(cal.getTime())+" incAndGet (X.class). Thread: " + Thread.currentThread().getName()+ " Start");
+                System.out.println(TimeUtil.showTime()+" incAndGet (X.class). Thread: " + Thread.currentThread().getName()+ " Start");
 
                 Thread.sleep(5000);
 
-                cal = Calendar.getInstance();
-
-                System.out.println(sdf.format(cal.getTime())+" incAndGet (X.class). Thread: " + Thread.currentThread().getName()+" Pause Over");
+                System.out.println(TimeUtil.showTime()+" incAndGet (X.class). Thread: " + Thread.currentThread().getName()+" Pause Over");
 
                 this.count++;
 
