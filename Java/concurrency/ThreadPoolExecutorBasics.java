@@ -23,6 +23,17 @@ public class ThreadPoolExecutorBasics
                     TimeUnit.MILLISECONDS,
                     new ArrayBlockingQueue<Runnable>(128));   //queue in which tasks are stored
 
+            threadPoolExecutor.execute(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    System.out.println("My function");
+                }
+            });
+
+            threadPoolExecutor.shutdown();      //if not done then it would continue executing
+
             threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
             ExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(corePoolSize);  //

@@ -38,7 +38,7 @@ public class ThreadPoolExecutorServiceBasics
 
             executorService1.execute(newRunnable("Task 5"));
 
-            executorService.shutdown();
+            executorService.shutdown();         //if not done then program would continue executing
 
             executorService1.shutdown();
         }
