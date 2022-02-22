@@ -58,20 +58,30 @@ public class EchoServer
         {
             try
             {
-                serverSocket.close();
+                if (serverSocket != null)
+                {
+                    serverSocket.close();
+                }
 
-                client.close();
+                if (client != null)
+                {
+                    client.close();
+                }
 
-                out.close();
+                if (out != null)
+                {
+                    out.close();
+                }
 
-                in.close();
+                if (in != null)
+                {
+                    in.close();
+                }
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-
-
         }
     }
 }

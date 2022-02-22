@@ -14,7 +14,7 @@ public class EchoClient
 
         BufferedReader in = null;
 
-        BufferedReader stdIn = null;
+        BufferedReader entered = null;
 
         try
         {
@@ -41,11 +41,11 @@ public class EchoClient
 
             in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 
-            stdIn = new BufferedReader(new InputStreamReader(System.in));
+            entered = new BufferedReader(new InputStreamReader(System.in));
 
             String userInput;
 
-            while ((userInput = stdIn.readLine()) != null)
+            while ((userInput = entered.readLine()) != null)
             {
                 out.println(userInput);
 
@@ -62,13 +62,25 @@ public class EchoClient
         {
             try
             {
-                echoSocket.close();
+                if (echoSocket != null)
+                {
+                    echoSocket.close();
+                }
 
-                out.close();
+                if (out != null)
+                {
+                    out.close();
+                }
 
-                in.close();
+                if (in != null)
+                {
+                    in.close();
+                }
 
-                stdIn.close();
+                if (entered != null)
+                {
+                    entered.close();
+                }
             }
             catch (IOException e)
             {
