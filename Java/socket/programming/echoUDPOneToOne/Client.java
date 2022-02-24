@@ -46,7 +46,7 @@ public class Client
 
             ipAddress = InetAddress.getLocalHost();
 
-            datagramPacket = new DatagramPacket(sentData, sentData.length, ipAddress, port);
+            datagramPacket = new DatagramPacket(sentData, sentData.length, ipAddress, port);        //packet to send so mention all 4 arguments
 
             datagramSocket.send(datagramPacket);
 
@@ -54,7 +54,7 @@ public class Client
 
             datagramPacket1 = new DatagramPacket(receivedData, receivedData.length);      //ipAddress, port not mentioned in case of receiving
 
-            datagramSocket.receive(datagramPacket1);
+                datagramSocket.receive(datagramPacket1);
 
             String str = new String(datagramPacket1.getData());
 
