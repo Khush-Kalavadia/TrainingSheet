@@ -1,7 +1,9 @@
 package com.java.socket.programming.basics;
 
 import java.io.BufferedReader;
+
 import java.io.InputStream;
+
 import java.io.InputStreamReader;
 
 public class BufferedReaderInput
@@ -18,7 +20,7 @@ public class BufferedReaderInput
 
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  //creates buffer
 
-            String string = bufferedReader.readLine();      //returns a string i.e. collection of characters
+            String string = bufferedReader.readLine();      //returns a line in string i.e. collection of characters
 
             System.out.println(string);
         }

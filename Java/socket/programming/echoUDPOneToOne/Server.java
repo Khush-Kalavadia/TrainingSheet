@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import java.net.InetAddress;
+import java.util.Arrays;
 
 public class Server
 {
@@ -34,9 +35,12 @@ public class Server
 
             String receivedString = new String(receivedPacket.getData());
 
+            System.out.println("receivedString: " + receivedString);
+
             byte[] sentData = receivedString.getBytes();
 
-            sentPacket = new DatagramPacket(sentData, sentData.length, InetAddress.getLocalHost(), receivedPacket.getPort());
+            //Once we receive the packet we can use it's address and port to send the data
+            sentPacket = new DatagramPacket(sentData, sentData.length, receivedPacket.getAddress(), receivedPacket.getPort());
 
             datagramSocket.send(sentPacket);
 

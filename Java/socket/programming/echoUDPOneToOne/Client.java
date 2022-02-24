@@ -54,7 +54,7 @@ public class Client
 
             datagramPacket1 = new DatagramPacket(receivedData, receivedData.length);      //ipAddress, port not mentioned in case of receiving
 
-                datagramSocket.receive(datagramPacket1);
+            datagramSocket.receive(datagramPacket1);
 
             String str = new String(datagramPacket1.getData());
 

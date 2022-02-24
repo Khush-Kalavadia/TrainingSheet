@@ -1,12 +1,6 @@
 package com.java.socket.programming.echoTCPOneToOne;
 
-import java.io.BufferedReader;
-
-import java.io.IOException;
-
-import java.io.InputStreamReader;
-
-import java.io.PrintWriter;
+import java.io.*;
 
 import java.net.*;
 
@@ -18,7 +12,7 @@ public class EchoServer
 
         Socket client = null;
 
-        PrintWriter out = null;
+        BufferedWriter out = null;
 
         BufferedReader in = null;
 
@@ -33,30 +27,57 @@ public class EchoServer
             int portNumber = Integer.parseInt(args[0]);
 
             // Way 1
-//            serverSocket = new ServerSocket(portNumber);
+            serverSocket = new ServerSocket(portNumber);            //by default sets the ip address
 
             // Way 2
-            SocketAddress socketAddress = new InetSocketAddress(portNumber);
+//            InetAddress hostname = InetAddress.getLocalHost();
+//
+//            serverSocket = new ServerSocket(portNumber, 50 , hostname);         //sets address by ourself, bydefault backlog is 50
 
-            serverSocket = new ServerSocket();
+            /* backlog is set to 50
+            In the space of time between calls to accept(), incoming client connection requests
+            are stored in a queue maintained by the operating system. Subsequent calls to accept()
+            remove requests from this queue, or block if there are no waiting clients. The “backlog”
+            argument controls the length of this queue.
+             */
 
-            serverSocket.bind(socketAddress);           //binding the  socket with the inetAddress and port number
+            // Way 3
+//            SocketAddress socketAddress = new InetSocketAddress(portNumber);
+//
+//            serverSocket = new ServerSocket();
+//
+//            serverSocket.bind(socketAddress);           //binding the  socket with the bydefault inetAddress and port number
 
-            System.out.println("IP address: "+serverSocket.getInetAddress());
 
-            System.out.println("Port: "+serverSocket.getLocalPort());
+            System.out.println("IP address: " + serverSocket.getInetAddress());
+
+            System.out.println("Port: " + serverSocket.getLocalPort());
 
             client = serverSocket.accept();
 
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-            out = new PrintWriter(client.getOutputStream(), true);
+            // #1 using PrintWriter
+//            out = new PrintWriter(client.getOutputStream(), true);
+
+            // #2 using BufferedWriter
+            out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
             String inputLine;
 
             while ((inputLine = in.readLine()) != null)
             {
-                out.println(inputLine);
+                System.out.println("Received: " + inputLine);
+
+                // #1
+//                out.println(inputLine);
+
+                // #2
+                out.write(inputLine);
+
+                out.newLine();
+
+                out.flush();
             }
         }
         catch (Exception ex)

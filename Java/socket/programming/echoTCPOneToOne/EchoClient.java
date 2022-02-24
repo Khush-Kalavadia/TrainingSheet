@@ -13,7 +13,7 @@ public class EchoClient
     {
         Socket echoSocket = null;
 
-        PrintWriter out = null;
+        BufferedWriter out = null;
 
         BufferedReader in = null;
 
@@ -38,12 +38,15 @@ public class EchoClient
 
             int portNumber = Integer.parseInt(args[1]);
 
-            // Way 1
             echoSocket = new Socket(hostname, portNumber);
 
             entered = new BufferedReader(new InputStreamReader(System.in));
 
-            out = new PrintWriter(echoSocket.getOutputStream(), true);
+            // #1 using PrintWriter
+//            out = new PrintWriter(echoSocket.getOutputStream(), true);
+
+            // #2 using BufferedWriter
+            out = new BufferedWriter(new OutputStreamWriter(echoSocket.getOutputStream()));
 
             in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 
@@ -53,7 +56,16 @@ public class EchoClient
 
             while ((userInput = entered.readLine()) != null)
             {
-                out.println(userInput);
+                // #1
+//                out.println(userInput);
+
+                // #2
+                out.write(userInput);
+
+                out.newLine();
+
+                out.flush();
+
 
                 System.out.println("Echo: " + in.readLine());
             }
