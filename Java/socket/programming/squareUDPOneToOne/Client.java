@@ -20,23 +20,9 @@ public class Client
 
         try
         {
-            //Way 1: Fix input
             int myInt = 8;
 
             byte[] sentData = (myInt + "").getBytes();
-
-            //Way 2: Using scanner (generally when we know the input is of type string or primitive)
-//            Scanner scanner = new Scanner(System.in);
-//
-//            for (int i = 0; scanner.hasNext(); i++)
-//            {
-//                sentData[i] = scanner.nextByte();
-//            }
-
-            //Way 3: Using buffered reader
-//            BufferedReader out = new BufferedReader(new InputStreamReader((System.in)));
-//
-//            sentData = out.readLine().getBytes();
 
             //sentData length
 //            System.out.println(sentData.length);
