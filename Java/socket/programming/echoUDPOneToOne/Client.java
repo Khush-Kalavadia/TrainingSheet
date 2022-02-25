@@ -32,7 +32,7 @@ public class Client
 
             System.out.println("Enter text");
 
-            //Way 1: Using scanner (generally when we know the input is of type string or primitive)
+            //Way 1: Using scanner (generally used when we know the input is of type string or primitive)
             Scanner scanner = new Scanner(System.in);
 
             sentData = scanner.nextLine().getBytes();

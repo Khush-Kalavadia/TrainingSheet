@@ -26,6 +26,8 @@ public class Client
 
             socket = new Socket(address, portNumber);
 
+//            System.out.println(socket);     //get port and localport
+
             enter = new BufferedReader(new InputStreamReader(System.in));
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

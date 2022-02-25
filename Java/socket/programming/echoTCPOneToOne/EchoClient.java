@@ -1,5 +1,9 @@
 package com.java.socket.programming.echoTCPOneToOne;
 
+//From the folder ~/IdeaProjects/Java_basics/src
+//to compile: javac com/java/socket/programming/echoTCPOneToOne/EchoClient.java
+//to run:     java com.java.socket.programming.echoTCPOneToOne.EchoClient 0.0.0.0 8080
+
 import java.io.*;
 
 import java.net.InetAddress;
