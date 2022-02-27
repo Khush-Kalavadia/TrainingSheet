@@ -42,6 +42,8 @@ public class EchoClient
 
             int portNumber = Integer.parseInt(args[1]);
 
+            //Creates a stream socket and connects it to the specified
+            //port number at the specified IP address.
             echoSocket = new Socket(hostname, portNumber);
 
             entered = new BufferedReader(new InputStreamReader(System.in));

@@ -1,8 +1,11 @@
 package com.java.socket.programming.chatOneToOne;
 
 import java.net.DatagramPacket;
+
 import java.net.DatagramSocket;
+
 import java.net.InetAddress;
+
 import java.util.Scanner;
 
 public class SendRunnable implements Runnable
