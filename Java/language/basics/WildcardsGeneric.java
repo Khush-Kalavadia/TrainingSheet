@@ -17,9 +17,9 @@ public class WildcardsGeneric
 
             n1.add(new Host<Object>());
 
-//            n1.add(new Host<Integer>());    //any object works
+//            n1.putValue(new Host<Integer>());    //any object works
 
-//            n1.add(new Host<String>());     //any object works
+//            n1.putValue(new Host<String>());     //any object works
 
             Host<?> newHost;                //can also be used in declaration
 

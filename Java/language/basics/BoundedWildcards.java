@@ -36,7 +36,7 @@ public class BoundedWildcards
 
             t2.add(new Glass<OrangeJuice>());
 
-//            t2.add(new Glass<Liquid>());      //Liquid will give error. As liquid does not extend juice
+//            t2.putValue(new Glass<Liquid>());      //Liquid will give error. As liquid does not extend juice
 
             t2.remove(new Glass<Juice>());
 

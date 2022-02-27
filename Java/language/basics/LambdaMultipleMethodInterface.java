@@ -34,6 +34,7 @@ public class LambdaMultipleMethodInterface
 
 //functional interface = interface having only one abstract method but can have default methods.
 //java lambda expression can only implement single method interface i.e. functional interface. Else it gets confused.
+@FunctionalInterface
 interface myFunction
 {
     String return_fun(String text1, String text2);
