@@ -1,8 +1,9 @@
 package com.java.socket.programming.chatApplication;
 
-import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientListUtil
@@ -11,29 +12,76 @@ public class ClientListUtil
 
     public static void add(String username, Socket socket)
     {
-        clientList.put(username, socket);
+        try
+        {
+            clientList.put(username, socket);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public static boolean containsUsername(String username)
     {
-        return clientList.containsKey(username);
+        try
+        {
+            return clientList.containsKey(username);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     public static Socket getSocket(String username)
     {
-        if (ClientListUtil.containsUsername(username))
+        try
         {
-            try
+            if (ClientListUtil.containsUsername(username))
             {
-                return ClientListUtil.getSocket(username);
+                return clientList.get(username);
             }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
         }
         return null;
     }
 
+    static void printClientList()
+    {
+        try
+        {
+            System.out.println(clientList.entrySet());
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 
+    public static void main(String[] args)      //for check
+    {
+        try
+        {
+            Socket socket = new Socket();
+
+            ClientListUtil.add("khush", socket);
+
+            ClientListUtil.add("khush1", socket);
+
+            System.out.println(clientList.entrySet());
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+    }
 }

@@ -1,6 +1,6 @@
 package com.java.socket.programming.chatApplication;
 
-import java.io.IOException;
+import java.io.*;
 
 import java.net.InetAddress;
 
@@ -12,32 +12,92 @@ public class Client
 
     private InetAddress serverAddress;
 
-    private int clientPort;
-
-    private InetAddress clientAddress;
-
     private String clientName;
 
-    public Client(InetAddress clientAddress, int clientPort, String clientName, InetAddress serverAddress, int serverPort)
+    public Client(String clientName, InetAddress serverAddress, int serverPort)
     {
         this.serverPort = serverPort;
-
-        this.clientPort = clientPort;
 
         this.clientName = clientName;
 
         this.serverAddress = serverAddress;
-
-        this.clientAddress = clientAddress;
     }
 
     void startClient()
     {
         try
         {
-            new Thread(new ClientSenderRunnable(clientAddress, clientPort, clientName, serverAddress, serverPort)).start();
+            Socket socket = null;
 
-//            new Thread(new ClientReceiverRunnable(serverAddress, serverPort)).start();
+            BufferedReader enter = null;
+
+            BufferedWriter out = null;
+
+            String message;
+
+            try
+            {
+                socket = new Socket(serverAddress, serverPort);
+
+                System.out.println(clientName + " created :" + socket);
+
+                System.out.println("Enter in format: <username> > <message>");
+
+                System.out.println("---------------------------------------");
+
+                out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+                out.write(clientName);
+
+                out.newLine();
+
+                out.flush();
+
+                new Thread(new ClientReceiverRunnable(socket)).start();
+
+                while (true)
+                {
+                    enter = new BufferedReader(new InputStreamReader(System.in));
+
+                    message = enter.readLine();
+
+                    out.write(MessageUtil.getDataToSend(clientName, message));
+
+                    out.newLine();
+
+                    out.flush();
+
+//                enter.close();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    if (enter != null)
+                    {
+                        enter.close();
+                    }
+                    if (out != null)
+                    {
+                        out.close();
+                    }
+                    if (socket != null)
+                    {
+                        socket.close();
+                    }
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+
         }
         catch (Exception ex)
         {

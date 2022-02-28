@@ -1,11 +1,17 @@
 package com.java.socket.programming.chatApplication;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
+
 import java.io.IOException;
+
 import java.io.InputStreamReader;
+
 import java.net.InetAddress;
+
 import java.net.ServerSocket;
+
 import java.net.Socket;
 
 /*
@@ -13,26 +19,18 @@ server -> serversocket(port, address)
 
 hash map <clientName, Socket>
 
-receive client -> server accept
+receive client and add to hash map
 
-check client
- N - find client -> socket find and put it in hashmap
- Y - send msg
+client send msg
 
+server continuously listed -> get msg
+
+server check receiver username in hashmap
+ Y - find receiver's socket -> send msg
+ N - not found
+
+client continuously listen
 */
-
-/*
-client -> Socket(serverPort, serverAddress)
-
-client1>
-
-Ready to receive
- */
-
-/*
-work flow 1 - all clients present - from client to server to receiver
-work flow 2 - all clinets not present
- */
 
 public class Server
 {
@@ -51,23 +49,19 @@ public class Server
     {
         try
         {
-//            new Thread(new ServerNewClientRunnable(address, port)).start();
-
             ServerSocket serverSocket = null;
 
             Socket client = null;
 
             BufferedReader in = null;
 
-            BufferedWriter out = null;
-
-            Socket receiverSocket = null;
-
-            String receivedData;
+            String receivedUsername;
 
             try
             {
                 serverSocket = new ServerSocket(port, 50, address);
+
+                System.out.println("Server created: " + serverSocket);
 
                 while (true)
                 {
@@ -75,15 +69,13 @@ public class Server
 
                     in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-                    receivedData = in.readLine();
+                    receivedUsername = in.readLine();
 
-                    System.out.println("Entered: " + MessageUtil.getNewClientName(receivedData));
+                    System.out.println("Entered: " + receivedUsername);
 
-                    ClientListUtil.add(MessageUtil.getNewClientName(receivedData), client);
+                    ClientListUtil.add(receivedUsername, client);
 
-                    new Thread(new ServerClientInputRunnable(in)).start();
-
-//                    client = null;
+                    new Thread(new ServerInputFromClientRunnable(in)).start();
                 }
             }
             catch (Exception ex)
@@ -105,14 +97,6 @@ public class Server
                     if (in != null)
                     {
                         in.close();
-                    }
-                    if (receiverSocket != null)
-                    {
-                        receiverSocket.close();
-                    }
-                    if (out != null)
-                    {
-                        out.close();
                     }
                 }
                 catch (IOException e)

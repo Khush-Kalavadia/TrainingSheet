@@ -8,8 +8,7 @@ public class Client1Main
     {
         try
         {
-            Client client1 = new Client(InetAddress.getLocalHost(), 9001, "client1",
-                    InetAddress.getLocalHost(), 9000);
+            Client client1 = new Client("client1", InetAddress.getLocalHost(), 9000);
 
             client1.startClient();
         }
