@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            My Page
+        </title>
+
+        <!--internal CSS-->
+        <style>         
+            .text{
+                color: darkorange;
+            }
+
+            #myDiv{
+                font-weight: bold;
+            }
+
+            body {background-color:beige;}
+            h1   {color: blue;}
+            p    {color: red;}
+        </style>
+        
+        <!--The rel attribute defines the relationship between a linked resource and the current document.-->
+        <link rel="stylesheet" href="myStyle.css">
+
+        <!--another way of using external -->
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/html/styles.css"> -->
+
+    </head>
+    <body>
+        <!--this is inline CSS-->
+        <h1 id = "start" style="background: darkseagreen; color: rgb(161, 0, 182);">
+            Inline CSS properties are applied over internal CSS. 
+        </h1>
+        
+        <!--relative URL. No '/' in beginning means it is in same folder-->
+        <img src="motadata_logo.png" alt="Motadata" width="220" height="120">
+
+        <br>
+
+        <!--absolute URL. Target set to open in new webpage-->
+        <a href="https://www.motadata.com/" target="_blank" title="Hovering text" alt="Text when not loaded">            
+            Click here to open Motadata Website
+        </a>
+        
+        <br>
+
+        <!--this is also relative but ../ means it is one folder outside the current folder-->
+        <a href="https://www.motadata.com/" target="_blank">            
+            <img src="../motadata_logo2.png" alt="Motadata2" width="100" height="50">
+        </a>
+        
+        <br>
+
+        <!--this would be from the root folder-->
+        <img src="/home/khush/VSCodeProjects/motadata_logo2.png" alt="Motadata2">
+
+        <h2 id="message" style="font-family:monospace; text-align: center; border:2px solid red;">
+            Hello world 
+        </h2>
+
+        <h3>
+            H3 using the external CSS from the file myStyle.css.
+        </h3>
+
+        <p>
+            This is a paragraph which is using CSS colour provided in internal CSS. 
+        </p>
+
+        <!--center using external CSS. Scroll and check effect-->
+        <!-- <button id="myButton" onclick="document.location='motadata_logo.png'">Page done</button> -->
+        <button id="myButton" onclick="displayResult()">Click here</button>
+
+        <table border="2">
+            <tr>
+                <th>Heading1</th>
+                <th>Heading2</th>
+            </tr>
+            <tr>
+                <td>Content1</td>
+                <td>Content2</td>
+            </tr>
+            <tr>
+                <td>Content3</td>
+                <td>Content4</td>
+            </tr>
+        </table>
+
+        <p>Class name i.e. text specific properties applied</p>
+        <div class="text">This includes normal text with class name text</div> 
+        <div class="text1">This includes normal text with class name text1</div> 
+        <div class="text">This includes normal text with class name text</div> 
+        
+        <p>ID i.e. myDiv as well as class name i.e. text specific properties applied</p>
+        <div class="text" id="myDiv">This includes normal text with class name text and id myDiv</div> 
+
+        <br><br>
+
+         Click on the animals
+         <ul>
+            <li onclick="showDetails(this)" id="owl" data-animal="bird">Owl</li>
+            <li onclick="showDetails(this)" id="salmon" data-animal="fish">Salmon</li> 
+            <li onclick="showDetails(this)" id="tarantula" data-animal="spider">Tarantula</li>  
+        </ul>
+
+        <br>
+
+        Radio buttons
+        <form>
+            <input type="radio" id="html" name="fav_language" value="HTML">
+            <label for="html">HTML</label><br>
+
+            <input type="radio" id="css" name="fav_language" value="CSS">
+            <label for="css">CSS</label><br>
+            
+            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+            <label for="javascript">JavaScript</label><br><br>
+
+            <input type="checkbox" id="java" name="other_language" value="java" checked>
+            <label for="java">Java</label><br>
+            
+            <input type="checkbox" id="python" name="other_language" value="python">
+            <label for="python">Python</label>
+            <br><br>
+            <select id="cars" name="cars">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="fiat">Fiat</option>
+                <option value="audi">Audi</option>
+              </select>
+              <br><br>
+            <input type="submit" formaction="motadata_logo.png" value="Submit - view image">
+        </form> 
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>   
+
+        <a href="#start">Jump to Top</a>
+
+        <script>
+            function displayResult() 
+            {
+              document.getElementById("message").innerHTML = "Have a nice day!";
+            }
+
+            function showDetails(animal) 
+            {
+            var animalType = animal.getAttribute("data-animal");
+            alert("The " + animal.innerHTML + " is a " + animalType + ".");
+            }
+        </script>
+
+    </body>
+</html>

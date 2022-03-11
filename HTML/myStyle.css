@@ -1,0 +1,28 @@
+h3
+{
+    color:darkgreen;
+}
+
+button
+{
+    position: fixed;
+    left: 50%;
+    bottom: 2%;
+}
+
+a:link {
+    background-color: orchid;
+    text-decoration:dashed;
+}
+
+/* text which appears when we hover on the link */
+a:hover {       
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+/* two tags passed together */  
+  th, td {
+    padding: 15px;
+  }
