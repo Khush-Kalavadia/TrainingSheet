@@ -1,0 +1,23 @@
+<!-- Program 2: Chaning colour of all p tags -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../jquery-3.6.0.js"></script>
+
+    <script>
+      function changeColour() {
+        alert("See text colour");
+        //everything is kept in double inverted comma in such case
+        $("p").css("color", "red");
+      }
+
+      //shorthand of calling $(document).ready(changeColour)
+      $(changeColour);
+    </script>
+  </head>
+  <body>
+    <p>All paragraphs turing red when document is ready</p>
+    <p id="content">Sample text</p>
+  </body>
+</html>
