@@ -14,6 +14,9 @@
       p.highlight {
         background: yellow;
       }
+      span {
+        background-color: orange;
+      }
     </style>
     <script>
       $("document").ready(function () {
@@ -35,6 +38,10 @@
           var selectedOption = $(this).find(":selected").val();
           alert("You have selected " + selectedOption);
         });
+
+        $('input[type="button"]').click(function () {
+          $(".begin p").slideToggle("slow");
+        });
       });
     </script>
   </head>
@@ -43,6 +50,7 @@
       <p>Click on me and I'll disappear.</p>
       <p>Click on me and I'll disappear.</p>
       <p>Click on me and I'll disappear.</p>
+      <input type="button" value="Click here to toggle" id="toggle" />
     </div>
     <hr />
     <div class="hover">
@@ -59,5 +67,6 @@
         <option value="ahmedabad">GJ 1</option>
       </select>
     </div>
+    <hr />
   </body>
 </html>

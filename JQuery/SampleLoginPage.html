@@ -4,6 +4,13 @@
 <html>
   <head>
     <script src="../jquery-3.6.0.js"></script>
+    <style>
+      label span {
+        display: none;
+        /* if we don't keep position as fixed then the label and input both will move */
+        position: fixed;
+      }
+    </style>
     <script>
       $("document").ready(function () {
         $("#background").css({
@@ -12,7 +19,7 @@
 
         $("div div").css({
           width: "30%",
-          height: "220px",
+          height: "230px",
           margin: "20px auto",
           padding: "30px",
           "background-color": "white",
@@ -35,22 +42,49 @@
 
         $("p:first").css("background-color", "red");
 
+        $("p:eq(2)").css("background-color", "green"); //third paragraph
+
         $("p:last").css("background-color", "pink");
+
+        $("form").submit(function () {
+          var regex = /^[a-zA-Z]+$/; //equivalent to -> new RegExp("^[a-zA-Z]+$")
+          var currentValue = $("#username").val();
+          if (regex.test(currentValue) == false) {
+            $("#result").html("Not valid!").show().fadeOut(1000);
+            event.preventDefault();
+          }
+        });
+
+        $("#result").css("height", "1em");
+
+        $("input").focus(function () {
+          $(this).next("span").show().fadeOut("slow");
+        });
       });
     </script>
   </head>
   <body>
     <div id="background">
       <div id="login">
-        <form>
+        <form id="login" action="https://motadata.com" method="post">
           <h1>Login Window</h1>
-          <label for="username">Username: </label>
-          <input type="text" name="username" id="username" />
+          <label for="username"
+            >Username:<input type="text" name="username" id="username" /><span
+              >Focus</span
+            ></label
+          >
           <br />
-          <label for="password">Password: </label>
-          <input type="password" name="password" id="password" />
+          <label for="password"
+            >Password:
+            <input type="password" name="password" id="password" />
+            <span>Focus</span></label
+          >
           <br />
-          <input type="submit" value="Sign in" />
+          <label>
+            <input type="submit" value="Sign in" />
+            <span>Focus</span>
+            <div id="result"></div
+          ></label>
         </form>
       </div>
       <div id="content">
