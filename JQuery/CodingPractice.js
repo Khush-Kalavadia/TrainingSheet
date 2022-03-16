@@ -1,8 +1,9 @@
 let Trial = {
   loadHTML: function () {
     $("#main").html(
-      '<p id="p1">This is paragraph 1.</p> <button type="button" id="button1">Toggle Paragraph 1</button><br /> <p id="p2">This is paragraph 2.</p> <button type="button" id="button2">Toggle Paragraph 2</button>'
+      '<p id="p1" value="hello">This is paragraph 1.</p> <button type="button" id="button1">Toggle Paragraph 1</button><br /> <p id="p2">This is paragraph 2.</p> <button type="button" id="button2">Toggle Paragraph 2</button>'
     );
+
     Trial.button1();
     Trial.button2();
     Trial.clickParagraph1();
