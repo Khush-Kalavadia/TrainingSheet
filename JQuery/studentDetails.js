@@ -10,23 +10,33 @@ let index = {
 
             console.log(event.currentTarget);   //on which element was the event attached
 
-            var dataArray = $(event.target).serializeArray();
+            var dataArray = $(event.target).serializeArray();   //array of objects
 
             console.log(dataArray);
-            ;
-            event.preventDefault();             //if not kept then console print would be lost
 
-            var trText = "<tr>";
+            var userExistResult = index.userExist(dataArray[0].value);
 
-            dataArray.forEach(function (currentValue)
+            if (userExistResult !== null)
             {
-                trText += "<td>" + currentValue.value + "</td>"
-            });
+                $("#UserPresent").show().fadeOut("slow");
+            }
+            else
+            {
+                var trText = "<tr>";
 
-            trText += "</tr>";
+                dataArray.forEach(function (currentValue)
+                {
+                    // console.log(typeof currentValue);    //will be an object whose name and value can be accessed
 
-            $("table").append(trText);
+                    trText += "<td>" + currentValue.value + "</td>"
+                });
 
+                trText += "</tr>";
+
+                $("table").append(trText);
+            }
+
+            event.preventDefault();             //if not kept then console print would be lost
         });
     },
 
@@ -41,7 +51,7 @@ let index = {
 
             var elementText = ($(element).text());
 
-            if ( elementText === rollCheck)
+            if (elementText === rollCheck)
             {
                 returnObj = $(element).parent();
             }
@@ -52,7 +62,7 @@ let index = {
 
     onUpdate: function ()
     {
-        $("[name=updateDetails]").on("submit", function ()
+        $("[name=updateDetails]").on("submit", function (event)
         {
             var updateDataArray = $(event.target).serializeArray();
 
@@ -63,17 +73,15 @@ let index = {
             if (userExistResult === null)
             {
                 $("#noUpdateUser").show().fadeOut("slow");
-
-                event.preventDefault();
             }
             else
             {
-                var textUpdate = '<td>'+ updateDataArray[0].value +'</td><td>'+ updateDataArray[1].value +'</td><td>'+ updateDataArray[2].value +'</td><td>'+ updateDataArray[3].value +'</td>';
+                var textUpdate = '<td>' + updateDataArray[0].value + '</td><td>' + updateDataArray[1].value + '</td><td>' + updateDataArray[2].value + '</td><td>' + updateDataArray[3].value + '</td>';
 
                 userExistResult.html(textUpdate);
-
-                event.preventDefault();
             }
+
+            event.preventDefault();
         });
 
     },
