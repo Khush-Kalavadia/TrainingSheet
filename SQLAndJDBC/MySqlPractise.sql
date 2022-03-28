@@ -1,3 +1,5 @@
+SELECT DATABASE();									-- know current database name
+
 CREATE DATABASE IF NOT EXISTS MyDatabase;			-- create database with given name 
 CREATE SCHEMA MyDatabase;							-- other way to create database
 SHOW DATABASES;		 								-- show list of all databases
@@ -83,7 +85,7 @@ INSERT INTO employee_info(firstName) VALUES ("Ravi");
 INSERT INTO employee_work(work) VALUES ("QA");
 DESCRIBE employee_work;
 
-CREATE TABLE employee_work_trial(	-- DEFAULT in primary key works for one time becuase parent table has 1 and it would repeat after one usage	
+CREATE TABLE employee_work_trial(	-- DEFAULT in primary key works for one time because parent table has 1 and it would repeat after one usage	
 id int DEFAULT 1,
 work varchar(30),
 PRIMARY KEY (id),
@@ -131,3 +133,47 @@ SELECT DISTINCT sales, item FROM sales;				-- this also gives same result just t
 SELECT * FROM sales ORDER BY item, sales DESC;		-- first orders based on item then based on sales
 SELECT item, SUM(sales) AS "Total sales" FROM sales GROUP BY item;
 SELECT item, SUM(sales) AS "Total sales" FROM sales GROUP BY item HAVING SUM(sales)>4;
+
+show tables;
+select * from employee_info;
+insert into employee_info(firstName) values ("Manish");
+delete from employee_info where id=7;
+-- DELETE FROM employee_info WHERE id = (SELECT id FROM employee_info ORDER BY id DESC LIMIT 4);	-- cannot use target table inside where when deleting
+DELETE FROM employee_info ORDER BY id DESC LIMIT 4;				-- remove last 4 rows
+show full tables;
+
+-- MOVIE DATABASE FOR JOINS
+create database MovieDb;
+use MovieDb;
+create table movie(id int, title varchar(50), category varchar(20), rating int, PRIMARY KEY(id));
+insert into movie(id, title, category, rating) values (1, "Real steel", "Action", 5), (2, "Mysterious island", "Adventure", 8), (3, "Transformer", "Action", 6);
+create table member(name varchar(50), movieId int, constraint foreign key (movieId) references movie(id));
+insert into member(name, movieId) values ("Adam Smith", 2), ("Lee Pong", 1), ("Ravi Kumar", 2);
+
+select * from movie;
+select * from member;
+select * from movie, member;													-- cross join
+select * from movie cross join member;
+select * from movie inner join member on id = movieId where rating>5;			-- inner join
+select * from movie natural join member;										-- natural join works when the column name and datatype of a column is same
+select * from movie left outer join member on id = movieId;						-- left join (outer is optional)
+select * from movie as a right join member as b on a.id = b.movieId;			-- right join
+select m1.id, m1.title from movie as m1, movie as m2 where m1.title <> m2.title; -- just an example to create a query using self join
+
+-- TCL STATEMENT
+set autocommit=0;							-- also need to turn off autocommit to use rollback
+start transaction;							-- MUST START to add savepoints
+savepoint tablesCreation;
+create table table1(id int);				
+create table table2(id int);
+rollback to tablesCreation;					-- cannot rollback the ddl statement like create. gives error
+insert table1(id) values (1), (2);
+insert table2(id) values (1), (2);
+rollback;									-- rollback to tablesCreation savepoint by default
+rollback to tablesCreation;					-- rollback to tablesCreation 
+select * from table1;
+select * from table2;
+drop table table1, table2;
+set autocommit=1;
+
+
