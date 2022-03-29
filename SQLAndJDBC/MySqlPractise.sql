@@ -159,6 +159,8 @@ select * from movie natural join member;										-- natural join works when the
 select * from movie left outer join member on id = movieId;						-- left join (outer is optional)
 select * from movie as a right join member as b on a.id = b.movieId;			-- right join
 select m1.id, m1.title from movie as m1, movie as m2 where m1.title <> m2.title; -- just an example to create a query using self join
+select * from movie where rating<6 union select * from movie where rating>7;
+select category, title from movie where rating<6 union select title, category from movie where rating>7;	-- same number of columns and sequence is MUST
 
 -- TCL STATEMENT
 set autocommit=0;							-- also need to turn off autocommit to use rollback
@@ -167,8 +169,8 @@ savepoint tablesCreation;
 create table table1(id int);				
 create table table2(id int);
 rollback to tablesCreation;					-- cannot rollback the ddl statement like create. gives error
-insert table1(id) values (1), (2);
-insert table2(id) values (1), (2);
+insert table1(id) values (10), (20), (25);
+insert table2(id) values (20), (7), (10);
 rollback;									-- rollback to tablesCreation savepoint by default
 rollback to tablesCreation;					-- rollback to tablesCreation 
 select * from table1;
@@ -176,4 +178,46 @@ select * from table2;
 drop table table1, table2;
 set autocommit=1;
 
+select * from table1 where id in (select id from table2);		-- equivalent to "= ANY"
+select * from table2 where id > any (select id from table1);	-- table1 -> 10,20,25 || table2 checks for 20 finds 10 which is smaller than 20
+																-- table2 checks for 7 and finds none smaller than 7 same with 10. Can try >= to see the result
+select * from table1 where id between 15 and 25;				-- includes 15 and 25
 
+-- EXISTS
+CREATE DATABASE Shop;
+USE Shop;
+CREATE TABLE customer(  
+  cust_id int NOT NULL,  
+  name varchar(35),  
+  occupation varchar(25),  
+  age int  
+);  
+CREATE TABLE orders (  
+    order_id int NOT NULL,   
+    cust_id int,   
+    prod_name varchar(45),  
+    order_date date  
+);  
+INSERT INTO customer(cust_id, name, occupation, age)   
+VALUES (101, 'Peter', 'Engineer', 32),  
+(102, 'Joseph', 'Developer', 30),  
+(103, 'John', 'Leader', 28),  
+(104, 'Stephen', 'Scientist', 45),  
+(105, 'Suzi', 'Carpenter', 26),  
+(106, 'Bob', 'Actor', 25),  
+(107, NULL, NULL, NULL);  
+INSERT INTO orders (order_id, cust_id, prod_name, order_date)   
+VALUES (1, '101', 'Laptop', '2020-01-10'),  
+(2, '103', 'Desktop', '2020-02-12'),  
+(3, '106', 'Iphone', '2020-02-15'),  
+(4, '104', 'Mobile', '2020-03-05'),  
+(5, '102', 'TV', '2020-03-20');  
+SELECT * FROM customer; 
+SELECT * FROM orders;  
+SELECT name, occupation FROM customer WHERE EXISTS (SELECT * FROM orders WHERE customer.cust_id = orders.cust_id);  
+SELECT name, occupation FROM customer WHERE EXISTS (SELECT order_date FROM orders WHERE customer.cust_id = orders.cust_id);  
+-- select * or order_date makes no difference in subquery of mysql
+SELECT true, false, TRUE, FALSE;										-- check boolean to number
+SELECT EXISTS(SELECT * from customer WHERE cust_id=104) AS Result;  	-- want to know whether row exists or not
+SELECT prod_name, order_date from orders where order_date between '2020-3-10' and '2020-2-12';		-- sequence matters
+SELECT prod_name, order_date from orders where order_date between '2020-2-12' and '2020-3-10';		-- between smaller and greater
