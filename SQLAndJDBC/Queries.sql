@@ -63,7 +63,8 @@ SELECT FIRST_NAME AS WORKER_NAME FROM Worker;
 SELECT upper(FIRST_NAME) FROM Worker;											-- upper
 SELECT DISTINCT DEPARTMENT FROM Worker;
 SELECT SUBSTRING(FIRST_NAME, 1, 3) FROM Worker;									-- substring
-SELECT INSTR(FIRST_NAME, BINARY 'a') FROM Worker WHERE FIRST_NAME = 'Amitabh';	-- instr to return FIRST occurance of substring
+SELECT INSTR(FIRST_NAME, BINARY 'a') FROM Worker WHERE FIRST_NAME = 'Amitabh';	-- instr to return FIRST occurance of substring {case insensitive}
+SELECT LOCATE('a', FIRST_NAME) FROM Worker WHERE FIRST_NAME = 'Amitabh';		-- same as above
 SELECT RTRIM(FIRST_NAME) FROM Worker;
 SELECT DISTINCT LENGTH(DEPARTMENT), DEPARTMENT FROM Worker;
 SELECT REPLACE(FIRST_NAME, 'A', 'a') FROM Worker;								-- replace
@@ -82,7 +83,7 @@ GROUP BY DEPARTMENT ORDER BY no_of_worker DESC;	-- creating variable and sorting
 -- Workers who are Managers. (both present below are same)
 SELECT * FROM Worker WHERE WORKER_ID IN (SELECT WORKER_REF_ID FROM Title where WORKER_TITLE = 'Manager');
 SELECT * FROM Worker W INNER JOIN Title T ON W.WORKER_ID = T.WORKER_REF_ID WHERE WORKER_TITLE = 'Manager';
-SELECT WORKER_TITLE, AFFECTED_FROM, COUNT(*)  FROM Title GROUP BY WORKER_TITLE, AFFECTED_FROM HAVING COUNT(*)>1;
+SELECT WORKER_TITLE, AFFECTED_FROM, COUNT(*), GROUP_CONCAT(WORKER_REF_ID)  FROM Title GROUP BY WORKER_TITLE, AFFECTED_FROM HAVING COUNT(*)>1;
 SELECT * FROM Title WHERE MOD(WORKER_ID, 2) <> 0;							-- Find odd rows
 -- Duplicating table
 CREATE TABLE TABLE_COPY LIKE Title;
@@ -111,10 +112,37 @@ WHERE W1.SALARY = W2.SALARY;
 -- Second highest salary
 SELECT DISTINCT SALARY FROM Worker ORDER BY SALARY DESC LIMIT 1,1;
 Select max(Salary) from Worker where Salary not in (Select max(Salary) from Worker);
-
+ 
 SELECT * FROM Worker WHERE WORKER_ID <= (SELECT count(WORKER_ID)/2 from Worker);		-- 50% records of the table
 SELECT DEPARTMENT, COUNT(*) FROM Worker GROUP BY DEPARTMENT HAVING COUNT(*) < 5;		-- Department having less than 5 workers
 SELECT * FROM Worker WHERE WORKER_ID = (SELECT MAX(WORKER_ID) FROM Worker);				-- Get last row from the table
+SELECT t.DEPARTMENT,t.FIRST_NAME,t.Salary 
+from(SELECT max(Salary) as MaxSalary,DEPARTMENT from Worker group by DEPARTMENT) as TempNew 
+Inner Join Worker t on TempNew.DEPARTMENT=t.DEPARTMENT and TempNew.MaxSalary=t.Salary;
+SELECT DISTINCT SALARY FROM Worker ORDER BY SALARY DESC LIMIT 3;
+SELECT DEPARTMENT, SUM(SALARY) FROM Worker GROUP BY DEPARTMENT;
+SELECT FIRST_NAME, SALARY FROM Worker WHERE SALARY = (SELECT MAX(SALARY) FROM Worker);
+
+-- LINK :https://stackhowto.com/mysql-practice-exercises-with-solutions-ordering-system-database-part-9/
+select * from information_schema.table_constraints;
+-- Get the department, the number of employees in that department, and the total salary grouped by department, and sorted by total salary in descending order.
+select department, count(*),  sum(salary) as tot  from Worker group by department order by tot desc;
+-- Get all the details of an employee if the employee exists in the Reward table? Or in other words, find employees with bonuses.
+select distinct w.* from Worker w, Bonus b where w.worker_id = b.worker_ref_id;
+-- Remove employees who have received rewards.
+DELETE FROM Worker WHERE worker_id IN (SELECT worker_ref_id FROM Bonus);
+-- Get the name of the employees which contains only numbers.
+SELECT * FROM Worker WHERE LOWER(Last_name) = UPPER(Last_name); -- We have used the two functions Lower and Upper, because the comparison between two numbers, the result will be the same. However, if there are alphabets in the column, the results will be different.
+-- Get the first name, the amount of the reward for the employees even if they have not received any rewards.
+SELECT First_name, bonus_amount FROM Worker E LEFT JOIN Bonus R ON E.worker_id = R.worker_ref_id;
+-- Get the first name, the reward amount for employees even if they did not receive any rewards, and set a reward amount equal to 0 for the employees who did not receive rewards.
+select first_name, ifnull(bonus_amount, 0) from Worker E LEFT JOIN Bonus R ON E.worker_id = R.worker_ref_id;
+-- Get the total price for each order and the date associated with that order as well as the first and last name of the associated customer.
+SELECT customer.firstname, customer.lastname, orders.purchase_date, order_id, SUM(total_price) AS order_price 
+FROM `orderLine` 
+LEFT JOIN orders ON orders.id = orderLine.order_id					-- combining all 3 tables based on different id
+LEFT JOIN customer ON customer.id = orders.customer_id
+GROUP BY `order_id`;
 
 
 

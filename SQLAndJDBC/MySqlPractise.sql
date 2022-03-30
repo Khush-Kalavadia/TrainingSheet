@@ -102,7 +102,7 @@ ALTER TABLE employee_work ADD COLUMN date date;						-- add column having type d
 SELECT * FROM employee_work;
 INSERT INTO employee_work(id, work, date) VALUES (5, "hr", "2000-3-4");
 INSERT INTO employee_work(id, work, date) VALUES (6, "hr", "2020-12-31");
-SELECT date_format(date, '%d/%m/%Y') FROM employee_work;			-- printing date in specific format
+SELECT date_format(date, '%d/%m/%Y') FROM employee_work;					-- printing date in specific format
 SELECT * FROM employee_work;
 UPDATE employee_work SET date = '2020-11-30' where work = "developement";	-- update single value in a row
 UPDATE employee_work SET work = 'sales', date = '2010-9-16' WHERE id = 2;  -- update multiple value in a row
@@ -113,10 +113,10 @@ UPDATE employee_info SET email = REPLACE(email, '@gmail.com', '@yahoo.com') wher
 INSERT INTO employee_info(id, firstName) VALUES (3,'Pravin');
 DELETE FROM employee_info WHERE id=3;										-- delete row based on given condition
 DELETE FROM employee_info ORDER BY id LIMIT 2;								-- delete first 2 rows if they are not set as foreign key in other table
-SELECT work, count(*), MAX(date) FROM employee_work 					-- specifing the columns which would be available even after grouping
-GROUP BY work 												-- grouping the above query
-ORDER BY MAX(date) DESC										-- ordering based on the available grouped dates
-LIMIT 2;													-- limiting the output to 2 rows
+SELECT work, count(*), MAX(date) FROM employee_work 					    -- specifing the columns which would be available even after grouping
+GROUP BY work 																-- grouping the above query
+ORDER BY MAX(date) DESC														-- ordering based on the available grouped dates
+LIMIT 2;																	-- limiting the output to 2 rows
 SELECT count(*), work FROM employee_work GROUP BY work HAVING work = 'hr';
 SELECT * FROM employee_work;
 
@@ -182,6 +182,7 @@ select * from table1 where id in (select id from table2);		-- equivalent to "= A
 select * from table2 where id > any (select id from table1);	-- table1 -> 10,20,25 || table2 checks for 20 finds 10 which is smaller than 20
 																-- table2 checks for 7 and finds none smaller than 7 same with 10. Can try >= to see the result
 select * from table1 where id between 15 and 25;				-- includes 15 and 25
+select * from table1 where id not in (select id from table2);	-- id which are in table1 and not in table2. basically table1 MINUS table2
 
 -- EXISTS
 CREATE DATABASE Shop;
@@ -221,3 +222,5 @@ SELECT true, false, TRUE, FALSE;										-- check boolean to number
 SELECT EXISTS(SELECT * from customer WHERE cust_id=104) AS Result;  	-- want to know whether row exists or not
 SELECT prod_name, order_date from orders where order_date between '2020-3-10' and '2020-2-12';		-- sequence matters
 SELECT prod_name, order_date from orders where order_date between '2020-2-12' and '2020-3-10';		-- between smaller and greater
+
+-- end --
