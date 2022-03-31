@@ -12,9 +12,8 @@
             <result>/index.jsp</result>
         </action>
 
-        <action name="login" class="example.Example" method="login">
+        <action name="login" class="action.LoginAction" method="loginCheck">
             <result name="success" type="json"></result>
-            <result name="error" type="json"></result>
         </action>
 
     </package>
