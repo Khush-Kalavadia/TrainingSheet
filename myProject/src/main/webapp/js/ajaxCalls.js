@@ -67,7 +67,7 @@ let ajaxCalls = {
 
     getDataFromFormSuccess: function (request)
     {
-        alert(request.bean.message);
+        alert(request.bean.login);
     }
 };
 

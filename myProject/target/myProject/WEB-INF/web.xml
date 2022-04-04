@@ -15,4 +15,15 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <servlet>
+    <servlet-name>ConnectionStartup</servlet-name>
+    <servlet-class>commonutil.ConnectionStartup</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ConnectionStartup</servlet-name>
+    <url-pattern>""</url-pattern>
+  </servlet-mapping>
+
 </web-app>

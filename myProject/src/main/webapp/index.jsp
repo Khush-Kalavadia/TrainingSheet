@@ -15,7 +15,7 @@
 <script>
     $(document).ready(function ()
     {
-        ajaxCalls.getDataFromForm();
+            ajaxCalls.getDataFromForm();
     });
 </script>
 </body>

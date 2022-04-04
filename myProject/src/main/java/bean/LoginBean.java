@@ -6,17 +6,7 @@ public class LoginBean
 
     private String password;
 
-    private String message;
-
-    public String getMessage()
-    {
-        return message;
-    }
-
-    public void setMessage(String message)
-    {
-        this.message = message;
-    }
+    private boolean login;
 
     public String getUsername()
     {
@@ -37,5 +27,15 @@ public class LoginBean
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public boolean isLogin()
+    {
+        return login;
+    }
+
+    public void setLogin(boolean login)
+    {
+        this.login = login;
     }
 }

@@ -6,17 +6,13 @@ import service.LoginService;
 
 public class LoginAction implements ModelDriven<LoginBean>
 {
-    LoginBean bean = new LoginBean();
+    LoginBean loginBean = new LoginBean();
 
-    LoginService loginService;
-
-    boolean loginStatus;
+    LoginService loginService = new LoginService();
 
     public String loginCheck()
     {
-        loginService = new LoginService(bean);
-
-        loginStatus = loginService.validate();          //fixme havent used loginStatus else turn to void
+        loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));          //fixme havent used the boolean returned from loginStatus else turn to void
 
         return "success";
     }
@@ -24,7 +20,7 @@ public class LoginAction implements ModelDriven<LoginBean>
     @Override
     public LoginBean getModel()
     {
-        return bean;
+        return loginBean;
     }
 }
 

@@ -3,6 +3,6 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Hi from login</h1>
+<h1>Hello from dashboard</h1>
 </body>
 </html>
