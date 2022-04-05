@@ -1,12 +1,10 @@
 //created database to handle any query
-//fixme can remove login dao
-//todo close connections in this file
-
 package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,13 +48,17 @@ public class Query
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            int columnCount = metaData.getColumnCount();
+
             while (resultSet.next())
             {
                 List<Object> resultSetRow = new ArrayList<>();
 
-                for (int i = 0; i < preparedStatementData.size(); i++)          //fixme change in cases when number of returned columns are differnt from number of "?"
+                for (int i = 0; i < columnCount; i++)
                 {
-                    datatype = preparedStatementData.get(i).getClass().getName();
+                    datatype = metaData.getColumnTypeName(i+1);
 
                     switch (datatype)
                     {

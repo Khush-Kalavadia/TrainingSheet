@@ -13,9 +13,7 @@ let ajaxCalls = {
 
             timeout: 180000,
 
-            // error:    //A function to be called if the request fails.
-
-            success: function (bean)            //why this? cos login provided in url worked successfully.
+            success: function (json)            //why this? cos login provided in url worked successfully.
             {
                 var callbacks;
 
@@ -25,49 +23,77 @@ let ajaxCalls = {
 
                     callbacks.add(request.callback);
 
-                    request.bean = bean;
+                    request.bean = json;
 
                     callbacks.fire(request);            //this directly moves to the callback given in request
 
                     callbacks.remove(request.callback);
                 }
-            }
+            },
+
+            error: function (request, error, status)       //A function to be called if the request fails.
+            {
+                alert("Error -> " + request + " || " + error + " || " + status);
+            },
+
+            dataType: "json"
         });
     },
 
     getDataFromForm: function ()        //practically different jsp would have such functions which
         // would be evoked and at the end everything would be transfered to postajax call
     {
-        $("input[type='button']").click(function ()
+        $("#form_submit").click(function ()
         {
-            let user = $("input[name='username']").val();
+            let user = $("#loginInputUsername").val();
 
-            let pass = $("input[name='password']").val();
+            let pass = $("#loginInputPassword").val();
 
             let param =
-            {
-                username: user,
+                {
+                    username: user,
 
-                password: pass
-            };
+                    password: pass
+                };
 
             let request =
-            {
-                url: "login",
+                {
+                    url: "login",
 
-                param: param,
+                    param: param,
 
-                callback: ajaxCalls.getDataFromFormSuccess
-            };
+                    callback: ajaxCalls.getDataFromFormSuccess
+                };
 
             ajaxCalls.ajaxPostCall(request);
+
+            // event.preventDefault();
 
         });
     },
 
     getDataFromFormSuccess: function (request)
     {
-        alert(request.bean.login);
+        //testme try keeping 5sec and check for callback or response on continuous clicks. work on postcall and ajax part
+
+        // function sleep(seconds)
+        // {
+        //     var e = new Date().getTime() + (seconds * 1000);
+        //     while (new Date().getTime() <= e)
+        //     {
+        //     }
+        // }
+        //
+        // sleep(5);
+
+        if (request.bean.login === true)
+        {
+            alert("Correct credentials");
+        }
+        else
+        {
+            alert("Incorrect credentials");
+        }
     }
 };
 

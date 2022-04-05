@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPoolHandler
 {
@@ -19,7 +18,7 @@ public class ConnectionPoolHandler
 
     private static final int MAX_CONNECTION;
 
-    private static final BlockingQueue<Connection> CONNECTION_POOL;
+    private static final LinkedBlockingQueue<Connection> CONNECTION_POOL;
 
     private static final List<Connection> USED_CONNECTION;
 
@@ -35,7 +34,7 @@ public class ConnectionPoolHandler
 
         MAX_CONNECTION = 5;
 
-        CONNECTION_POOL = new ArrayBlockingQueue<>(MAX_CONNECTION);
+        CONNECTION_POOL = new LinkedBlockingQueue<>(MAX_CONNECTION);
 
         USED_CONNECTION = new ArrayList<>();
     }
@@ -89,6 +88,7 @@ public class ConnectionPoolHandler
     }
 
     public static void destory()            //testme in case when we have >max_connection - study rejection handler
+                                            //fixme need to check error which appears only sometime when destroying
     {
         try
         {

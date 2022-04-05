@@ -12,7 +12,16 @@ public class LoginAction implements ModelDriven<LoginBean>
 
     public String loginCheck()
     {
-        loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));          //fixme havent used the boolean returned from loginStatus else turn to void
+        try
+        {
+            loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));          //fixme havent used the boolean returned from loginStatus else turn to void
+//            Thread.sleep(3000);
+//            System.out.println(10/0);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();           //in case of any error struts will handle the response
+        }
 
         return "success";
     }

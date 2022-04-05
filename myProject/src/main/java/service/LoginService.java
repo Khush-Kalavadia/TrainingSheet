@@ -1,25 +1,20 @@
 package service;
 
 import dao.Query;
-import dao.LoginDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginService
 {
-    public boolean validate(String username, String password)                   //todo validate the user based on data coming from dao
+    public boolean validate(String username, String password)
     {
         boolean loginStatus = false;
-
-        LoginDao loginDao = new LoginDao();
 
         List<List<Object>> resultSetList;
 
         try
         {
-            //resultSetList = loginDao.checkUser(username, password);
-
             Query database = new Query();
 
             List<Object> preparedStatementData = new ArrayList<>();
@@ -30,7 +25,7 @@ public class LoginService
 
             resultSetList = database.select("SELECT username, password FROM user WHERE username = ? AND password = ?", preparedStatementData);
 
-            if (resultSetList.get(0).size() != 0)
+            if (resultSetList.size() != 0)
             {
                 loginStatus = true;
             }

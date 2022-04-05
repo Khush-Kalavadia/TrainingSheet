@@ -13,7 +13,9 @@
         </action>
 
         <action name="login" class="action.LoginAction" method="loginCheck">
-            <result name="success" type="json"></result>
+            <!--todo set the submit to move on the new page-->
+            <result name="success" type="json">/WEB-INF/mainPage.jsp</result>
+            <result name="failure" type="json">/index.jsp</result>
         </action>
 
     </package>
