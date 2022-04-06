@@ -10,79 +10,79 @@ import java.util.List;
 
 public class Query
 {
+    private Connection connection;
+
+    public void createConnection()
+    {
+        this.connection = dao.ConnectionPoolHandler.getConnection();
+    }
+
     public List<List<Object>> select(String sql, List<Object> preparedStatementData)
     {
         List<List<Object>> resultSetList = new ArrayList<>();
-
-        Connection connection = null;
 
         PreparedStatement preparedStatement = null;
 
         try
         {
-            connection = dao.ConnectionPoolHandler.getConnection();
-
-            preparedStatement = connection.prepareStatement(sql);
-
-            String datatype;
-
-            for (int i = 0; i < preparedStatementData.size(); i++)
+            if (connection != null)
             {
-                datatype = preparedStatementData.get(i).getClass().getName();
+                preparedStatement = connection.prepareStatement(sql);
 
-                switch (datatype)
+                String datatype;
+
+                for (int i = 0; i < preparedStatementData.size(); i++)
                 {
-                    case "java.lang.String":
-
-                        preparedStatement.setString(i + 1, (String) preparedStatementData.get(i));
-
-                        break;
-
-                    case "java.lang.Integer":
-
-                        preparedStatement.setInt(i + 1, (Integer) preparedStatementData.get(i));
-
-                        break;
-                }
-            }
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            ResultSetMetaData metaData = resultSet.getMetaData();
-
-            int columnCount = metaData.getColumnCount();
-
-            while (resultSet.next())
-            {
-                List<Object> resultSetRow = new ArrayList<>();
-
-                for (int i = 0; i < columnCount; i++)
-                {
-                    datatype = metaData.getColumnTypeName(i+1);
+                    datatype = preparedStatementData.get(i).getClass().getName();
 
                     switch (datatype)
                     {
                         case "java.lang.String":
 
-                            resultSetRow.add(resultSet.getString(i+1));
+                            preparedStatement.setString(i + 1, (String) preparedStatementData.get(i));
 
                             break;
 
                         case "java.lang.Integer":
 
-                            resultSetRow.add(resultSet.getInt(i+1));
+                            preparedStatement.setInt(i + 1, (Integer) preparedStatementData.get(i));
 
                             break;
                     }
                 }
 
-                resultSetList.add(resultSetRow);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                ResultSetMetaData metaData = resultSet.getMetaData();
+
+                int columnCount = metaData.getColumnCount();
+
+                while (resultSet.next())
+                {
+                    List<Object> resultSetRow = new ArrayList<>();
+
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        datatype = metaData.getColumnTypeName(i + 1);
+
+                        switch (datatype)
+                        {
+                            case "java.lang.String":
+
+                                resultSetRow.add(resultSet.getString(i + 1));
+
+                                break;
+
+                            case "java.lang.Integer":
+
+                                resultSetRow.add(resultSet.getInt(i + 1));
+
+                                break;
+                        }
+                    }
+                    resultSetList.add(resultSetRow);
+                }
             }
-
-            preparedStatement.close();
-
-            dao.ConnectionPoolHandler.releaseConnection(connection);
-
         }
         catch (Exception ex)
         {
@@ -101,21 +101,22 @@ public class Query
             {
                 ex.printStackTrace();
             }
-            try
-            {
-                if (connection != null)
-                {
-                    if (dao.ConnectionPoolHandler.isAlive(connection))
-                    {
-                        dao.ConnectionPoolHandler.releaseConnection(connection);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
-            }
         }
         return resultSetList;
+    }
+
+    public void releaseConnection()
+    {
+        try
+        {
+            if (connection != null)
+            {
+                dao.ConnectionPoolHandler.releaseConnection(connection);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

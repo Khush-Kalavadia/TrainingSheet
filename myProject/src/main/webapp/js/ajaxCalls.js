@@ -33,7 +33,7 @@ let ajaxCalls = {
 
             error: function (request, error, status)       //A function to be called if the request fails.
             {
-                alert("Error -> " + request + " || " + error + " || " + status);
+                alert("Error -> " + request + " || " + error + " || " + status);    //todo 3rd party notification
             },
 
             dataType: "json"
@@ -43,8 +43,10 @@ let ajaxCalls = {
     getDataFromForm: function ()        //practically different jsp would have such functions which
         // would be evoked and at the end everything would be transfered to postajax call
     {
-        $("#form_submit").click(function ()
+        $("#form_submit").click(function (event)
         {
+            event.preventDefault();
+
             let user = $("#loginInputUsername").val();
 
             let pass = $("#loginInputPassword").val();
@@ -67,8 +69,6 @@ let ajaxCalls = {
 
             ajaxCalls.ajaxPostCall(request);
 
-            // event.preventDefault();
-
         });
     },
 
@@ -88,13 +88,43 @@ let ajaxCalls = {
 
         if (request.bean.login === true)
         {
-            alert("Correct credentials");
+            window.location.href = "mainPage";
         }
         else
         {
-            alert("Incorrect credentials");
+            var returnedObject = $("#loginUnsuccessfulAlert").html('<div class="alert alert-danger" role="alert"><strong>Incorrect login credentials!</strong> Check your username and password.</div></div>').show(100);
+
+            setTimeout(function ()
+            {
+                returnedObject.slideUp(200);
+            }, 3000);
+
         }
+    },
+
+    mainPageHtmlLoader: function ()
+    {
+        $(".horizontal-menu ul li:first").css("color", "var(--primary-color)");
+
+        // $("#main-area").html("hello");
+
+        ajaxCalls.discoveryOnClick()
+    },
+
+    discoveryOnClick: function ()
+    {
+        $("#discoveryLi").on("click", function ()
+        {
+            $('.horizontal-menu ul li:first').css("color", "black");
+
+            $('.horizontal-menu ul li:last').css("color", "var(--primary-color)");
+
+            $(".horizontal-menu ul li:eq(1)").css("color", "var(--primary-color)");
+        });
+
     }
+
+
 };
 
 

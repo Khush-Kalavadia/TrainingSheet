@@ -151,6 +151,13 @@
     max-width: 120px;
 }
 
+.logo h3{
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #805ff5;
+    text-shadow: 0px 5px 5px rgba(53, 62, 87, 0.25);
+}
+
 .metismenu > li > a {
     padding-left: 32px !important;
 }
@@ -277,6 +284,11 @@
 .horizontal-menu ul li {
     display: inline-block;
     position: relative;
+    padding: 10px 20px;
+}
+
+.horizontal-menu ul li:hover{
+    color: var(--primary-color);
 }
 
 .horizontal-menu ul li a {
@@ -540,6 +552,10 @@
     overflow: hidden;
 }
 
+.ti-bell{
+    padding-right: 10px;
+}
+
 .notify-title a {
     float: right;
     display: inline-block;
@@ -733,6 +749,7 @@ ul.breadcrumbs {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    padding: 0px 20px;
 }
 
 .user-name i {
@@ -778,7 +795,7 @@ ul.breadcrumbs {
     top: 100% !important;
     visibility: visible;
     opacity: 1;
-    box-shadow: 0 0 45px 0 rgba(131, 23, 254, 0.06);
+    box-shadow: 0 0 45px 0 rgba(131, 23, 254, 0.3);
 }
 
 .user-profile .dropdown-menu a {
@@ -1720,6 +1737,10 @@ table.dbkit-table tr td {
 
 /*-------------------- 9. Alert------------------- */
 
+#loginUnsuccessfulAlert .alert-danger{
+    text-align: center;
+}
+
 .alert {
     letter-spacing: 0;
     font-size: 13px;
@@ -2315,7 +2336,6 @@ table.dataTable thead td {
     padding: 30px 50px 35px 50px;
     border-radius: 30px;
     box-shadow: 0px 5px 10px rgba(53, 62, 87, 0.45);
-    z-index: 0;
 
     background: linear-gradient(
             159deg,
@@ -2341,7 +2361,6 @@ table.dataTable thead td {
 .login-form-head h1 {
     text-shadow: 0px 5px 10px rgba(53, 62, 87, 0.45);
     font-family: Arial, sans-serif;
-    letter-spacing: 1px;
     color: #fff;
 }
 
@@ -2359,7 +2378,7 @@ table.dataTable thead td {
 }
 
 .login-form-body {
-    padding: 50px 50px 40px 50px;
+    padding: 40px 50px 50px 50px;
 }
 
 .form-gp {

@@ -21,9 +21,7 @@ public class ConnectionStartup extends HttpServlet
     {
         try
         {
-            //called when we are redeploying project
-
-            dao.ConnectionPoolHandler.destory();                //todo check destory method else it would wait if all threads are not there
+            dao.ConnectionPoolHandler.destory();               //called when we are redeploying project
         }
         catch (Exception ex)
         {

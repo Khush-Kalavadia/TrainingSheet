@@ -66,13 +66,14 @@
 <div class="login-area login-bg">
     <div class="container">
         <div class="login-box ptb--70">
-            <form action="login" method="post">          <!--form action="login"-->
+            <form method="post">          <!--form action="login"-->
                 <div class="login-form-head">
                     <h1>LiteNMS</h1>
                     <hr/>
                     <h5>Sign In</h5>
                     <p>Hello there, Sign in and start monitoring your network</p>
                 </div>
+                <div id="loginUnsuccessfulAlert"></div>
                 <div class="login-form-body">
                     <div class="form-gp">
                         <label for="loginInputUsername">Username</label>
@@ -88,7 +89,7 @@
                         <%--<button id="form_submit" type="submit">--%>
                         <%--Submit <i class="ti-arrow-right"></i>--%>
                         <%--</button>--%>
-                        <button id="form_submit" type="submit">
+                        <button id="form_submit">               <!--type="submit"-->
                             Login <i class="ti-arrow-right"></i>
                         </button>
                     </div>

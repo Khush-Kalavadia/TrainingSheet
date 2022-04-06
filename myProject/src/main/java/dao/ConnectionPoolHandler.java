@@ -1,9 +1,8 @@
+//testme in case when we have >max_connection - study rejection handler
 package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPoolHandler
@@ -20,8 +19,6 @@ public class ConnectionPoolHandler
 
     private static final LinkedBlockingQueue<Connection> CONNECTION_POOL;
 
-    private static final List<Connection> USED_CONNECTION;
-
     static
     {
         DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
@@ -35,8 +32,6 @@ public class ConnectionPoolHandler
         MAX_CONNECTION = 5;
 
         CONNECTION_POOL = new LinkedBlockingQueue<>(MAX_CONNECTION);
-
-        USED_CONNECTION = new ArrayList<>();
     }
 
     public static void start()
@@ -47,7 +42,14 @@ public class ConnectionPoolHandler
 
             for (int i = 0; i < MAX_CONNECTION; i++)
             {
-                CONNECTION_POOL.put(DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD));
+                try
+                {
+                    CONNECTION_POOL.put(DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD));
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         }
         catch (Exception ex)
@@ -56,15 +58,13 @@ public class ConnectionPoolHandler
         }
     }
 
-    public static Connection getConnection()
+    static Connection getConnection()
     {
         Connection connection = null;
 
         try
         {
             connection = CONNECTION_POOL.take();
-
-            USED_CONNECTION.add(connection);
         }
         catch (Exception ex)
         {
@@ -73,13 +73,14 @@ public class ConnectionPoolHandler
         return connection;
     }
 
-    public static void releaseConnection(Connection connection)
+    static void releaseConnection(Connection connection)
     {
         try
         {
-            CONNECTION_POOL.put(connection);
-
-            USED_CONNECTION.remove(connection);
+            if (!CONNECTION_POOL.contains(connection))
+            {
+                CONNECTION_POOL.put(connection);
+            }
         }
         catch (Exception ex)
         {
@@ -87,8 +88,7 @@ public class ConnectionPoolHandler
         }
     }
 
-    public static void destory()            //testme in case when we have >max_connection - study rejection handler
-                                            //fixme need to check error which appears only sometime when destroying
+    public static void destory()           //fixme need to check error which appears only sometime when destroying
     {
         try
         {
@@ -109,47 +109,11 @@ public class ConnectionPoolHandler
                 {
                     ex.printStackTrace();
                 }
-
-            }
-
-            for (int i = 0; i < USED_CONNECTION.size(); i++)
-            {
-                connection = USED_CONNECTION.get(0);
-
-                try
-                {
-                    if (!connection.isClosed())
-                    {
-                        connection.close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
-    }
-
-    static boolean isAlive(Connection connection)
-    {
-        boolean connectionAlive = false;
-
-        try
-        {
-            if (USED_CONNECTION.indexOf(connection) != -1)
-            {
-                connectionAlive = true;
-            }
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        return connectionAlive;
     }
 }

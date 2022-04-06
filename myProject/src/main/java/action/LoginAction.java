@@ -6,21 +6,19 @@ import service.LoginService;
 
 public class LoginAction implements ModelDriven<LoginBean>
 {
-    LoginBean loginBean = new LoginBean();
+    private LoginBean loginBean = new LoginBean();
 
-    LoginService loginService = new LoginService();
+    private LoginService loginService = new LoginService();
 
     public String loginCheck()
     {
         try
         {
-            loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));          //fixme havent used the boolean returned from loginStatus else turn to void
-//            Thread.sleep(3000);
-//            System.out.println(10/0);
+            loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();           //in case of any error struts will handle the response
+            ex.printStackTrace();
         }
 
         return "success";
@@ -32,4 +30,3 @@ public class LoginAction implements ModelDriven<LoginBean>
         return loginBean;
     }
 }
-

@@ -8,15 +8,19 @@
 
     <package name="default" extends="struts-default, json-default">
 
-        <action name="">
+        <action name="">                        <!--setting page to open on first hand-->
             <result>/index.jsp</result>
         </action>
 
         <action name="login" class="action.LoginAction" method="loginCheck">
-            <!--todo set the submit to move on the new page-->
-            <result name="success" type="json">/WEB-INF/mainPage.jsp</result>
-            <result name="failure" type="json">/index.jsp</result>
+            <result name="success" type="json"></result>
         </action>
+
+        <action name="mainPage">
+            <result>/WEB-INF/mainPage.jsp</result>
+        </action>
+
+
 
     </package>
 
