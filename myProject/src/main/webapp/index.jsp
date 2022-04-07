@@ -121,11 +121,12 @@
 <script src="bootstrap/js/plugins.js"></script>
 <script src="bootstrap/js/scripts.js"></script>
 
+<script src="js/login.js"></script>
 <script src="js/ajaxCalls.js"></script>
 <script>
     $(document).ready(function ()
     {
-        ajaxCalls.getDataFromForm();
+        login.getDataFromForm();
     });
 </script>
 

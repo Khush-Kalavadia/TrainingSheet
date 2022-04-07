@@ -242,6 +242,10 @@
     background: #f3f8fb;
 }
 
+.apply-primary-color{
+    color: var(--primary-color);
+}
+
 .horizontal-main-wrapper {
     min-height: 100vh;
 }
@@ -285,10 +289,6 @@
     display: inline-block;
     position: relative;
     padding: 10px 20px;
-}
-
-.horizontal-menu ul li:hover{
-    color: var(--primary-color);
 }
 
 .horizontal-menu ul li a {

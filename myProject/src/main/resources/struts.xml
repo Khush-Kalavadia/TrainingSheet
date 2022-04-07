@@ -20,6 +20,10 @@
             <result>/WEB-INF/mainPage.jsp</result>
         </action>
 
+        <action name="loginPage">
+            <result>/index.jsp</result>
+        </action>
+
 
 
     </package>

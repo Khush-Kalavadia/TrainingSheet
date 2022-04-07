@@ -19,11 +19,24 @@
             type="text/css"
             media="all"
     />
+<%--
+    <!--Start datatable css-->
+    <link rel="stylesheet" href="../bootstrap/css/datatable.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+--%>
     <!-- others css -->
     <link rel="stylesheet" href="../bootstrap/css/typography.css"/>
     <link rel="stylesheet" href="../bootstrap/css/default-css.css"/>
     <link rel="stylesheet" href="../bootstrap/css/styles.css"/>
     <link rel="stylesheet" href="../bootstrap/css/responsive.css"/>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
+
     <!-- modernizr css -->
     <script src="../bootstrap/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -144,7 +157,8 @@
                                 <!--todo add name of the user in span using the session get name-->
                             </h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Log Out</a>
+                                <%--<a class="dropdown-item" href="#">Log Out</a>--%>
+                                <span class="dropdown-item">Log Out</span>
                             </div>
                         </div>
                     </div>
@@ -185,11 +199,21 @@
     <!-- header area end -->
     <!-- page title area end -->
     <div class="main-content-inner">
-        <div class="container">
-            <div class="main" id="main-area">
-            </div>
+        <div class="container" id="main-area">
+
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
     <!-- main content area end -->
 </div>
 <!-- offset area end -->
@@ -216,11 +240,27 @@
 <script src="../bootstrap/js/plugins.js"></script>
 <script src="../bootstrap/js/scripts.js"></script>
 
+<%--
+<!-- Start datatable js -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+--%>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+
+<script src="../js/navigationBar.js"></script>
+<script src="../js/dashboard.js"></script>
 <script src="../js/ajaxCalls.js"></script>
+<script src="../js/discovery.js"></script>
+<script src="../js/monitors.js"></script>
 <script>
     $(document).ready(function ()
     {
-        ajaxCalls.mainPageHtmlLoader();
+        navigationBar.horizontalMenuLoader();
     });
 </script>
 
