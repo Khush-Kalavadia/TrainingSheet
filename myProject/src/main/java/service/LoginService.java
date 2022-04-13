@@ -45,4 +45,15 @@ public class LoginService
         }
         return loginStatus;
     }
+
+//    public static void main(String[] args)
+//    {
+//        ConnectionStartup connectionStartup = new ConnectionStartup();
+//
+//        connectionStartup.init();
+//
+//        LoginService loginService = new LoginService();
+//
+//        System.out.println(loginService.validate("admin", "admin"));
+//    }
 }

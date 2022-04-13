@@ -852,7 +852,7 @@ ul.breadcrumbs {
     letter-spacing: 0;
     color: #333;
     text-transform: capitalize;
-    margin-bottom: 17px;
+    margin-bottom: 14px;
 }
 
 .single-report p {
@@ -1968,6 +1968,7 @@ label {
     display: inline-block;
     margin-bottom: 8px;
     margin-bottom: 0.5rem;
+    padding: 8px;
 }
 
 .font-14 {
@@ -2007,6 +2008,15 @@ label {
 /*-------------------- END Form ------------------- */
 
 /*-------------------- 18. Icons ------------------- */
+
+.discoveryOperationsCell .fa{
+    padding: 5px;
+}
+
+.discoveryOperationsCell input,
+.card-body input{
+    padding: 2px 5px;
+}
 
 .fw-icons {
 }

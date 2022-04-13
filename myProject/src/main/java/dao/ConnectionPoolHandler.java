@@ -34,7 +34,7 @@ public class ConnectionPoolHandler
         CONNECTION_POOL = new LinkedBlockingQueue<>(MAX_CONNECTION);
     }
 
-    public static void start()
+    public static int start()
     {
         try
         {
@@ -56,6 +56,7 @@ public class ConnectionPoolHandler
         {
             ex.printStackTrace();
         }
+        return CONNECTION_POOL.size();
     }
 
     static Connection getConnection()

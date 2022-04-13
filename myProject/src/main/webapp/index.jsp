@@ -66,7 +66,7 @@
 <div class="login-area login-bg">
     <div class="container">
         <div class="login-box ptb--70">
-            <form method="post">          <!--form action="login"-->
+            <form>          <!--method="post" form action="login"-->
                 <div class="login-form-head">
                     <h1>LiteNMS</h1>
                     <hr/>
@@ -77,19 +77,19 @@
                 <div class="login-form-body">
                     <div class="form-gp">
                         <label for="loginInputUsername">Username</label>
-                        <input type="text" name="username" id="loginInputUsername"/>
+                        <input type="text" name="username" id="loginInputUsername" required>
                         <i class="ti-email"></i>
                     </div>
                     <div class="form-gp">
                         <label for="loginInputPassword">Password</label>
-                        <input type="password" name="password" id="loginInputPassword"/>
+                        <input type="password" name="password" id="loginInputPassword" required>
                         <i class="ti-lock"></i>
                     </div>
                     <div class="submit-btn-area">
                         <%--<button id="form_submit" type="submit">--%>
                         <%--Submit <i class="ti-arrow-right"></i>--%>
                         <%--</button>--%>
-                        <button id="form_submit">               <!--type="submit"-->
+                        <button id="form_submit" type="submit">               <!--type="submit"-->
                             Login <i class="ti-arrow-right"></i>
                         </button>
                     </div>

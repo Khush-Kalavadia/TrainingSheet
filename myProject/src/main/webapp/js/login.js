@@ -2,20 +2,12 @@ let login = {
     getDataFromForm: function ()        //practically different jsp would have such functions which
         // would be evoked and at the end everything would be transfered to postajax call
     {
-        $("#form_submit").click(function (event)
+        $("form").submit(function (event)
         {
             event.preventDefault();
 
-            let user = $("#loginInputUsername").val();
-
-            let pass = $("#loginInputPassword").val();
-
-            let param =
-                {
-                    username: user,
-
-                    password: pass
-                };
+            //array.reduce(function(total, currentValue), initialValue)
+            let param = $('form').serializeArray().reduce(function(finalParam, currentValue) { finalParam[currentValue.name] = currentValue.value; return finalParam; }, {});
 
             let request =
                 {
@@ -57,7 +49,6 @@ let login = {
             {
                 returnedObject.slideUp(200);
             }, 3000);
-
         }
     },
 };

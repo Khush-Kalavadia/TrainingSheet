@@ -1,10 +1,10 @@
 //created database to handle any query
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import commonutil.ConnectionStartup;
+import service.LoginService;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +15,21 @@ public class Query
     public void createConnection()
     {
         this.connection = dao.ConnectionPoolHandler.getConnection();
+    }
+
+    public void releaseConnection()
+    {
+        try
+        {
+            if (connection != null)
+            {
+                dao.ConnectionPoolHandler.releaseConnection(connection);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public List<List<Object>> select(String sql, List<Object> preparedStatementData)
@@ -57,9 +72,11 @@ public class Query
 
                 int columnCount = metaData.getColumnCount();
 
+                List<Object> resultSetRow;
+
                 while (resultSet.next())
                 {
-                    List<Object> resultSetRow = new ArrayList<>();
+                    resultSetRow = new ArrayList<>();
 
                     for (int i = 0; i < columnCount; i++)
                     {
@@ -67,13 +84,15 @@ public class Query
 
                         switch (datatype)
                         {
-                            case "java.lang.String":
+                            case "VARCHAR":
 
                                 resultSetRow.add(resultSet.getString(i + 1));
 
                                 break;
 
-                            case "java.lang.Integer":
+                            case "INT":
+
+                            case "TINYINT":
 
                                 resultSetRow.add(resultSet.getInt(i + 1));
 
@@ -105,18 +124,74 @@ public class Query
         return resultSetList;
     }
 
-    public void releaseConnection()
+    public int executeUpdate(String sql, List<Object> preparedStatementData)
     {
+        int updatedRow = 0;
+
+        PreparedStatement preparedStatement = null;
+
         try
         {
             if (connection != null)
             {
-                dao.ConnectionPoolHandler.releaseConnection(connection);
+                preparedStatement = connection.prepareStatement(sql);
+
+                int i = 1;
+
+                for (Object value : preparedStatementData)
+                {
+                    preparedStatement.setObject(i, value);
+
+                    i++;
+                }
+
+//                System.out.println(preparedStatement);
+
+                updatedRow = preparedStatement.executeUpdate();
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
+        finally
+        {
+            try
+            {
+                if (preparedStatement != null && !preparedStatement.isClosed())
+                {
+                    preparedStatement.close();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        return updatedRow;
     }
+
+//    public static void main(String[] args)
+//    {
+//        ConnectionStartup connectionStartup = new ConnectionStartup();
+//
+//        connectionStartup.init();
+//
+//        Query query = new Query();
+//
+//        List<Object> list = new ArrayList<>();
+//
+//        list.add(1222);
+//
+//        list.add("hello");
+//
+//        System.out.println(list);
+//
+//        query.createConnection();
+//
+//        int result = query.executeUpdate("insert into discovery(id, name) values (?, ?)", list);
+//
+//        System.out.println(result);
+//    }
+
 }

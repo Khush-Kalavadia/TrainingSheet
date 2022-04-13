@@ -8,11 +8,18 @@ public class ConnectionStartup extends HttpServlet
     {
         try
         {
-            dao.ConnectionPoolHandler.start();
+            int blockingQueueSize = dao.ConnectionPoolHandler.start();
+
+            if (blockingQueueSize == 0)
+            {
+                System.exit(1);
+            }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
+
+            System.exit(1);
         }
     }
 

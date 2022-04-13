@@ -12,10 +12,6 @@
             <result>/index.jsp</result>
         </action>
 
-        <action name="login" class="action.LoginAction" method="loginCheck">
-            <result name="success" type="json"></result>
-        </action>
-
         <action name="mainPage">
             <result>/WEB-INF/mainPage.jsp</result>
         </action>
@@ -23,6 +19,33 @@
         <action name="loginPage">
             <result>/index.jsp</result>
         </action>
+
+        <action name="login" class="action.LoginAction" method="loginCheck">
+            <result name="success" type="json"></result>
+        </action>
+
+        <action name="loadDiscoveryTable" class="action.TableAction" method="loadDiscoveryTable">
+            <result name="success" type="json"></result>
+        </action>
+
+        <action name="deleteDiscoveryRow" class="action.TableAction" method="deleteDiscoveryRow">
+            <result name="success" type="json"></result>
+        </action>
+
+        <action name="insertDiscoveryRow" class="action.DiscoveryAction" method="insertDiscoveryRow">
+            <result name="success" type="json"></result>
+        </action>
+
+        <action name="getDiscoveryData" class="action.DiscoveryAction" method="getDiscoveryData">
+            <result name="success" type="json"></result>
+        </action>
+
+        <action name="editDiscoveryDevice" class="action.DiscoveryAction" method="editDiscoveryDevice">
+            <result name="success" type="json"></result>
+        </action>
+
+
+
 
 
 

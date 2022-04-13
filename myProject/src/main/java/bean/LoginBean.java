@@ -10,7 +10,6 @@ public class LoginBean
 
     public String getUsername()
     {
-
         return username;
     }
 

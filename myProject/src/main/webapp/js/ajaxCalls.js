@@ -13,17 +13,17 @@ let ajaxCalls = {
 
             timeout: 180000,
 
-            success: function (json)            //why this? cos login provided in url worked successfully.
+            success: function (bean)            //url worked successfully
             {
-                var callbacks;
+                let callbacks;
 
-                if (request.callback != undefined)
+                if (request.callback !== undefined)
                 {
                     callbacks = $.Callbacks();
 
                     callbacks.add(request.callback);
 
-                    request.bean = json;
+                    request.bean = bean;
 
                     callbacks.fire(request);            //this directly moves to the callback given in request
 

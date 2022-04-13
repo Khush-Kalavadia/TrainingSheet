@@ -1,5 +1,7 @@
 let hoverLiColor;
+
 let clickedObject = $("#dashboardLi");
+
 let navigationBar = {
     horizontalMenuLoader: function ()
     {
@@ -15,32 +17,12 @@ let navigationBar = {
         navigationBar.logOutOnClick();
     },
 
-    loadHtml: function (clickedObject)
-    {
-        switch (clickedObject.text().trim())
-        {
-            case "Dashboard":
-            {
-                dashboard.dashboardHtmlLoader();
-                break;
-            }
-            case "Discovery":
-            {
-                discovery.discoveryHtmlLoader();
-                break;
-            }
-            case "Monitors":
-            {
-                monitors.monitorsHtmlLoader();
-                break;
-            }
-        }
-    },
-
     hoverHorizontalMenuLi: function ()
     {
         $(".horizontal-menu ul li").hover(function (event)
         {
+            $(event.currentTarget).css("cursor", "pointer");
+
             hoverLiColor = $(event.currentTarget).css("color");
 
             $(event.currentTarget).css("color", "var(--primary-color)");
@@ -68,6 +50,28 @@ let navigationBar = {
 
             navigationBar.loadHtml(clickedObject);
         });
+    },
+
+    loadHtml: function (clickedObject)
+    {
+        switch (clickedObject.text().trim())
+        {
+            case "Dashboard":
+            {
+                dashboard.dashboardHtmlLoader();
+                break;
+            }
+            case "Discovery":
+            {
+                discovery.discoveryHtmlLoader();
+                break;
+            }
+            case "Monitors":
+            {
+                monitors.monitorsHtmlLoader();
+                break;
+            }
+        }
     },
 
     logOutOnClick: function ()
