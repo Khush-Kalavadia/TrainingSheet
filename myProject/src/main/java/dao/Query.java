@@ -1,30 +1,19 @@
-//created database to handle any query
 package dao;
-
-import commonutil.ConnectionStartup;
-import service.LoginService;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Query
 {
     private Connection connection;
 
-    public void createConnection()
-    {
-        this.connection = dao.ConnectionPoolHandler.getConnection();
-    }
-
-    public void releaseConnection()
+    void createConnection()
     {
         try
         {
-            if (connection != null)
-            {
-                dao.ConnectionPoolHandler.releaseConnection(connection);
-            }
+            this.connection = dao.ConnectionPoolHandler.getConnection();
         }
         catch (Exception ex)
         {
@@ -32,72 +21,63 @@ public class Query
         }
     }
 
-    public List<List<Object>> select(String sql, List<Object> preparedStatementData)
+    void releaseConnection()
     {
-        List<List<Object>> resultSetList = new ArrayList<>();
+        try
+        {
+            dao.ConnectionPoolHandler.releaseConnection(connection);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<HashMap<String, Object>> select(String sql, List<Object> preparedStatementData)
+    {
+        List<HashMap<String, Object>> resultSetList = null;
 
         PreparedStatement preparedStatement = null;
+
+        HashMap<String, Object> resultSetRow;
 
         try
         {
             if (connection != null)
             {
+                int preparedStatementDataCount = 0;
+
                 preparedStatement = connection.prepareStatement(sql);
 
-                String datatype;
-
-                for (int i = 0; i < preparedStatementData.size(); i++)
+                for (Object data : preparedStatementData)
                 {
-                    datatype = preparedStatementData.get(i).getClass().getName();
-
-                    switch (datatype)
+                    if (data != null)
                     {
-                        case "java.lang.String":
+                        preparedStatement.setObject(++preparedStatementDataCount, data);
+                    }
+                    else
+                    {
+                        preparedStatement.close();
 
-                            preparedStatement.setString(i + 1, (String) preparedStatementData.get(i));
-
-                            break;
-
-                        case "java.lang.Integer":
-
-                            preparedStatement.setInt(i + 1, (Integer) preparedStatementData.get(i));
-
-                            break;
+                        return resultSetList;
                     }
                 }
+
+                System.out.println(preparedStatement);
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 ResultSetMetaData metaData = resultSet.getMetaData();
 
-                int columnCount = metaData.getColumnCount();
-
-                List<Object> resultSetRow;
+                resultSetList = new ArrayList<>();
 
                 while (resultSet.next())
                 {
-                    resultSetRow = new ArrayList<>();
+                    resultSetRow = new HashMap<>();
 
-                    for (int i = 0; i < columnCount; i++)
+                    for (int i = 1; i <= metaData.getColumnCount(); i++)
                     {
-                        datatype = metaData.getColumnTypeName(i + 1);
-
-                        switch (datatype)
-                        {
-                            case "VARCHAR":
-
-                                resultSetRow.add(resultSet.getString(i + 1));
-
-                                break;
-
-                            case "INT":
-
-                            case "TINYINT":
-
-                                resultSetRow.add(resultSet.getInt(i + 1));
-
-                                break;
-                        }
+                        resultSetRow.put(metaData.getColumnLabel(i), resultSet.getObject(i));
                     }
                     resultSetList.add(resultSetRow);
                 }
@@ -124,7 +104,7 @@ public class Query
         return resultSetList;
     }
 
-    public int executeUpdate(String sql, List<Object> preparedStatementData)
+    int executeUpdate(String sql, List<Object> preparedStatementData)
     {
         int updatedRow = 0;
 
@@ -134,18 +114,27 @@ public class Query
         {
             if (connection != null)
             {
-                preparedStatement = connection.prepareStatement(sql);
+                int preparedStatementDataCount = 1;
 
-                int i = 1;
+                preparedStatement = connection.prepareStatement(sql);
 
                 for (Object value : preparedStatementData)
                 {
-                    preparedStatement.setObject(i, value);
+                    if (value != null)
+                    {
+                        preparedStatement.setObject(preparedStatementDataCount, value);
 
-                    i++;
+                        preparedStatementDataCount++;
+                    }
+                    else
+                    {
+                        preparedStatement.close();
+
+                        return updatedRow;
+                    }
                 }
 
-//                System.out.println(preparedStatement);
+                System.out.println(preparedStatement);
 
                 updatedRow = preparedStatement.executeUpdate();
             }
@@ -181,17 +170,21 @@ public class Query
 //
 //        List<Object> list = new ArrayList<>();
 //
-//        list.add(1222);
+//        list.add(1);
 //
-//        list.add("hello");
+////        list.add("hello");
 //
 //        System.out.println(list);
 //
 //        query.createConnection();
 //
-//        int result = query.executeUpdate("insert into discovery(id, name) values (?, ?)", list);
+////        int result = query.executeUpdate("insert into discovery(id, name) values (?, ?)", list);
 //
-//        System.out.println(result);
+//        System.out.println(query.select("select * from discovery where id = ?", list));
+//
+////        System.out.println(result);
+//
+//        query.releaseConnection();
 //    }
 
 }

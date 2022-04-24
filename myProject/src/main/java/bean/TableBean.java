@@ -1,12 +1,13 @@
 package bean;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class TableBean
 {
     private String tableName;
 
-    private List<List<Object>> tableData;
+    private List<HashMap<String, Object>> tableData;
 
     private int tableId;
 
@@ -24,12 +25,12 @@ public class TableBean
         this.tableName = tableName;
     }
 
-    public List<List<Object>> getTableData()
+    public List<HashMap<String, Object>> getTableData()
     {
         return tableData;
     }
 
-    public void setTableData(List<List<Object>> tableData)
+    public void setTableData(List<HashMap<String, Object>> tableData)
     {
         this.tableData = tableData;
     }

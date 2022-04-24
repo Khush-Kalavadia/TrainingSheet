@@ -8,9 +8,7 @@ public class ConnectionStartup extends HttpServlet
     {
         try
         {
-            int blockingQueueSize = dao.ConnectionPoolHandler.start();
-
-            if (blockingQueueSize == 0)
+            if (dao.ConnectionPoolHandler.start() == 0)
             {
                 System.exit(1);
             }
@@ -28,7 +26,7 @@ public class ConnectionStartup extends HttpServlet
     {
         try
         {
-            dao.ConnectionPoolHandler.destory();               //called when we are redeploying project
+            dao.ConnectionPoolHandler.destroy();               //called when we are redeploying project
         }
         catch (Exception ex)
         {

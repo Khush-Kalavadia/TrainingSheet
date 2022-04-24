@@ -1,59 +1,42 @@
 package service;
 
-import commonutil.ConnectionStartup;
-import dao.Query;
+import bean.LoginBean;
+import dao.LoginDao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class LoginService
 {
-    public boolean validate(String username, String password)
+    public static void validate(LoginBean loginBean)
     {
-        boolean loginStatus = false;
-
-        List<List<Object>> resultSetList;
-
-        Query query = new Query();
+        HashMap<String, Object> resultSetRow;
 
         try
         {
-            List<Object> preparedStatementData = new ArrayList<>();
+            resultSetRow = LoginDao.getRowByUsernamePassword(loginBean.getUsername(), loginBean.getPassword());
 
-            preparedStatementData.add(username);
-
-            preparedStatementData.add(password);
-
-            query.createConnection();
-
-            resultSetList = query.select("SELECT username, password FROM user WHERE username LIKE BINARY ? AND password LIKE BINARY ?", preparedStatementData);
-
-            query.releaseConnection();
-
-            if (!resultSetList.isEmpty())
+            if (resultSetRow != null && !resultSetRow.isEmpty())
             {
-                loginStatus = true;
+                loginBean.setLogin(true);
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
-        finally
-        {
-            query.releaseConnection();
-        }
-        return loginStatus;
     }
 
-//    public static void main(String[] args)
-//    {
-//        ConnectionStartup connectionStartup = new ConnectionStartup();
-//
-//        connectionStartup.init();
-//
-//        LoginService loginService = new LoginService();
-//
-//        System.out.println(loginService.validate("admin", "admin"));
-//    }
+    public static void logout(LoginBean loginBean)
+    {
+        try
+        {
+            loginBean.setUsername(null);
+
+            loginBean.setPassword(null);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
 }

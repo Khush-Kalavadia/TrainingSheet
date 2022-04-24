@@ -78,7 +78,7 @@ public class ConnectionPoolHandler
     {
         try
         {
-            if (!CONNECTION_POOL.contains(connection))
+            if (connection != null && !CONNECTION_POOL.contains(connection))
             {
                 CONNECTION_POOL.put(connection);
             }
@@ -89,32 +89,32 @@ public class ConnectionPoolHandler
         }
     }
 
-    public static void destory()           //fixme need to check error which appears only sometime when destroying
+    public static void destroy()           //fixme need to check error which appears only sometime when destroying
     {
-        try
-        {
-            Connection connection;
+        Connection connection = null;
 
-            for (int i = 0; i < CONNECTION_POOL.size(); i++)
+        for (int i = 0; i < CONNECTION_POOL.size(); i++)
+        {
+            try
             {
                 connection = CONNECTION_POOL.take();
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
 
-                try
+            try
+            {
+                if (connection != null && !connection.isClosed())
                 {
-                    if (!connection.isClosed())
-                    {
-                        connection.close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
+                    connection.close();
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
 }

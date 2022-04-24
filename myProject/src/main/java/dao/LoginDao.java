@@ -1,47 +1,37 @@
 package dao;
 
-import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LoginDao
 {
-    public List<List<Object>> checkUser(String username, String password)
+    public static HashMap<String, Object> getRowByUsernamePassword(String username, String password)
     {
-        PreparedStatement preparedStatement = null;
+        List<HashMap<String, Object>> resultSetList;
 
-        List<List<Object>> resultSetList = new ArrayList<>();
+        HashMap<String, Object> resultSetRow = null;
 
-        Connection connection = null;
+        Query query = new Query();
 
         try
         {
-            String query = "SELECT username, password FROM user WHERE username = ? AND password = ?";
+            List<Object> preparedStatementData = new ArrayList<>();
 
-            connection = dao.ConnectionPoolHandler.getConnection();
+            preparedStatementData.add(username);
 
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatementData.add(password);
 
-            preparedStatement.setString(1, username);
+            query.createConnection();
 
-            preparedStatement.setString(2, password);
+            resultSetList = query.select("SELECT username, password FROM user WHERE username LIKE BINARY ? AND password LIKE BINARY ?", preparedStatementData);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            query.releaseConnection();
 
-            List<Object> resultSetRow = new ArrayList<>();
-
-            while (resultSet.next())
+            if (resultSetList != null && !resultSetList.isEmpty())
             {
-                resultSetRow.add(resultSet.getString(1));
-
-                resultSetRow.add(resultSet.getString(2));
+                resultSetRow = resultSetList.get(0);
             }
-
-            preparedStatement.close();
-
-            dao.ConnectionPoolHandler.releaseConnection(connection);
-
-            resultSetList.add(resultSetRow);
         }
         catch (Exception ex)
         {
@@ -49,32 +39,8 @@ public class LoginDao
         }
         finally
         {
-            try
-            {
-                if (preparedStatement != null && !preparedStatement.isClosed())
-                {
-                    preparedStatement.close();
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
-            }
-            try
-            {
-                if (connection != null)
-                {
-                    if (dao.ConnectionPoolHandler.isAlive(connection))
-                    {
-                        dao.ConnectionPoolHandler.releaseConnection(connection);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
-            }
+            query.releaseConnection();
         }
-        return resultSetList;
+        return resultSetRow;
     }
 }

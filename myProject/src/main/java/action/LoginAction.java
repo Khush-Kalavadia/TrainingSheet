@@ -2,25 +2,48 @@ package action;
 
 import com.opensymphony.xwork2.ModelDriven;
 import bean.LoginBean;
+import org.apache.struts2.interceptor.SessionAware;
 import service.LoginService;
 
-public class LoginAction implements ModelDriven<LoginBean>
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginAction implements ModelDriven<LoginBean>, SessionAware
 {
     private LoginBean loginBean = new LoginBean();
 
-    private LoginService loginService = new LoginService();
+    private Map<String, Object> session = new HashMap<>();
 
     public String loginCheck()
     {
         try
         {
-            loginBean.setLogin(loginService.validate(loginBean.getUsername(), loginBean.getPassword()));
+            LoginService.validate(loginBean);
+
+            if (loginBean.isLogin())
+            {
+                session.put("user", loginBean.getUsername());
+            }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
+        return "success";
+    }
 
+    public String logout()
+    {
+        try
+        {
+            session.remove("user");
+
+            LoginService.logout(loginBean);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
         return "success";
     }
 
@@ -28,5 +51,11 @@ public class LoginAction implements ModelDriven<LoginBean>
     public LoginBean getModel()
     {
         return loginBean;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> map)
+    {
+        this.session = map;
     }
 }
