@@ -27,6 +27,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+
     <title>Login screen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <%--<link--%>
@@ -123,11 +124,26 @@
 
 <script src="js/login.js"></script>
 <script src="js/ajaxCalls.js"></script>
+
+<!--For toastr notification-->
+<script type="text/javascript" src="/bootstrap/js/toastr.min.js"></script>
+<link rel="stylesheet" href="/bootstrap/css/toastr.min.css">
+
+<%
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
+
 <script>
     $(document).ready(function ()
     {
         login.getDataFromForm();
     });
+
+
+
 </script>
 
 </body>

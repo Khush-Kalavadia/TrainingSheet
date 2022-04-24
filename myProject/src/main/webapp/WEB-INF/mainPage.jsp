@@ -19,14 +19,14 @@
             type="text/css"
             media="all"
     />
-<%--
-    <!--Start datatable css-->
-    <link rel="stylesheet" href="../bootstrap/css/datatable.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
---%>
+    <%--
+        <!--Start datatable css-->
+        <link rel="stylesheet" href="../bootstrap/css/datatable.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+    --%>
     <!-- others css -->
     <link rel="stylesheet" href="../bootstrap/css/typography.css"/>
     <link rel="stylesheet" href="../bootstrap/css/default-css.css"/>
@@ -34,7 +34,6 @@
     <link rel="stylesheet" href="../bootstrap/css/responsive.css"/>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-
 
 
     <!-- modernizr css -->
@@ -153,7 +152,7 @@
                                     alt="avatar"
                             />
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-                                <span>admin</span> <i class="fa fa-angle-down"></i>
+                                <span id="usernameLabel"></span> <i class="fa fa-angle-down"></i>
                                 <!--todo add name of the user in span using the session get name-->
                             </h4>
                             <div class="dropdown-menu">
@@ -205,15 +204,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
     <!-- main content area end -->
 </div>
 <!-- offset area end -->
@@ -249,14 +239,25 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 --%>
 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
+<script type="text/javascript" charset="utf8" src="../bootstrap/js/jquery.dataTables.js"></script>
 
 <script src="../js/navigationBar.js"></script>
 <script src="../js/dashboard.js"></script>
 <script src="../js/ajaxCalls.js"></script>
 <script src="../js/discovery.js"></script>
-<script src="../js/monitors.js"></script>
+<script src="../js/monitor.js"></script>
+
+<!--For toastr notification-->
+<script type="text/javascript" src="../bootstrap/js/toastr.min.js"></script>
+<link rel="stylesheet" href="../bootstrap/css/toastr.min.css">
+
+<%
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
+
 <script>
     $(document).ready(function ()
     {

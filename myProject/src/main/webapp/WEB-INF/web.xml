@@ -21,4 +21,10 @@
     <load-on-startup>0</load-on-startup>
   </servlet>
 
+  <servlet>
+    <servlet-name>ForkJoinPoolStartup</servlet-name>
+    <servlet-class>commonutil.ForkJoinPoolStartup</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
 </web-app>

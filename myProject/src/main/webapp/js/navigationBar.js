@@ -9,12 +9,16 @@ let navigationBar = {
 
         navigationBar.loadHtml(clickedObject);
 
+        navigationBar.loadUsername();
+
         //mention dynamically added functionality to hover and click on menu item
         navigationBar.hoverHorizontalMenuLi();
 
         navigationBar.onClickHorizontalMenuLi();
 
         navigationBar.logOutOnClick();
+
+        discovery.webSocket();
     },
 
     hoverHorizontalMenuLi: function ()
@@ -68,17 +72,33 @@ let navigationBar = {
             }
             case "Monitors":
             {
-                monitors.monitorsHtmlLoader();
+                monitor.monitorHtmlLoader();
                 break;
             }
         }
+    },
+
+    loadUsername: function ()
+    {
+        $("#usernameLabel").html("admin");              //fixme get user from session
     },
 
     logOutOnClick: function ()
     {
         $(".dropdown-menu span").on("click", function ()
         {
-            window.location.href = "loginPage";
+            let request = {
+                url: "logout",
+
+                callback: navigationBar.logOutSuccess
+            };
+
+            ajaxCalls.ajaxPostCall(request);
         });
+    },
+
+    logOutSuccess: function ()
+    {
+        window.location.href = "loginPage";
     }
 };
