@@ -30,7 +30,7 @@ let discovery = {
         discovery.preventSelectChangeEditModal();
     },
 
-    discoveryHtmlLoaderSuccess: function (request)          //todo can create list<list<String>> and directly send to frontend to be added. Add the icons also at the backend side
+    discoveryHtmlLoaderSuccess: function (request)
     {
         discoveryDataTable = $('#dataTableDiscovery').DataTable();
 
@@ -59,7 +59,8 @@ let discovery = {
 
                 rowHtml[3] = tableRow.type;
 
-                rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + tableRow.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play" title="Run Discovery"></i><i class="fa fa-edit" title="Edit device"></i><i class="fa fa-archive" title="Delete Device"></i>';
+                rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + tableRow.id + '"><i class="fa fa-play" title="Run Discovery"></i><i class="fa fa-edit" title="Edit device"></i><i class="fa fa-archive" title="Delete Device"></i>';
+                // the one having datatable id: rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + tableRow.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play" title="Run Discovery"></i><i class="fa fa-edit" title="Edit device"></i><i class="fa fa-archive" title="Delete Device"></i>';
 
                 if (tableRow.provision === 1)
                 {
@@ -101,7 +102,7 @@ let discovery = {
 
                 sshFieldsSelector.hide();
 
-                sshFieldsSelector.find("input").val("");
+                sshFieldsSelector.find("input").val(null);
             }
         });
     },
@@ -180,7 +181,9 @@ let discovery = {
 
             rowHtml[3] = discoveryBean.type;
 
-            rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + discoveryBean.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play"></i><i class="fa fa-edit"></i><i class="fa fa-archive"></i>';
+            rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + discoveryBean.id + '"><i class="fa fa-play"></i><i class="fa fa-edit"></i><i class="fa fa-archive"></i>';
+            //the one having data table id: rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + discoveryBean.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play"></i><i class="fa fa-edit"></i><i class="fa fa-archive"></i>';
+
 
             if (discoveryBean.provision === 1)
             {
@@ -197,11 +200,18 @@ let discovery = {
 
             $('#addModal').modal('hide');
 
-            $('#addModal').find('input').val("");
+            $('#addModal').find('input').val(null);
         }
         else
         {
-            toastr.error("Device insertion unsuccessful");
+            if (request.bean.duplicateEntry)
+            {
+                toastr.error("Device having ip/hostname and type already present");
+            }
+            else
+            {
+                toastr.error("Device insertion unsuccessful");
+            }
         }
     },
 
@@ -217,7 +227,7 @@ let discovery = {
 
     deleteDeviceConfirmationClick: function ()
     {
-        $("#deleteDiscoveryPopupModal").on("click", "#deleteDeviceConfirmationButton", function (event)
+        $("#deleteDiscoveryPopupModal").on("click", "#deleteDeviceConfirmationButton", function ()
         {
             $('#deleteDiscoveryPopupModal').modal('hide');
 
@@ -254,7 +264,7 @@ let discovery = {
         }
         else
         {
-            toastr.error("Deletion unsuccessful")
+            toastr.error("Deletion unsuccessful");
         }
     },
 
@@ -315,7 +325,7 @@ let discovery = {
             }
             modalSelector.find('.deviceType').val(receivedBean.type);
             modalSelector.find('.deviceUsername').val(receivedBean.username);
-            modalSelector.find('.devicePassword').val('');          //fixme if i enter password and open other ssh device the same password would be visible it is not clearing
+            modalSelector.find(':password').val(null);
 
             modalSelector.modal('show');
         }
@@ -360,11 +370,18 @@ let discovery = {
 
             discovery.tableLoader(request.bean.discoveryTableData);
 
-            toastr.success("Device updated successfully");
+            toastr.success("Device edited successfully");
         }
         else
         {
-            toastr.error("Update unsuccessful");
+            if (request.bean.duplicateEntry)
+            {
+                toastr.error("Device having ip/hostname and type already present");
+            }
+            else
+            {
+                toastr.error("Device edit unsuccessful");
+            }
         }
     },
 
@@ -412,9 +429,21 @@ let discovery = {
 
                 break;
 
+            case "userPasswordError":
+
+                toastr.warning('Username or password invalid of IP/Hostname: ' + ipHostname);
+
+                break;
+
+            case "notLinuxDevice":
+
+                toastr.warning('IP/Hostname ' + ipHostname + ' is not a linux device');
+
+                break;
+
             default:
 
-                toastr.error('Error while doing ' + type + ' having IP/Hostname: ' + ipHostname);
+                toastr.error('Error while doing ' + type + ' having IP/Hostname: ' + ipHostname+'. Check IP/Hostname.');
         }
     },
 
@@ -508,7 +537,7 @@ let discovery = {
         }
     },
 
-    webSocket: function ()          //fixme increase the timeout from ideal time 30sec
+    webSocket: function ()          //fixme increase the timeout from ideal time 5min
     {
         websocket = new WebSocket("ws://localhost:8080/server-endpoint");
 
@@ -525,6 +554,8 @@ let discovery = {
         websocket.onclose = function ()
         {
             toastr.warning("Frontend: Websocket closed");
+
+            discovery.webSocket();
         };
 
         websocket.onerror = function ()

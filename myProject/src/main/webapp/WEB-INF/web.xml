@@ -21,10 +21,24 @@
     <load-on-startup>0</load-on-startup>
   </servlet>
 
+  <!--testme thread count limit cores*2 = 8-->
+  <!--1 while true for discovery polling which adds the requests to queue-->
+  <!--4 threads in fork join pool which handles the above queue-->
+  <!--1 while true for monitor polling which adds the devices to queue-->
+  <!--2 threads in fork join pool which handles the above queue-->
+  <!--1 thread for scheduler-->
+  <!--1 ui-->
+
   <servlet>
     <servlet-name>ForkJoinPoolStartup</servlet-name>
     <servlet-class>commonutil.ForkJoinPoolStartup</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
+  <!--<servlet>-->
+    <!--<servlet-name>JobSchedulerStartup</servlet-name>-->
+    <!--<servlet-class>commonutil.JobScheduler</servlet-class>-->
+    <!--<load-on-startup>2</load-on-startup>-->
+  <!--</servlet>-->
 
 </web-app>

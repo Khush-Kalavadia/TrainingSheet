@@ -33,7 +33,7 @@ let ajaxCalls = {
 
             error: function (request, error, status)       //A function to be called if the request fails.
             {
-                toastr.error("Error -> " + request + " || " + error + " || " + status);    //todo 3rd party notification
+                toastr.error("Error -> " + request + " || " + error + " || " + status);
             },
 
             dataType: "json"

@@ -19,6 +19,8 @@ let navigationBar = {
         navigationBar.logOutOnClick();
 
         discovery.webSocket();
+
+        monitor.destroyChartOnModalClose();
     },
 
     hoverHorizontalMenuLi: function ()
