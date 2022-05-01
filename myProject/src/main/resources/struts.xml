@@ -6,9 +6,8 @@
 
     <constant name="struts.devMode" value="true"/>
 
-    <constant name="struts.action.excludePattern" value=".*server-endpoint"/>
-    <!--for web socket-->
-    <!--todo how to set interceptor here-->
+    <constant name="struts.action.excludePattern" value=".*server-endpoint"/>       <!--for web socket-->
+    <!--todo how to set login interceptor here-->
 
     <package name="myPackage" extends="struts-default, json-default">
 
@@ -74,17 +73,22 @@
             <result name="success" type="json"/>
         </action>
 
-        <!--<action name="runDiscovery" class="action.DiscoveryAction" method="runDiscovery">-->
-            <!--<interceptor-ref name="loginStack"/>-->
-            <!--<result name="success" type="json"/>-->
-        <!--</action>-->
-
         <action name="loadMonitorTable" class="action.MonitorAction" method="loadMonitorTable">
             <interceptor-ref name="loginStack"/>
             <result name="success" type="json"/>
         </action>
 
         <action name="provisionDevice" class="action.DiscoveryAction" method="provisionDevice">
+            <interceptor-ref name="loginStack"/>
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="deleteMonitorDevice" class="action.MonitorAction" method="deleteMonitorDevice">
+            <interceptor-ref name="loginStack"/>
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="getMonitorDeviceDetail" class="action.MonitorAction" method="getMonitorDeviceDetail">
             <interceptor-ref name="loginStack"/>
             <result name="success" type="json"/>
         </action>
