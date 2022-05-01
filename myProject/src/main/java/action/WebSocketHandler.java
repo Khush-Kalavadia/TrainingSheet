@@ -1,12 +1,12 @@
 package action;
 
-import service.RunDiscoveryPoolService;
+import commonutil.DataBlockingQueue;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/server-endpoint")
-public class WebSocketHandler
+public class WebSocketHandler                   //fixme why am i not able to see ws request on network inspect
 {
     private Session session;
 
@@ -36,11 +36,11 @@ public class WebSocketHandler
     }
 
     @OnMessage
-    public void handleMessage(Integer id)         //receiving msg and sending reply back as well. We can keep it void as well.
+    public void handleMessage(Integer id)         //receiving request and storing the session as well to send reply back to same session.
     {
         try
         {
-            RunDiscoveryPoolService.addDiscoveryDevice(id, session);
+            DataBlockingQueue.addDiscoveryDevice(id, session);
         }
         catch (Exception ex)
         {

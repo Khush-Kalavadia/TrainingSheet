@@ -1,8 +1,10 @@
 //testme in case when we have >max_connection - study rejection handler
 package dao;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPoolHandler
@@ -19,6 +21,8 @@ public class ConnectionPoolHandler
 
     private static final LinkedBlockingQueue<Connection> CONNECTION_POOL;
 
+    private static final int MAX_CONNECTION_LIMIT = 150;        //allows 150 normal connections plus one connection from the SUPER account
+
     static
     {
         DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
@@ -29,7 +33,29 @@ public class ConnectionPoolHandler
 
         DB_PASSWORD = "Mind@123";
 
-        MAX_CONNECTION = 5;
+        int connections = MAX_CONNECTION_LIMIT;
+
+        try
+        {
+            FileInputStream fileInputStream = new FileInputStream("/home/khush/IdeaProjects/myProject/src/main/java/dao/connection.prop");
+
+            Properties properties = new Properties();
+
+            properties.load(fileInputStream);
+
+            connections = Integer.parseInt((String)properties.get("MAXIMUM_CONNECTION"));
+
+            if (connections > MAX_CONNECTION_LIMIT)
+            {
+                connections = MAX_CONNECTION_LIMIT;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        MAX_CONNECTION = connections;
 
         CONNECTION_POOL = new LinkedBlockingQueue<>(MAX_CONNECTION);
     }
@@ -89,7 +115,7 @@ public class ConnectionPoolHandler
         }
     }
 
-    public static void destroy()           //fixme need to check error which appears only sometime when destroying
+    public static void destroy()           // todo check connections closing or not
     {
         Connection connection = null;
 

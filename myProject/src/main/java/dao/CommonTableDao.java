@@ -75,11 +75,11 @@ public class CommonTableDao
         {
             String sql = "DELETE FROM " + tableName + " WHERE " + idName + " = ?";
 
-            query.createConnection();
-
             List<Object> preparedStatementData = new ArrayList<>();
 
             preparedStatementData.add(tableId);
+
+            query.createConnection();
 
             if (query.executeUpdate(sql, preparedStatementData) != 0)
             {
@@ -101,8 +101,6 @@ public class CommonTableDao
     {
         int id = -1;
 
-        List<HashMap<String, Object>> resultSetList;
-
         Query query = new Query();
 
         try
@@ -111,9 +109,9 @@ public class CommonTableDao
 
             query.createConnection();
 
-            resultSetList = query.select("SELECT MAX(id) FROM " + tableName, preparedStatementData);
+            List<HashMap<String, Object>> resultSetList = query.select("SELECT MAX(id) FROM " + tableName, preparedStatementData);
 
-            if (resultSetList != null)
+            if (resultSetList != null && !resultSetList.isEmpty())
             {
                 id = (int) resultSetList.get(0).get("MAX(id)");
             }
@@ -139,13 +137,15 @@ public class CommonTableDao
         {
             String sql = "SELECT * FROM " + tableName + " WHERE " + idName + " = ?";
 
-            query.createConnection();
-
             List<Object> preparedStatementData = new ArrayList<>();
 
             preparedStatementData.add(tableId);
 
-            if (!query.select(sql, preparedStatementData).isEmpty())
+            query.createConnection();
+
+            List<HashMap<String, Object>> resultList = query.select(sql, preparedStatementData);
+
+            if (resultList != null && !resultList.isEmpty())
             {
                 exists = true;
             }

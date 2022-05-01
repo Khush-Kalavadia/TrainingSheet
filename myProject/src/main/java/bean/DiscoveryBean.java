@@ -19,11 +19,9 @@ public class DiscoveryBean
 
     private boolean operationSuccess;
 
-    private HashMap<String, Object> discoveryCredentialTableRow;
-
     private List<HashMap<String, Object>> discoveryTableData;
 
-    private boolean provision;
+    private boolean duplicateEntry;
 
     public int getId()
     {
@@ -95,33 +93,23 @@ public class DiscoveryBean
         this.operationSuccess = operationSuccess;
     }
 
-    public HashMap<String, Object> getDiscoveryCredentialTableRow()
-    {
-        return discoveryCredentialTableRow;
-    }
-
-    public void setDiscoveryCredentialTableRow(HashMap<String, Object> discoveryCredentialTableRow)
-    {
-        this.discoveryCredentialTableRow = discoveryCredentialTableRow;
-    }
-
     public List<HashMap<String, Object>> getDiscoveryTableData()
     {
         return discoveryTableData;
     }
 
-    public void setDiscoveryTableData(List<HashMap<String, Object>> discoveryTableData)
+    public void setDiscoveryTableData(List<HashMap<String, Object>> discoveryTableData)             //todo send list of bean and do setting of hashmap over here
     {
         this.discoveryTableData = discoveryTableData;
     }
 
-    public boolean isProvision()
+    public boolean isDuplicateEntry()
     {
-        return provision;
+        return duplicateEntry;
     }
 
-    public void setProvision(boolean provision)
+    public void setDuplicateEntry(boolean duplicateEntry)
     {
-        this.provision = provision;
+        this.duplicateEntry = duplicateEntry;
     }
 }

@@ -120,18 +120,9 @@ public class Query
 
                 for (Object value : preparedStatementData)
                 {
-                    if (value != null)
-                    {
-                        preparedStatement.setObject(preparedStatementDataCount, value);
+                    preparedStatement.setObject(preparedStatementDataCount, value);
 
-                        preparedStatementDataCount++;
-                    }
-                    else
-                    {
-                        preparedStatement.close();
-
-                        return updatedRow;
-                    }
+                    preparedStatementDataCount++;
                 }
 
                 System.out.println(preparedStatement);

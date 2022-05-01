@@ -58,7 +58,6 @@ public class CredentialDao
 
             preparedStatementData.add(id);
 
-
             String sql = "UPDATE credential SET username = ?, password = ? WHERE map_discovery_id = ?";
 
             query.createConnection();

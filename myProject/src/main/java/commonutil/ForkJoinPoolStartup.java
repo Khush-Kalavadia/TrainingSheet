@@ -9,7 +9,9 @@ public class ForkJoinPoolStartup extends HttpServlet
     {
         try
         {
-            (new Thread(new DiscoveryForkJoinPoolRunnable())).start();
+            (new Thread(new MonitorPollingForkJoinPoolRunnable())).start();
+
+            (new Thread(new RunDiscoveryForkJoinPoolRunnable())).start();
         }
         catch (Exception ex)
         {

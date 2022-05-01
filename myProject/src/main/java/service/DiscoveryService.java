@@ -1,17 +1,9 @@
 package service;
 
 import bean.DiscoveryBean;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
 import dao.*;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 public class DiscoveryService
 {
@@ -21,24 +13,31 @@ public class DiscoveryService
 
         try
         {
-            if (DiscoveryDao.insertDiscoveryTableRow(discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
+            if (DiscoveryDao.checkIpHostnameAndTypeExists(discoveryBean.getIpHostname(), discoveryBean.getType()))
             {
-                operationSuccess = true;
-
-                int id = CommonTableDao.getMaxTableId("discovery");
-
-                if (id != -1)
+                discoveryBean.setDuplicateEntry(true);
+            }
+            else
+            {
+                if (DiscoveryDao.insertDiscoveryTableRow(discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
                 {
-                    discoveryBean.setId(id);
-                }
-                else
-                {
-                    operationSuccess = false;
-                }
+                    operationSuccess = true;
 
-                if (discoveryBean.getType().equals("ssh"))
-                {
-                    operationSuccess = CredentialDao.insertCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                    int id = CommonTableDao.getMaxTableId("discovery");     //fixme get this from the index which is returned from the insert query itself. Basically change the type of insertDiscoveryTableRow from boolean to int and get the int recieved from execute query
+
+                    if (id != -1)
+                    {
+                        discoveryBean.setId(id);
+                    }
+                    else
+                    {
+                        operationSuccess = false;
+                    }
+
+                    if (discoveryBean.getType().equals("ssh"))
+                    {
+                        operationSuccess = CredentialDao.insertCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                    }
                 }
             }
         }
@@ -48,10 +47,7 @@ public class DiscoveryService
 
             operationSuccess = false;
         }
-        finally
-        {
-            discoveryBean.setOperationSuccess(operationSuccess);
-        }
+        discoveryBean.setOperationSuccess(operationSuccess);
     }
 
     public static void editDiscoveryCredentialTableRow(DiscoveryBean discoveryBean)
@@ -60,15 +56,24 @@ public class DiscoveryService
 
         try
         {
-            if (DiscoveryDao.updateDiscoveryTableRow(discoveryBean.getId(), discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
+            if (DiscoveryDao.checkIpHostnameAndTypeExistsExceptGivenId(discoveryBean.getIpHostname(), discoveryBean.getType(), discoveryBean.getId()))
             {
-                operationSuccess = true;
-
-                discoveryBean.setDiscoveryTableData(CommonTableDao.getTableData("discovery"));
-
-                if (discoveryBean.getType().equals("ssh"))
+                discoveryBean.setDuplicateEntry(true);
+            }
+            else
+            {
+                if (DiscoveryDao.updateDiscoveryTableRow(discoveryBean.getId(), discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
                 {
-                   operationSuccess = CredentialDao.updateCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                    operationSuccess = true;
+
+                    DiscoveryDao.setProvision(discoveryBean.getId(), 0);
+
+                    discoveryBean.setDiscoveryTableData(CommonTableDao.getTableData("discovery"));
+
+                    if (discoveryBean.getType().equals("ssh"))
+                    {
+                        operationSuccess = CredentialDao.updateCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                    }
                 }
             }
         }
@@ -78,10 +83,7 @@ public class DiscoveryService
 
             operationSuccess = false;
         }
-        finally
-        {
-            discoveryBean.setOperationSuccess(operationSuccess);
-        }
+        discoveryBean.setOperationSuccess(operationSuccess);
     }
 
     public static void getDiscoveryCredentialTableData(DiscoveryBean discoveryBean)
@@ -127,17 +129,14 @@ public class DiscoveryService
 
             operationSuccess = false;
         }
-        finally
-        {
-            discoveryBean.setOperationSuccess(operationSuccess);
-        }
+        discoveryBean.setOperationSuccess(operationSuccess);
     }
 
     public static void deleteDiscoveryTableRow(DiscoveryBean discoveryBean)
     {
         try
         {
-            discoveryBean.setOperationSuccess(CommonTableDao.deleteTableRowUsingId("discovery", "id", discoveryBean.getId()));      //todo record not deleted form credential as it might be in monitors. so will have to check later if it is not even present in the monitor
+            discoveryBean.setOperationSuccess(CommonTableDao.deleteTableRowUsingId("discovery", "id", discoveryBean.getId()));      //todo record not deleted from credential as it might be in monitors. so will have to check later if it is not even present in the monitor
         }
         catch (Exception ex)
         {
@@ -200,7 +199,7 @@ public class DiscoveryService
 //
 //                                commandList.add("exit");
 //
-//                                HashMap<String, String> responseMap = DiscoveryService.fireGenericSSHCommand((String) credentialTableData.get("username"), (String) credentialTableData.get("password"), ipHostname, commandList);
+//                                HashMap<String, String> responseMap = DiscoveryService.fireSSHCommands((String) credentialTableData.get("username"), (String) credentialTableData.get("password"), ipHostname, commandList);
 //
 //                                if (responseMap != null)
 //                                {
@@ -246,177 +245,6 @@ public class DiscoveryService
 //        }
 //    }
 
-    static float getPingPacketLoss(String ipHostname)
-    {
-        float packetLoss = -1;
-
-        try
-        {
-            ArrayList<String> commandList = new ArrayList<>();
-
-            commandList.add("ping");
-
-            commandList.add("-c 3");
-
-            commandList.add("-w 3");
-
-            commandList.add(ipHostname);
-
-            ProcessBuilder build = new ProcessBuilder(commandList);
-
-            Process process = build.start();
-
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            String pingOutputLine;
-
-            while ((pingOutputLine = input.readLine()) != null)
-            {
-                if (pingOutputLine.contains("% packet loss"))
-                {
-                    String[] pingOutputArray = pingOutputLine.split(", ");
-
-                    for (String pingOutputSubString : pingOutputArray)
-                    {
-                        if (pingOutputSubString.contains("% packet loss"))
-                        {
-                            packetLoss = Float.parseFloat(pingOutputSubString.substring(0, pingOutputSubString.indexOf("% packet loss")));
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        System.out.println("Packet Loss: " + packetLoss);
-
-        return packetLoss;
-    }
-
-    static HashMap<String, String> fireGenericSSHCommand(String username, String password, String host, List<String> commandList)
-    {
-        int port = 22;
-
-        Session session = null;
-
-        Channel channel = null;
-
-        BufferedWriter commandWriter = null;
-
-        BufferedReader responseReader = null;
-
-        HashMap<String, String> responseMap = null;
-
-        try
-        {
-            session = new JSch().getSession(username, host, port);
-
-            session.setPassword(password);
-
-            session.setConfig("StrictHostKeyChecking", "no");       //accepts SSH host keys from remote servers and those not in the known host’s list.
-
-            session.connect(10 * 1000);
-
-            channel = session.openChannel("shell");
-
-            channel.connect(10 * 1000);
-
-            if (channel.isConnected() && session.isConnected())
-            {
-                commandWriter = new BufferedWriter(new OutputStreamWriter(channel.getOutputStream()));
-
-                responseReader = new BufferedReader(new InputStreamReader(channel.getInputStream()));
-
-                StringBuilder commandConcat = new StringBuilder();
-
-                for (String command : commandList)
-                {
-                    commandConcat.append(command).append("\n");
-                }
-
-                commandWriter.write(commandConcat.toString());
-
-                commandWriter.flush();
-
-                String response;
-
-                int commandIndex = 0;
-
-                StringBuilder commandString;
-
-                responseMap = new HashMap<>();
-
-                do
-                {
-                    response = responseReader.readLine();
-                }
-                while (!response.contains(":~$ " + commandList.get(commandIndex)));
-
-                commandIndex++;
-
-                do
-                {
-                    commandString = new StringBuilder();
-
-                    response = responseReader.readLine();
-
-                    while (!response.contains(":~$ " + commandList.get(commandIndex)))
-                    {
-                        commandString.append(response.concat("\n"));
-
-                        response = responseReader.readLine();
-                    }
-
-                    responseMap.put(commandList.get(commandIndex - 1), commandString.toString());
-
-                    commandIndex++;
-                }
-                while (commandIndex != commandList.size());
-            }
-
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        finally
-        {
-            if (responseReader != null)
-            {
-                try
-                {
-                    responseReader.close();
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            if (commandWriter != null)
-            {
-                try
-                {
-                    commandWriter.close();
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            if (channel != null)
-            {
-                channel.disconnect();
-            }
-            if (session != null)
-            {
-                session.disconnect();
-            }
-        }
-        return responseMap;
-    }
-
     public static void addMonitorDevice(DiscoveryBean discoveryBean)
     {
         boolean operationSuccess = false;
@@ -429,7 +257,7 @@ public class DiscoveryService
             {
                 if (CommonTableDao.checkIdExists("monitor", "map_discovery_id", discoveryBean.getId()))
                 {
-                    operationSuccess = MonitorDao.updateDeviceMonitorTableRow(discoveryBean.getId(), discoveryTableData.get("name"), discoveryTableData.get("ip_hostname"));
+                    operationSuccess = MonitorDao.updateMonitorTableRow(discoveryBean.getId(), discoveryTableData.get("name"), discoveryTableData.get("ip_hostname"));
                 }
                 else
                 {
@@ -455,10 +283,7 @@ public class DiscoveryService
         {
             ex.printStackTrace();
         }
-        finally
-        {
-            discoveryBean.setOperationSuccess(operationSuccess);
-        }
+        discoveryBean.setOperationSuccess(operationSuccess);
     }
 
 }

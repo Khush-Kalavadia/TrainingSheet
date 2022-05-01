@@ -1,7 +1,5 @@
 package dao;
 
-import commonutil.ConnectionStartup;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,6 +146,58 @@ public class DiscoveryDao
             query.releaseConnection();
         }
         return setStatus;
+    }
+
+    public static boolean checkIpHostnameAndTypeExists(Object ip_hostname, Object type)
+    {
+        return checkIpHostnameAndTypeExistsExceptGivenId(ip_hostname, type, null);
+    }
+
+    public static boolean checkIpHostnameAndTypeExistsExceptGivenId(Object ip_hostname, Object type, Object id)
+    {
+        boolean exists = false;
+
+        Query query = new Query();
+
+        String sql;
+
+        try
+        {
+            List<Object> preparedStatementData = new ArrayList<>();
+
+            preparedStatementData.add(ip_hostname);
+
+            preparedStatementData.add(type);
+
+            if (id != null)
+            {
+                preparedStatementData.add(id);
+
+                sql = "SELECT * FROM discovery WHERE ip_hostname = ? and type = ? and id != ?";
+            }
+            else
+            {
+                sql = "SELECT * FROM discovery WHERE ip_hostname = ? and type = ?";
+            }
+
+            query.createConnection();
+
+            List<HashMap<String, Object>> resultList = query.select(sql, preparedStatementData);
+
+            if (resultList != null && !resultList.isEmpty())
+            {
+                exists = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            query.releaseConnection();
+        }
+        return exists;
     }
 
 }

@@ -83,7 +83,7 @@ public class MonitorDao
         return insertionStatus;
     }
 
-    public static boolean updateDeviceMonitorTableRow(Object map_discovery_id, Object name, Object ip_hostname)
+    public static boolean updateMonitorTableRow(Object map_discovery_id, Object name, Object ip_hostname)
     {
         boolean updateStatus = false;
 
@@ -117,5 +117,33 @@ public class MonitorDao
             query.releaseConnection();
         }
         return updateStatus;
+    }
+
+    public static void updateMonitorAvailability(Object id, Object availability)
+    {
+        Query query = new Query();
+
+        List<Object> preparedStatementData = new ArrayList<>();
+
+        try
+        {
+            preparedStatementData.add(availability);
+
+            preparedStatementData.add(id);
+
+            String sql = "UPDATE monitor SET availability_status = ? WHERE id = ?";
+
+            query.createConnection();
+
+            query.executeUpdate(sql, preparedStatementData);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            query.releaseConnection();
+        }
     }
 }
