@@ -42,7 +42,7 @@ public class DataBlockingQueue
         }
     }
 
-    public static LinkedBlockingQueue<HashMap<String, Object>> getRunDiscoveryQueue()
+    static LinkedBlockingQueue<HashMap<String, Object>> getRunDiscoveryQueue()
     {
         return RUN_DISCOVERY_QUEUE;
     }

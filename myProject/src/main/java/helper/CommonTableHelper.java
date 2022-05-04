@@ -132,4 +132,34 @@ public class CommonTableHelper
         }
         return exists;
     }
+
+//    public static int getMaxTableId(String tableName)
+//    {
+//        int id = -1;
+//
+//        Query query = new Query();
+//
+//        try
+//        {
+//            List<Object> preparedStatementData = new ArrayList<>();
+//
+//            query.createConnection();
+//
+//            List<HashMap<String, Object>> resultSetList = query.select("SELECT MAX(id) FROM " + tableName, preparedStatementData);
+//
+//            if (resultSetList != null && !resultSetList.isEmpty())
+//            {
+//                id = (int) resultSetList.get(0).get("MAX(id)");
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//        }
+//        finally
+//        {
+//            query.releaseConnection();
+//        }
+//        return id;
+//    }
 }

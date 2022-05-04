@@ -139,32 +139,4 @@ public class Query
         }
         return returnedValue;
     }
-
-//    public static void main(String[] args)
-//    {
-//        ConnectionStartup connectionStartup = new ConnectionStartup();
-//
-//        connectionStartup.init();
-//
-//        Query query = new Query();
-//
-//        List<Object> list = new ArrayList<>();
-//
-//        list.add(1);
-//
-////        list.add("hello");
-//
-//        System.out.println(list);
-//
-//        query.createConnection();
-//
-////        int result = query.executeUpdate("insert into discovery(id, name) values (?, ?)", list);
-//
-//        System.out.println(query.select("select * from discovery where id = ?", list));
-//
-////        System.out.println(result);
-//
-//        query.releaseConnection();
-//    }
-
 }

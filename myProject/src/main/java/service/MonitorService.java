@@ -97,16 +97,16 @@ public class MonitorService
 
             monitorBean.setPastAvailabilityPercent(PollingTableHelper.getPastAvailabilityPercent(monitorBean.getId(), 24));
 
-            HashMap<String, Object[]> axisData = PollingTableHelper.getPastPacketLossAndTimeData(monitorBean.getId(), 20);
+            HashMap<String, Object[]> axisData = PollingTableHelper.getPastPacketLossAndTimeData(monitorBean.getId(), 10);
 
-            String[] timeStringArray = new String[20];
+            String[] timeStringArray = new String[10];
 
-            float[] packetLossArray = new float[20];
+            float[] packetLossArray = new float[10];
 
-//            for (int i = 0; i < 20; i++)
-//            {
-//                packetLossArray[i] = -1;
-//            }
+            for (int i = 0; i < 10; i++)
+            {
+                packetLossArray[i] = -1;
+            }
 
             if (axisData != null)
             {

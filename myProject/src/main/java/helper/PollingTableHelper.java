@@ -150,9 +150,9 @@ public class PollingTableHelper
 
     public static HashMap<String, Object[]> getPastPacketLossAndTimeData(int monitorId, int numberOfObservation)
     {
-        Object[] packetLossData = null;
+        Object[] packetLossData;
 
-        Object[] timeData = null;
+        Object[] timeData;
 
         HashMap<String, Object[]> sendResult = null;
 
@@ -266,7 +266,6 @@ public class PollingTableHelper
                     resultSetList.add(deviceInformation);
                 }
             }
-
         }
         catch (Exception ex)
         {

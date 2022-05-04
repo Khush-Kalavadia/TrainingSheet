@@ -12,7 +12,7 @@ public class MonitorPollingTask extends RecursiveAction
 {
     private DiscoveryBean deviceDetail;
 
-    public MonitorPollingTask(DiscoveryBean deviceDetail)
+    MonitorPollingTask(DiscoveryBean deviceDetail)
     {
         this.deviceDetail = deviceDetail;
     }

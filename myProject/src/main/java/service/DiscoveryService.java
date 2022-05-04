@@ -35,6 +35,28 @@ public class DiscoveryService
                         operationSuccess = CredentialTableHelper.insertCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
                     }
                 }
+
+//                if (DiscoveryTableHelper.insertDiscoveryTableRowBoolean(discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
+//                {
+//                    operationSuccess = true;
+//
+//                    int id = CommonTableHelper.getMaxTableId("discovery");     //fixme get this from the index which is returned from the insert query itself. Basically change the type of insertDiscoveryTableRow from boolean to int and get the int recieved from execute query
+//
+//                    if (id != -1)
+//                    {
+//                        discoveryBean.setId(id);
+//                    }
+//                    else
+//                    {
+//                        operationSuccess = false;
+//                    }
+//
+//                    if (discoveryBean.getType().equals("ssh"))
+//                    {
+//                        operationSuccess = CredentialTableHelper.insertCredentialTableRow(discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+//                    }
+//                }
+
             }
         }
         catch (Exception ex)
@@ -151,95 +173,6 @@ public class DiscoveryService
             ex.printStackTrace();
         }
     }
-
-
-//    public static void discoverDevice(DiscoveryBean discoveryBean)
-//    {
-//        boolean operationSuccess = false;
-//
-//        boolean provision = false;
-//
-//        try
-//        {
-//            HashMap<String, Object> discoveryTableData = CommonTableHelper.getTableRowUsingId("discovery", "id", discoveryBean.getId());
-//
-//            if (discoveryTableData != null)
-//            {
-//                String ipHostname = (String) discoveryTableData.get("ip_hostname");
-//
-//                String type = (String) discoveryTableData.get("type");
-//
-//                discoveryBean.setType(type);
-//
-//                discoveryBean.setIpHostname(ipHostname);
-//
-//                float packetLoss = DiscoveryService.getPingPacketLoss(ipHostname);
-//
-//                if (packetLoss != -1)
-//                {
-//                    operationSuccess = true;
-//
-//                    if (packetLoss <= 50)
-//                    {
-//                        provision = true;
-//
-//                        if (type.equals("ssh"))
-//                        {
-//                            HashMap<String, Object> credentialTableData = CommonTableHelper.getTableRowUsingId("credential", "map_discovery_id", discoveryBean.getId());
-//
-//                            if (credentialTableData != null)
-//                            {
-//                                List<String> commandList = new ArrayList<>();
-//
-//                                commandList.add("uname");
-//
-//                                commandList.add("exit");
-//
-//                                HashMap<String, String> responseMap = DiscoveryService.fireSSHCommands((String) credentialTableData.get("username"), (String) credentialTableData.get("password"), ipHostname, commandList);
-//
-//                                if (responseMap != null)
-//                                {
-//                                    provision = responseMap.get("uname").contains("Linux");
-//                                }
-//                                else
-//                                {
-//                                    provision = false;
-//
-//                                    operationSuccess = false;
-//                                }
-//                            }
-//                            else
-//                            {
-//                                operationSuccess = false;
-//
-//                                provision = false;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//            ex.printStackTrace();
-//
-//            operationSuccess = false;
-//
-//            provision = false;
-//        }
-//        finally
-//        {
-//            //error thrown from following methods are handled so no need of try catch over here
-//            discoveryBean.setOperationSuccess(operationSuccess);
-//
-//            discoveryBean.setProvision(provision);
-//
-//            if (provision && DiscoveryTableHelper.setProvision(discoveryBean.getId(), 1))
-//            {
-//                discoveryBean.setDiscoveryTableData(CommonTableHelper.getTableData("discovery"));
-//            }
-//        }
-//    }
 
     public static void addMonitorDevice(DiscoveryBean discoveryBean)
     {

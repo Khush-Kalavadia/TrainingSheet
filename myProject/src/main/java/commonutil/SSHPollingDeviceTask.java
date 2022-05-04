@@ -13,7 +13,7 @@ public class SSHPollingDeviceTask extends RecursiveTask<HashMap<String, Object>>
 
     private String host;
 
-    public SSHPollingDeviceTask(String username, String password, String host)
+    SSHPollingDeviceTask(String username, String password, String host)
     {
         this.username = username;
 

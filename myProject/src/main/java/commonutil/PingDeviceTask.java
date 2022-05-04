@@ -9,7 +9,7 @@ public class PingDeviceTask extends RecursiveTask<HashMap<String, Object>>
 {
     private String ipHostname;
 
-    public PingDeviceTask(String ipHostname)
+    PingDeviceTask(String ipHostname)
     {
         this.ipHostname = ipHostname;
     }

@@ -19,7 +19,7 @@ public class LoginInterceptor extends AbstractInterceptor
 
         try
         {
-            if ((session != null && session.get("user") != null && session.get("user").equals("admin")) || (request.getRequestURI().equals("/login")))      //admin fixed if i keep list then anyone of them can login.
+            if ((session != null && session.get("user") != null && session.get("user").equals("admin")) || (request.getRequestURI().equals("/login")))      //admin fixed if i keep list then anyone of them can login. let say there are 2 user admin and adminNew. If i log out from admin and adminNew is logged in. Now if i keep the condition of user being not null then adminNew would be there and would also allow admin to invoke the request. For that i will have to get user sending me this request everytime
             {
                 result = invocation.invoke();
             }

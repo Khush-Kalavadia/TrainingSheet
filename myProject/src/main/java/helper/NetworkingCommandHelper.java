@@ -140,7 +140,7 @@ public class NetworkingCommandHelper
                             {
                                 response = responseReader.readLine();
                             }
-                            while (!response.contains(":~$ " + commandList.get(commandIndex)));
+                            while (!response.matches(".*:~.\\s" + commandList.get(commandIndex)));
 
                             commandIndex++;
 
@@ -150,7 +150,7 @@ public class NetworkingCommandHelper
 
                                 response = responseReader.readLine();
 
-                                while (!response.contains(":~$ " + commandList.get(commandIndex)))
+                                while (!response.matches(".*:~.\\s" + commandList.get(commandIndex)))
                                 {
                                     commandString.append(response.concat("\n"));
 
@@ -294,39 +294,5 @@ public class NetworkingCommandHelper
             ex.printStackTrace();
         }
         return parsedDeviceDetailResponse;
-    }
-
-    public static void main(String[] args)
-    {
-        //using pingoutput
-//        HashMap<String, Object> pingOutput = NetworkingCommandHelper.getParsedPingDeviceDetail("10.20.40.139");
-//
-//        if (pingOutput != null)
-//        {
-//            System.out.println(pingOutput.get("packetsTransmitted"));
-//
-//            System.out.println(pingOutput.get("packetsReceived"));
-//
-//            System.out.println(pingOutput.get("packetLoss"));
-//
-//            if (pingOutput.get("rttMin") != null)
-//            {
-//                System.out.println(pingOutput.get("rttMin"));
-//            }
-//        }
-
-        //using sshoutput
-//        HashMap<String, Object> sshOutput = NetworkingCommandHelper.getParsedSSHDeviceDetail("rahil", "Mind@123", "10.20.40.98");
-//        HashMap<String, Object> sshOutput = NetworkingCommandHelper.getParsedSSHDeviceDetail("pavan", "Mind@123", "10.20.40.139");
-//
-//        if (sshOutput != null)
-//        {
-//            if (sshOutput.get("error") == null)
-//            {
-//                System.out.println(sshOutput);
-//            }
-//        }
-
-        System.out.println(NetworkingCommandHelper.getParsedPingDeviceDetail("10.20.42.142"));
     }
 }

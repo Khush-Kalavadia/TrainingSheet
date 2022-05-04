@@ -86,19 +86,6 @@ public class DiscoveryAction implements ModelDriven<DiscoveryBean>
         return "success";
     }
 
-//    public String runDiscovery()
-//    {
-//        try
-//        {
-//            DiscoveryService.discoverDevice(discoveryBean);
-//        }
-//        catch (Exception ex)
-//        {
-//            ex.printStackTrace();
-//        }
-//        return "success";
-//    }
-
     @Override
     public DiscoveryBean getModel()
     {

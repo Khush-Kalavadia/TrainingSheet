@@ -41,6 +41,42 @@ public class DiscoveryTableHelper
         return insertedRowNumber;
     }
 
+//    public static boolean insertDiscoveryTableRowBoolean(Object name, Object ip_hostname, Object type)
+//    {
+//        boolean insertionStatus = false;
+//
+//        Query query = new Query();
+//
+//        List<Object> preparedStatementData = new ArrayList<>();
+//
+//        try
+//        {
+//            preparedStatementData.add(name);
+//
+//            preparedStatementData.add(ip_hostname);
+//
+//            preparedStatementData.add(type);
+//
+//            String sql = "INSERT INTO discovery(name, ip_hostname, type) VALUES (?, ?, ?)";
+//
+//            query.createConnection();
+//
+//            if (query.executeUpdate(sql, preparedStatementData) != 0)
+//            {
+//                insertionStatus = true;
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//        }
+//        finally
+//        {
+//            query.releaseConnection();
+//        }
+//        return insertionStatus;
+//    }
+
     public static boolean updateDiscoveryTableRow(Object id, Object name, Object ip_hostname, Object type)
     {
         boolean updateStatus = false;
@@ -106,40 +142,6 @@ public class DiscoveryTableHelper
             query.releaseConnection();
         }
     }
-
-//    public static boolean setProvision(int id, int provision)
-//    {
-//        boolean setStatus = false;
-//
-//        Query query = new Query();
-//
-//        try
-//        {
-//            List<Object> preparedStatementData = new ArrayList<>();
-//
-//            preparedStatementData.add(provision);
-//
-//            preparedStatementData.add(id);
-//
-//            String sql = "UPDATE discovery SET provision = ? WHERE id = ?";
-//
-//            query.createConnection();
-//
-//            if (query.executeUpdate(sql, preparedStatementData) != 0)
-//            {
-//                setStatus = true;
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//            ex.printStackTrace();
-//        }
-//        finally
-//        {
-//            query.releaseConnection();
-//        }
-//        return setStatus;
-//    }
 
     public static boolean checkIpHostnameAndTypeExists(Object ip_hostname, Object type)
     {

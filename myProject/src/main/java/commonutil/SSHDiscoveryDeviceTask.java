@@ -17,7 +17,7 @@ public class SSHDiscoveryDeviceTask extends RecursiveTask<HashMap<String, String
 
     private List<String> commandList;
 
-    public SSHDiscoveryDeviceTask(String username, String password, String host, List<String> commandList)
+    SSHDiscoveryDeviceTask(String username, String password, String host, List<String> commandList)
     {
         this.username = username;
 

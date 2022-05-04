@@ -13,7 +13,7 @@ public class RunDiscoveryTask extends RecursiveAction
 {
     private HashMap<String, Object> discoveryDeviceInfo;
 
-    public RunDiscoveryTask(HashMap<String, Object> discoveryDeviceInfo)
+    RunDiscoveryTask(HashMap<String, Object> discoveryDeviceInfo)
     {
         this.discoveryDeviceInfo = discoveryDeviceInfo;
     }
