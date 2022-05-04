@@ -93,6 +93,11 @@
             <result name="success" type="json"/>
         </action>
 
+        <action name="loadDashboardDetails" class="action.DashboardAction" method="loadDashboardDetails">
+            <interceptor-ref name="loginStack"/>
+            <result name="success" type="json"/>
+        </action>
+
     </package>
 
 </struts>
