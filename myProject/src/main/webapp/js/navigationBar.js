@@ -1,11 +1,13 @@
 let hoverLiColor;
 
+let websocket;
+
 let clickedObject = $("#dashboardLi");
 
 let navigationBar = {
     horizontalMenuLoader: function ()
     {
-        $(clickedObject).css("color", "var(--primary-color)");
+        clickedObject.css("color", "var(--primary-color)");
 
         navigationBar.loadHtml(clickedObject);
 
@@ -18,9 +20,7 @@ let navigationBar = {
 
         navigationBar.logOutOnClick();
 
-        discovery.webSocket();
-
-        monitor.destroyChartOnModalClose();
+        // monitor.destroyChartOnModalClose();
     },
 
     hoverHorizontalMenuLi: function ()
@@ -65,16 +65,24 @@ let navigationBar = {
             case "Dashboard":
             {
                 dashboard.dashboardHtmlLoader();
+
                 break;
             }
             case "Discovery":
             {
+                if (typeof websocket === 'undefined' || websocket.readyState === WebSocket.CLOSE)
+                {
+                    navigationBar.webSocket();
+                }
+
                 discovery.discoveryHtmlLoader();
+
                 break;
             }
             case "Monitors":
             {
                 monitor.monitorHtmlLoader();
+
                 break;
             }
         }
@@ -82,7 +90,7 @@ let navigationBar = {
 
     loadUsername: function ()
     {
-        $("#usernameLabel").html("admin");              //fixme get user from session
+        $("#usernameLabel").html("admin");
     },
 
     logOutOnClick: function ()
@@ -102,5 +110,40 @@ let navigationBar = {
     logOutSuccess: function ()
     {
         window.location.href = "loginPage";
+    },
+
+    webSocket: function ()
+    {
+        let protocol = (window.location.protocol === 'https:') ? 'wss://' : 'ws://';
+
+        let host = window.location.host;
+
+        let endpoint = '/server-endpoint';
+
+        websocket = new WebSocket(protocol + host + endpoint);
+
+        // websocket = new WebSocket("wss://localhost:8443/server-endpoint");
+
+        websocket.onopen = function ()
+        {
+            toastr.success("Frontend: Websocket started");
+        };
+
+        websocket.onmessage = function (message)
+        {
+            discovery.runDiscoveryResponse(message.data);
+        };
+
+        websocket.onclose = function ()
+        {
+            toastr.warning("Frontend: Websocket closed");
+        };
+
+        websocket.onerror = function ()         //todo not catching timeout error
+        {
+            toastr.error("Frontend: Error from websocket");
+
+            navigationBar.webSocket();
+        };
     }
 };

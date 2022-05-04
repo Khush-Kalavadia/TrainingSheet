@@ -2,16 +2,6 @@ let monitorDataTable;
 
 let deleteMonitorEventTarget;
 
-let pingAvailabilityDonutChart;
-
-let memoryDonutChart;
-
-let diskDonutChart;
-
-let cpuUsageDonutChart;
-
-let pingPacketLossBarChart;
-
 let monitor = {
 
     monitorHtmlLoader: function ()
@@ -23,10 +13,10 @@ let monitor = {
                 callback: monitor.monitorHtmlLoaderSuccess
             };
 
-        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>ID</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss <hr /> <span>100</span> % </div> <div class="grid-item" id="rtt"> Minimum RTT <hr /> <span>16.345</span> ms </div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item"> <canvas id="pingAvailabilityDonutChart"></canvas> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4"> <canvas id="pingPacketLossChart"></canvas> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>ID</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <hr> <h6 align="center">Data of last polling time</h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss <hr /> <span>100</span> % </div> <div class="grid-item" id="rtt"> Minimum RTT <hr /> <span>16.345</span> ms </div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item"> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4" id="pingChartDiv"> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
 
 
-        $(".modal-body label").css("font-weight", "bold");
+        // $(".modal-body label").css("font-weight", "bold");
 
         ajaxCalls.ajaxPostCall(request);
 
@@ -173,26 +163,18 @@ let monitor = {
 
         let deviceDetail = request.bean;
 
-        /*
-         - availability: "up"
-         - idleCpuPercentage: 75.6
-         - ipHostname: "10.20.40.139"
-         - packetLoss: 0
-         - packetsReceived: 3
-         - packetsTransmitted: 3
-         - pastAvailabilityPercent: 100
-         - rttMin: 37.944
-         - totalDiskGb: 229
-         - totalMemoryGb: 15
-         - type: "ssh"
-         - uptime: "20 hours, 10 minutes"
-         - usedDiskGb: 50.38
-         - usedMemoryGb: 7.2
-         */
-
         monitor.pingUpdateIndices(deviceDetail.ipHostname, deviceDetail.type, deviceDetail.packetLoss, deviceDetail.rttMin, deviceDetail.packetsTransmitted, deviceDetail.packetsReceived, deviceDetail.availability);
 
-        monitor.loadPingAvailabilityDonutChart(deviceDetail.pastAvailabilityPercent);
+        if (deviceDetail.pastAvailabilityPercent === -1)
+        {
+            $(".grid-container-2-inline .grid-item:first").html("<h6 style='color: #636363'>Availability chart not available because current availability is unknown.</h6>");
+        }
+        else
+        {
+            $(".grid-container-2-inline .grid-item:first").html('<canvas id="pingAvailabilityDonutChart"></canvas>');
+
+            monitor.loadPingAvailabilityDonutChart(deviceDetail.pastAvailabilityPercent);
+        }
 
         monitor.loadPingPacketLossChart(deviceDetail.timeChartData, deviceDetail.packetLossChartData);
 
@@ -202,116 +184,117 @@ let monitor = {
         }
         else if (request.bean.type === "ssh")
         {
-            $("#sshDeviceDetailsContainer").html('<div class="grid-container-3-inline"> <div class="grid-item" id="totalMemory">Total memory<hr /> <span>5.5</span> GB</div> <div class="grid-item" id="totalDisk"> Total Disk <hr /> <span>64</span> GB</div> <div class="grid-item" id="upTime"> System up time <hr /> <span>2 days, 4 hours, 13 minutes</span></div> </div> <div class="grid-container-3-chart-inline"> <div class="grid-item"> <canvas id="memoryDonutChart"></canvas> </div> <div class="grid-item"> <canvas id="diskDonutChart"></canvas> </div> <div class="grid-item"> <canvas id="cpuUsageDonutChart"></canvas> </div> </div>  ');
+            if (deviceDetail.availability === "up")
+            {
+                $("#sshDeviceDetailsContainer").html('<div class="grid-container-3-inline"> <div class="grid-item" id="totalMemory">Total memory<hr /> <span>5.5</span> GB</div> <div class="grid-item" id="totalDisk"> Total Disk <hr /> <span>64</span> GB</div> <div class="grid-item" id="upTime"> System up time <hr /> <span>2 days, 4 hours, 13 minutes</span></div> </div> <div class="grid-container-3-chart-inline"> <div class="grid-item"> <canvas id="memoryDonutChart"></canvas> </div> <div class="grid-item"> <canvas id="diskDonutChart"></canvas> </div> <div class="grid-item"> <canvas id="cpuUsageDonutChart"></canvas> </div> </div>  ');
 
-            monitor.sshUpdateIndices(deviceDetail.totalMemoryGb, deviceDetail.totalDiskGb, deviceDetail.uptime);
+                monitor.sshUpdateIndices(deviceDetail.totalMemoryGb, deviceDetail.totalDiskGb, deviceDetail.uptime);
 
-            monitor.loadMemoryUsageDonutChart(deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
+                monitor.loadMemoryUsageDonutChart(deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
 
-            monitor.loadDiskUsageDonutChart(deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
+                monitor.loadDiskUsageDonutChart(deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
 
-            monitor.loadCpuUsageDonutChart(deviceDetail.idleCpuPercentage);
+                monitor.loadCpuUsageDonutChart(deviceDetail.idleCpuPercentage);
+            }
+            else
+            {
+                $("#sshDeviceDetailsContainer").html("<h6>Not showing SSH device details because the device is unavailable as per last pooling data.</h6>");
+            }
         }
+
+        $('#pingMonitorDetailsModal').modal('show');
     },
 
     loadPingPacketLossChart: function (xaxisLabel, data)
     {
-        $('#pingMonitorDetailsModal').modal('show');
+        if (xaxisLabel[0] !== null)
+        {
+            $("#pingChartDiv").html('<canvas id="pingPacketLossChart"></canvas>');
 
-        // let labelArray = [];                //fixme over here i can show time as well
-        // for (let i = 1; i <= 20; i++)
-        // {
-        //     labelArray[i - 1] = i;
-        // }
-
-        const ctx = $("#pingPacketLossChart");
-        pingPacketLossBarChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: xaxisLabel,
-                datasets: [
-                    {
-                        label: "packets",
-                        data: data,
-                        // data: [33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 0.7)",
-                            "rgba(54, 162, 235, 0.7)",
-                            "rgba(255, 206, 86, 0.7)",
-                            "rgba(75, 192, 192, 0.7)",
-                            "rgba(153, 102, 255, 0.7)",
-                            "rgba(255, 159, 64, 0.7)",
-                            "rgba(255, 99, 132, 0.7)",
-                            "rgba(54, 162, 235, 0.7)",
-                            "rgba(255, 206, 86, 0.7)",
-                            "rgba(75, 192, 192, 0.7)",
-                            "rgba(153, 102, 255, 0.7)",
-                            "rgba(255, 159, 64, 0.7)",
-                            "rgba(255, 99, 132, 0.7)",
-                            "rgba(54, 162, 235, 0.7)",
-                            "rgba(255, 206, 86, 0.7)",
-                            "rgba(75, 192, 192, 0.7)",
-                            "rgba(153, 102, 255, 0.7)",
-                            "rgba(255, 159, 64, 0.7)",
-                            "rgba(255, 99, 132, 0.7)",
-                            "rgba(54, 162, 235, 0.7)",
-                        ],
-                        borderColor: [
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)",
-                            "rgba(255, 159, 64, 1)",
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)",
-                            "rgba(255, 159, 64, 1)",
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)",
-                            "rgba(255, 159, 64, 1)",
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                        ],
-                        borderWidth: 1,
-                    },
-                ],
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Last 20 packet loss'
-                    }
+            const ctx = $("#pingPacketLossChart");
+            let pingPacketLossBarChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: xaxisLabel,
+                    datasets: [
+                        {
+                            data: data,
+                            // data: [33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100, 33.33, 66.66, 0, 100],
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 0.7)",
+                                "rgba(54, 162, 235, 0.7)",
+                                "rgba(255, 206, 86, 0.7)",
+                                "rgba(75, 192, 192, 0.7)",
+                                "rgba(153, 102, 255, 0.7)",
+                                "rgba(255, 159, 64, 0.7)",
+                                "rgba(255, 99, 132, 0.7)",
+                                "rgba(54, 162, 235, 0.7)",
+                                "rgba(255, 206, 86, 0.7)",
+                            ],
+                            borderColor: [
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                                "rgba(75, 192, 192, 1)",
+                                "rgba(153, 102, 255, 1)",
+                                "rgba(255, 159, 64, 1)",
+                                "rgba(255, 99, 132, 1)",
+                                "rgba(54, 162, 235, 1)",
+                                "rgba(255, 206, 86, 1)",
+                            ],
+                            borderWidth: 1,
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top'
+                            }
+                        },
+                    ],
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Packet loss'
+                plugins: [ChartDataLabels],
+                options: {
+                    plugins: {
+                        // title: {
+                        //     display: true,
+                        //     text: 'Last 10 packet loss'
+                        // },
+                        legend: {
+                            display: false
                         }
                     },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Occasions when packets send'
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Packet loss (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Occasions when packets send'
+                            },
+                            ticks: {
+                                autoSkip: false,
+                                minRotation: 45,
+                                maxRotation: 90
+                            },
+                            barPercentage: 0.2
                         }
-                    }
+                    },
                 },
-            },
-        });
+            });
+        }
+        else
+        {
+            $("#pingChartDiv").html('<h6>Not showing ping packet loss chart as still packets are not send.</h6>');
+        }
     },
 
     loadPingAvailabilityDonutChart: function (pingAvailability)
     {
         const selector = $("#pingAvailabilityDonutChart");
-        pingAvailabilityDonutChart = new Chart(selector, {
+        let pingAvailabilityDonutChart = new Chart(selector, {
             type: 'doughnut',
             data: {
                 labels: [
@@ -338,15 +321,16 @@ let monitor = {
         });
     },
 
-    destroyChartOnModalClose: function ()
-    {
-        $(document).on('hide.bs.modal', '#pingMonitorDetailsModal', function ()
-        {
-            pingAvailabilityDonutChart.destroy();
-
-            pingPacketLossBarChart.destroy();
-        });
-    },
+    // destroyChartOnModalClose: function ()
+    // {
+    //     $(document).on('hide.bs.modal', '#pingMonitorDetailsModal', function ()
+    //     {
+    //         if (pingPacketLossBarChart !== null)                //it shows chart is being used if not destroyed
+    //         {
+    //             pingPacketLossBarChart.destroy();
+    //         }
+    //     });
+    // },
 
     pingUpdateIndices: function (ipHostname, type, packetLoss, rttMin, packetsTransmitted, packetsReceived, availability)
     {
@@ -394,7 +378,7 @@ let monitor = {
         }
         else
         {
-            modalSelector.find("#transmittedPackets span").html(packetsTransmitted);
+            modalSelector.find("#transmittedPackets span").html("-");
         }
 
         if (packetsReceived !== -1)
@@ -432,7 +416,7 @@ let monitor = {
     loadMemoryUsageDonutChart: function (freeMemory, usedMemory)
     {
         const selector = $("#memoryDonutChart");
-        memoryDonutChart = new Chart(selector, {
+        let memoryDonutChart = new Chart(selector, {
             type: 'doughnut',
             data: {
                 labels: [
@@ -462,7 +446,7 @@ let monitor = {
     loadDiskUsageDonutChart: function (freeDisk, usedDisk)
     {
         const selector = $("#diskDonutChart");
-        diskDonutChart = new Chart(selector, {
+        let diskDonutChart = new Chart(selector, {
             type: 'doughnut',
             data: {
                 labels: [
@@ -492,7 +476,7 @@ let monitor = {
     loadCpuUsageDonutChart: function (idleCPUPercent)
     {
         const selector = $("#cpuUsageDonutChart");
-        cpuUsageDonutChart = new Chart(selector, {
+        let cpuUsageDonutChart = new Chart(selector, {
             type: 'doughnut',
             data: {
                 labels: [

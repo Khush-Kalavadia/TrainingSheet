@@ -22,10 +22,10 @@
   </servlet>
 
   <!--testme thread count limit cores*2 = 8-->
-  <!--1 while true for discovery polling which adds the requests to queue-->
-  <!--4 threads in fork join pool which handles the above queue-->
-  <!--1 while true for monitor polling which adds the devices to queue-->
+  <!--1 infinite loop for discovery polling which adds the requests to queue-->
   <!--2 threads in fork join pool which handles the above queue-->
+  <!--1 infinite loop for monitor polling which adds the devices to queue-->
+  <!--4 threads in fork join pool which handles the above queue-->
   <!--1 thread for scheduler-->
   <!--1 ui-->
 

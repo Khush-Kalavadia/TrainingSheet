@@ -13,7 +13,7 @@ let ajaxCalls = {
 
             timeout: 180000,
 
-            success: function (bean)            //url worked successfully
+            success: function (bean)
             {
                 let callbacks;
 
@@ -31,9 +31,9 @@ let ajaxCalls = {
                 }
             },
 
-            error: function (request, error, status)       //A function to be called if the request fails.
+            error: function (request, error, status)       //function to be called if the request fails.
             {
-                toastr.error("Error -> " + request + " || " + error + " || " + status);
+                toastr.error("User logged out or Server stopped or Jetty session ended. -> " + request + " || " + error + " || " + status);
             },
 
             dataType: "json"

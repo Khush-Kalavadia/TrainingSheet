@@ -7,7 +7,8 @@ let login = {
             event.preventDefault();
 
             //array.reduce(function(total, currentValue), initialValue)
-            let param = $('form').serializeArray().reduce(function(finalParam, currentValue) { finalParam[currentValue.name] = currentValue.value; return finalParam; }, {});
+            // let param = $('form').serializeArray().reduce(function(finalParam, currentValue) { finalParam[currentValue.name] = currentValue.value; return finalParam; }, {});
+            let param = $('form').serialize();
 
             let request =
                 {

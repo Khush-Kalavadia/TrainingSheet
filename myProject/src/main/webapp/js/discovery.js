@@ -1,12 +1,12 @@
 let discoveryDataTable;
 
-let deleteEventTarget;      //fixme is this the right way to keep variable global and pass to success method of delete on click
+let deleteEventTarget;      //testme is this the right way to keep variable global and pass to success method of delete on click
 
 let editEventTarget;
 
 let maxTableRow;
 
-let websocket;
+let deviceType;
 
 let discovery = {
 
@@ -19,7 +19,7 @@ let discovery = {
                 callback: discovery.discoveryHtmlLoaderSuccess
             };
 
-        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Discovered Devices</h4> <input type="button" value="Add device" id="deviceAdder" data-toggle="modal" data-target="#addModal" /> <div class="modal fade" id="addModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Device details</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <form id="discoveryDeviceForm"> <div class="modal-body"> <label>Name</label> <input type="text" name="name" class="deviceName" required /> <br /> <label>IP address or hostname</label> <input type="text" name="ipHostname" class="deviceIpHostname" required /> <br /> <label>Type</label> <select name="type" class="deviceType"> <option value="ping">Ping</option> <option value="ssh">SSH</option> </select> <div id="sshFields"> <label>Username</label> <input type="text" name="username" class="deviceUsername" /> <br /> <label>Password</label> <input type="password" name="password" class="devicePassword"/> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="submit" class="btn btn-primary" id="addDeviceButton" > Add device </button> </div> </form> </div> </div> </div> <div class="modal fade" id="editModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <form id="editDiscoveryDeviceForm"> <div class="modal-header"> <h5 class="modal-title">Device details</h5> <button type="button" class="close" data-dismiss="modal" > <span>&times;</span> </button> </div> <div class="modal-body"> <input type="text" name="id" class="deviceId" style="display: none" /> <label>Name</label> <input type="text" name="name" class="deviceName" required /> <br /> <label>IP address or hostname</label> <input type="text" name="ipHostname" class="deviceIpHostname" required /> <br /> <label>Type</label> <select name="type" class="deviceType"> <option value="ping">Ping</option> <option value="ssh">SSH</option> </select> <div id="sshFields"> <label>Username</label> <input type="text" name="username" class="deviceUsername" /> <br /> <label>Password</label> <input type="password" name="password" /> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="submit" class="btn btn-primary" id="editDeviceButton" > Edit device </button> </div> </form> </div> </div> </div> <div class="data-tables"> <div class="data-tables"> <table id="dataTableDiscovery" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>ID</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteDiscoveryPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div>');
+        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Discovered Devices</h4> <input type="button" value="Add device" id="deviceAdder" data-toggle="modal" data-target="#addModal" /> <div class="modal fade" id="addModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Device details</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <form id="discoveryDeviceForm"> <div class="modal-body"> <label>Name</label> <input type="text" name="name" class="deviceName" required /> <br /> <label>IP address or hostname</label> <input type="text" name="ipHostname" class="deviceIpHostname" required /> <br /> <label>Type</label> <select name="type" class="deviceType"> <option value="ping">Ping</option> <option value="ssh">SSH</option> </select> <div id="sshFields"> <label>Username</label> <input type="text" name="username" class="deviceUsername" /> <br /> <label>Password</label> <input type="password" name="password" class="devicePassword"/> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="submit" class="btn btn-primary" id="addDeviceButton" > Add device </button> </div> </form> </div> </div> </div> <div class="modal fade" id="editModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <form id="editDiscoveryDeviceForm"> <div class="modal-header"> <h5 class="modal-title">Device details</h5> <button type="button" class="close" data-dismiss="modal" > <span>&times;</span> </button> </div> <div class="modal-body"> <input type="text" name="id" class="deviceId" style="display: none" /> <label>Name</label> <input type="text" name="name" class="deviceName" required /> <br /> <label>IP address or hostname</label> <input type="text" name="ipHostname" class="deviceIpHostname" required /> <br /> <label>Type</label> <select name="type" class="deviceType" disabled="disabled"> <option value="ping">Ping</option> <option value="ssh">SSH</option> </select> <div id="sshFields"> <label>Username</label> <input type="text" name="username" class="deviceUsername" /> <br /> <label>Password</label> <input type="password" name="password" /> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="submit" class="btn btn-primary" id="editDeviceButton" > Edit device </button> </div> </form> </div> </div> </div> <div class="data-tables"> <div class="data-tables"> <table id="dataTableDiscovery" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>ID</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteDiscoveryPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div>');
 
         $(".modal-body label").css("font-weight", "bold");
 
@@ -60,7 +60,6 @@ let discovery = {
                 rowHtml[3] = tableRow.type;
 
                 rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + tableRow.id + '"><i class="fa fa-play" title="Run Discovery"></i><i class="fa fa-edit" title="Edit device"></i><i class="fa fa-archive" title="Delete Device"></i>';
-                // the one having datatable id: rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + tableRow.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play" title="Run Discovery"></i><i class="fa fa-edit" title="Edit device"></i><i class="fa fa-archive" title="Delete Device"></i>';
 
                 if (tableRow.provision === 1)
                 {
@@ -145,12 +144,14 @@ let discovery = {
         {
             event.preventDefault();
 
-            let param = $("#discoveryDeviceForm").serializeArray().reduce(function (finalParam, currentValue)
-            {
-                finalParam[currentValue.name] = currentValue.value;
+            // let param = $("#discoveryDeviceForm").serializeArray().reduce(function (finalParam, currentValue)
+            // {
+            //     finalParam[currentValue.name] = currentValue.value;
+            //
+            //     return finalParam;
+            // }, {});
 
-                return finalParam;
-            }, {});
+            let param = $("#discoveryDeviceForm").serialize();
 
             let request =
                 {
@@ -184,7 +185,6 @@ let discovery = {
             rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + discoveryBean.id + '"><i class="fa fa-play"></i><i class="fa fa-edit"></i><i class="fa fa-archive"></i>';
             //the one having data table id: rowHtml[4] = '<div class="discoveryOperationsCell" data-database_table_id = "' + discoveryBean.id + '" data-datatable_id = "' + maxTableRow + '"><i class="fa fa-play"></i><i class="fa fa-edit"></i><i class="fa fa-archive"></i>';
 
-
             if (discoveryBean.provision === 1)
             {
                 rowHtml[4] += '<input class="provision" type="button" value="Provision">'
@@ -194,13 +194,13 @@ let discovery = {
 
             discoveryDataTable.row.add(rowHtml).draw();
 
-            discovery.iconHover();
+            discovery.iconHover();              //todo set in css
 
             toastr.success("Device added successfully");
 
             $('#addModal').modal('hide');
 
-            $('#addModal').find('input').val(null);
+            $('#addModal').find('form')[0].reset();
         }
         else
         {
@@ -324,6 +324,7 @@ let discovery = {
                 sshFieldSelector.find("input").prop("required", true);
             }
             modalSelector.find('.deviceType').val(receivedBean.type);
+            deviceType = receivedBean.type;
             modalSelector.find('.deviceUsername').val(receivedBean.username);
             modalSelector.find(':password').val(null);
 
@@ -341,12 +342,7 @@ let discovery = {
         {
             event.preventDefault();
 
-            let param = $("#editModal").find("form").serializeArray().reduce(function (finalParam, currentValue)
-            {
-                finalParam[currentValue.name] = currentValue.value;
-
-                return finalParam;
-            }, {});
+            let param = $("#editModal").find("form").serialize() + "&type=" + deviceType;
 
             let request = {
                 url: "editDiscoveryDevice",
@@ -392,6 +388,8 @@ let discovery = {
             let discoverRowId = $(event.target).parent().data("database_table_id");
 
             websocket.send(discoverRowId);
+
+            toastr.success("Running discovery");
         });
     },
 
@@ -443,65 +441,9 @@ let discovery = {
 
             default:
 
-                toastr.error('Error while doing ' + type + ' having IP/Hostname: ' + ipHostname+'. Check IP/Hostname.');
+                toastr.error('Cannot translate ' + ipHostname + ' into IP address. Check IP/Hostname.');
         }
     },
-
-    // discoverIconClick: function ()
-    // {
-    //     $("#dataTableDiscovery").on("click", ".fa-play", function (event)
-    //     {
-    //         let discoverRowId = $(event.target).parent().data("database_table_id");
-    //
-    //         let param = {
-    //             id: discoverRowId
-    //         };
-    //
-    //         let request = {
-    //             url: "runDiscovery",
-    //
-    //             param: param,
-    //
-    //             callback: discovery.runDiscoverySuccess
-    //         };
-    //
-    //         ajaxCalls.ajaxPostCall(request);
-    //     });
-    // },
-    //
-    // runDiscoverySuccess: function (request)
-    // {
-    //     if (request.bean.operationSuccess)
-    //     {
-    //         if (request.bean.provision)
-    //         {
-    //             if (request.bean.type === "ping")
-    //             {
-    //                 toastr.success('Ping successful of device having IP/Hostname: ' + request.bean.ipHostname);
-    //             }
-    //             else
-    //             {
-    //                 toastr.success('SSH successful of device having IP/Hostname: ' + request.bean.ipHostname);
-    //             }
-    //             discovery.tableLoader(request.bean.discoveryTableData);
-    //         }
-    //         else
-    //         {
-    //             if (request.bean.type === "ping")
-    //             {
-    //                 toastr.warning('Ping unsuccessful of device having IP/Hostname: ' + request.bean.ipHostname);
-    //             }
-    //             else
-    //             {
-    //                 toastr.warning('SSH unsuccessful of device having IP/Hostname: ' + request.bean.ipHostname);
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         toastr.error('Error while discovering device having IP/Hostname: ' + request.bean.ipHostname);
-    //     }
-    // },
 
     provisionIconClick: function ()
     {
@@ -536,31 +478,4 @@ let discovery = {
             toastr.error("Device addition unsuccessful to pooling monitors");
         }
     },
-
-    webSocket: function ()          //fixme increase the timeout from ideal time 5min
-    {
-        websocket = new WebSocket("ws://localhost:8080/server-endpoint");
-
-        websocket.onopen = function ()
-        {
-            toastr.success("Frontend: Websocket started");
-        };
-
-        websocket.onmessage = function (message)
-        {
-            discovery.runDiscoveryResponse(message.data);
-        };
-
-        websocket.onclose = function ()
-        {
-            toastr.warning("Frontend: Websocket closed");
-
-            discovery.webSocket();
-        };
-
-        websocket.onerror = function ()
-        {
-            toastr.error("Frontend: Error from websocket")
-        };
-    }
 };
