@@ -3,6 +3,7 @@ package helper;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -111,6 +112,8 @@ public class NetworkingCommandHelper
 
                         if (channel.isConnected())
                         {
+                            error = false;
+
                             commandWriter = new BufferedWriter(new OutputStreamWriter(channel.getOutputStream()));
 
                             responseReader = new BufferedReader(new InputStreamReader(channel.getInputStream()));
@@ -140,7 +143,7 @@ public class NetworkingCommandHelper
                             {
                                 response = responseReader.readLine();
                             }
-                            while (!response.matches(".*:~.\\s" + commandList.get(commandIndex)));
+                            while (!(response.contains(":~$ " + commandList.get(commandIndex)) || response.contains(":~# " + commandList.get(commandIndex))));
 
                             commandIndex++;
 
@@ -150,7 +153,7 @@ public class NetworkingCommandHelper
 
                                 response = responseReader.readLine();
 
-                                while (!response.matches(".*:~.\\s" + commandList.get(commandIndex)))
+                                while (!response.contains(commandList.get(commandIndex)))
                                 {
                                     commandString.append(response.concat("\n"));
 
@@ -162,8 +165,6 @@ public class NetworkingCommandHelper
                                 commandIndex++;
                             }
                             while (commandIndex != commandList.size());
-
-                            error = false;
                         }
                     }
                 }
