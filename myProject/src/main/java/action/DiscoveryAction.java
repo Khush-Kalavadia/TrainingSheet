@@ -2,7 +2,10 @@ package action;
 
 import bean.DiscoveryBean;
 import com.opensymphony.xwork2.ModelDriven;
+import org.apache.struts2.interceptor.SessionAware;
 import service.DiscoveryService;
+
+import java.util.Map;
 
 public class DiscoveryAction implements ModelDriven<DiscoveryBean>
 {
@@ -31,7 +34,7 @@ public class DiscoveryAction implements ModelDriven<DiscoveryBean>
 
     public String loadDiscoveryTable()
     {
-        DiscoveryService.getDiscoveryTableData(discoveryBean);            //checked if null is returned
+        DiscoveryService.getDiscoveryTableData(discoveryBean);
 
         return "success";
     }

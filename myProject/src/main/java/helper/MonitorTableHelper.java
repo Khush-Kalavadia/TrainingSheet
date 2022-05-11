@@ -81,8 +81,6 @@ public class MonitorTableHelper
 
             String sql = "UPDATE monitor SET availability_status = ? WHERE id = ?";
 
-            System.out.println(new Date() + "||" + id + "||" + availability);
-
             query.executeUpdate(sql, preparedStatementData);
         }
         catch (Exception ex)

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class DashboardBean
 {
-    private long totalDevice;
+    private String totalDevice;
 
-    private long downDevice;
+    private String downDevice;
 
-    private long upDevice;
+    private String upDevice;
 
     private List<HashMap<String, Object>> topCpuUsageDevice;
 
@@ -17,32 +17,32 @@ public class DashboardBean
 
     private List<HashMap<String, Object>> topDiskUsageDevice;
 
-    public long getTotalDevice()
+    public String getTotalDevice()
     {
         return totalDevice;
     }
 
-    public void setTotalDevice(long totalDevice)
+    public void setTotalDevice(String totalDevice)
     {
         this.totalDevice = totalDevice;
     }
 
-    public long getDownDevice()
+    public String getDownDevice()
     {
         return downDevice;
     }
 
-    public void setDownDevice(long downDevice)
+    public void setDownDevice(String downDevice)
     {
         this.downDevice = downDevice;
     }
 
-    public long getUpDevice()
+    public String getUpDevice()
     {
         return upDevice;
     }
 
-    public void setUpDevice(long upDevice)
+    public void setUpDevice(String upDevice)
     {
         this.upDevice = upDevice;
     }

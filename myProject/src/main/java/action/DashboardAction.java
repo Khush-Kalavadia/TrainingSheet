@@ -5,6 +5,8 @@ import bean.DiscoveryBean;
 import com.opensymphony.xwork2.ModelDriven;
 import service.DashboardService;
 
+import java.util.Map;
+
 public class DashboardAction implements ModelDriven<DashboardBean>
 {
     private DashboardBean dashboardBean = new DashboardBean();

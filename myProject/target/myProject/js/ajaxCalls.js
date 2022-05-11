@@ -31,9 +31,9 @@ let ajaxCalls = {
                 }
             },
 
-            error: function (request, error, status)       //function to be called if the request fails.
+            error: function ()       //function to be called if the request fails.
             {
-                toastr.error("User logged out or Server stopped or Jetty session ended. -> " + request + " || " + error + " || " + status);
+                toastr.error("User logged out, Server stopped or Jetty session ended.");
             },
 
             dataType: "json"

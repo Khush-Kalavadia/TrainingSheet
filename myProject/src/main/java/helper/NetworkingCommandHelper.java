@@ -1,11 +1,11 @@
 package helper;
 
-import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,13 +32,13 @@ public class NetworkingCommandHelper
 
             Process process = build.start();
 
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String pingOutputLine;
 
             parsedPingOutput = new HashMap<>();
 
-            while ((pingOutputLine = input.readLine()) != null)
+            while ((pingOutputLine = bufferedReader.readLine()) != null)
             {
                 if (pingOutputLine.contains("% packet loss"))
                 {
@@ -102,7 +102,7 @@ public class NetworkingCommandHelper
 
                         loginError = false;
 
-                        BufferedInputStream bufferedInputStream = null;
+                        BufferedReader bufferedReader = null;
 
                         for (String command : commandList)
                         {
@@ -118,7 +118,7 @@ public class NetworkingCommandHelper
 
                                     channel.setErrStream(System.err);
 
-                                    bufferedInputStream = new BufferedInputStream(channel.getInputStream());
+                                    bufferedReader = new BufferedReader(new InputStreamReader((channel.getInputStream())));
 
                                     channel.connect(10000);
 
@@ -127,16 +127,16 @@ public class NetworkingCommandHelper
                                         Thread.sleep(100);
                                     }
 
-                                    int byt;
+                                    String commandResultLine;
 
-                                    StringBuilder commandResult = new StringBuilder();
+                                    StringBuilder completeCommandResult = new StringBuilder();
 
-                                    while ((byt = bufferedInputStream.read()) != -1)
+                                    while ((commandResultLine = bufferedReader.readLine()) != null)
                                     {
-                                        commandResult.append((char) byt);
+                                        completeCommandResult.append(commandResultLine);
                                     }
 
-                                    responseMap.put(command, commandResult.toString());
+                                    responseMap.put(command, completeCommandResult.toString());
                                 }
                             }
                             catch (Exception ex)
@@ -145,9 +145,9 @@ public class NetworkingCommandHelper
                             }
                             finally
                             {
-                                if (bufferedInputStream != null)
+                                if (bufferedReader != null)
                                 {
-                                    bufferedInputStream.close();
+                                    bufferedReader.close();
                                 }
                                 if (channel != null)
                                 {
@@ -193,9 +193,9 @@ public class NetworkingCommandHelper
 
             commandList.add("top -bn 2 | grep %Cpu");   //cpu usage. 1st iteration of top -b returns the percentages since boot, we therefore need at least two iterations (-n 2) to get the current percentage. So, as long as you run top once before using it to gather your data you will be fine.
 
-            commandList.add("df -lh --total -x tmpfs | grep total");                 //disk usage. lh for local and human readable format. tmpfs intended to appear as a mounted file system, but data is stored in volatile memory
+            commandList.add("df -l --total -x tmpfs | grep total");                 //disk usage. lh for local and human readable format. tmpfs intended to appear as a mounted file system, but data is stored in volatile memory
 
-            commandList.add("free -h");                 //memory usage
+            commandList.add("free");                 //memory usage
 
             HashMap<String, String> commandOutput = NetworkingCommandHelper.fireSSHCommands(username, password, host, commandList);
 
@@ -223,13 +223,15 @@ public class NetworkingCommandHelper
                         parsedDeviceDetailResponse.put("idleCpuPercent", Float.parseFloat(splitedOutput[3].substring(0, splitedOutput[3].indexOf(" id"))));
                     }
 
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
                     commandOutputString = commandOutput.get(commandList.get(2));
 
                     if (commandOutputString != null && commandOutputString.contains("total"))
                     {
                         splitedOutput = commandOutputString.substring(commandOutputString.indexOf("total"), commandOutputString.length()).split("\\s+");
 
-                        parsedDeviceDetailResponse.put("totalDiskGB", Float.parseFloat(splitedOutput[1].replaceAll("[^\\d.]", "")));
+                        parsedDeviceDetailResponse.put("totalDiskGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
 
                         parsedDeviceDetailResponse.put("usedDiskPercent", Float.parseFloat(splitedOutput[4].replaceAll("[^\\d.]", "")));
                     }
@@ -240,9 +242,9 @@ public class NetworkingCommandHelper
                     {
                         splitedOutput = commandOutputString.substring(commandOutputString.indexOf("Mem:"), commandOutputString.length()).split("\\s+");
 
-                        parsedDeviceDetailResponse.put("totalMemoryGB", Float.parseFloat(splitedOutput[1].replaceAll("[^\\d.]", "")));
+                        parsedDeviceDetailResponse.put("totalMemoryGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
 
-                        parsedDeviceDetailResponse.put("usedMemoryGB", Float.parseFloat(splitedOutput[2].replaceAll("[^\\d.]", "")));
+                        parsedDeviceDetailResponse.put("usedMemoryGB", Float.parseFloat(decimalFormat.format((Float.parseFloat(splitedOutput[1]) - Float.parseFloat(splitedOutput[3]) - Float.parseFloat(splitedOutput[4]) - Float.parseFloat(splitedOutput[5])) / (1024 * 1024))));
                     }
                 }
                 else

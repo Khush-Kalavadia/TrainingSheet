@@ -2,7 +2,7 @@ package commonutil;
 
 import java.util.concurrent.ForkJoinPool;
 
-class ForkJoinPoolUtil
+public class ForkJoinPoolUtil
 {
     private static final ForkJoinPool DISCOVERY_FORK_JOIN_POOL;
 
@@ -15,7 +15,7 @@ class ForkJoinPoolUtil
         MONITOR_FORK_JOIN_POOL = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
     }
 
-    static ForkJoinPool getDiscoveryForkJoinPool()
+    public static ForkJoinPool getDiscoveryForkJoinPool()
     {
         return DISCOVERY_FORK_JOIN_POOL;
     }

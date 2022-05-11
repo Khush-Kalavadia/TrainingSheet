@@ -10,11 +10,13 @@ public class JobScheduler extends HttpServlet
 {
     public void init()
     {
+        int pollingTimeSec = 180;
+
         try
         {
             JobDetail job = JobBuilder.newJob(AddPollingDeviceJob.class).build();
 
-            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(180).repeatForever()).build();
+            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(pollingTimeSec).repeatForever()).build();
 
             SchedulerFactory schFactory = new StdSchedulerFactory();
 

@@ -64,8 +64,6 @@ public class Query
                         }
                     }
 
-                    System.out.println(preparedStatement);
-
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     if (resultSet != null)
@@ -267,37 +265,4 @@ public class Query
         }
         return resultSetList;
     }
-
-//    public static void main(String[] args)
-//    {
-//        ConnectionPoolHandler.start();
-//
-//        Query query = new Query();
-//
-//        query.getConnection();
-//
-//        List<String> columnList = new ArrayList<>();
-//
-//        columnList.add("name");
-//
-//        columnList.add("ip_hostname");
-//
-//        columnList.add("CONVERT(used_memory_gb/total_memory_gb * 100, DECIMAL(4,2)) as measuring_unit");
-//
-//        HashMap<Condition, String> condition = new HashMap<>();
-//
-//        condition.put(Condition.WHERE, "availability_status = 'up' AND (time, map_monitor_id) in (SELECT MAX(time), map_monitor_id FROM ssh_polling GROUP BY map_monitor_id)");
-//
-//        condition.put(Condition.ORDER_BY, "used_memory_gb/total_memory_gb " + (true ? "DESC" : "ASC"));
-//
-//        condition.put(Condition.LIMIT, "?");
-//
-//        List<Object> preparedStatementData = new ArrayList<>();
-//
-//        preparedStatementData.add(3);
-//
-//        System.out.println(query.commonSelect(Operation.SELECT, columnList, "ssh_polling INNER JOIN monitor ON id = map_monitor_id", condition, preparedStatementData));
-//
-//        query.releaseConnection();
-//    }
 }

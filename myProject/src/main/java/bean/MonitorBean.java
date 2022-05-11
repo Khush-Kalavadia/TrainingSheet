@@ -2,8 +2,6 @@ package bean;
 
 public class MonitorBean
 {
-    private String[][] monitorTableData;
-
     private int id;
 
     private boolean operationSuccess;
@@ -39,6 +37,8 @@ public class MonitorBean
     private float[] packetLossChartData;
 
     private String[] timeChartData;
+
+    private String[][] monitorTableData;
 
     public int getId()
     {

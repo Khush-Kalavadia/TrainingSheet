@@ -70,7 +70,6 @@ public class DiscoveryService
 
             if (resultSetList != null && !resultSetList.isEmpty())
             {
-//                HashMap<String, Object> discoveryRow = CommonTableHelper.getTableRowUsingId("discovery", "id", discoveryBean.getId());
                 HashMap<String, Object> discoveryRow = resultSetList.get(0);
 
                 if (discoveryRow != null && !discoveryRow.isEmpty())
@@ -92,8 +91,6 @@ public class DiscoveryService
                         if (resultSetList != null && !resultSetList.isEmpty())
                         {
                             HashMap<String, Object> credentialRow = resultSetList.get(0);
-
-//                        HashMap<String, Object> credentialRow = CommonTableHelper.getTableRowUsingId("credential", "map_discovery_id", discoveryBean.getId());
 
                             if (credentialRow != null && !credentialRow.isEmpty())
                             {
@@ -134,56 +131,71 @@ public class DiscoveryService
 
         Query query = null;
 
-        List<String> allColumn = new ArrayList<>();
-
-        HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
-
-        List<Object> preparedStatementData = new ArrayList<>();
-
         List<HashMap<String, Object>> resultSetList;
 
         try
         {
-            allColumn.add("*");
+            String trimmedName = discoveryBean.getName().trim();
 
-            preparedStatementData.add(discoveryBean.getIpHostname());
+            String trimmedIpHostname = discoveryBean.getIpHostname().trim();
 
-            preparedStatementData.add(discoveryBean.getType());
+            String trimmedUsername = discoveryBean.getUsername().trim();
 
-            conditionStringHashMap.put(Query.Condition.WHERE, "ip_hostname = ? and type = ?");
+            String trimmedPassword = discoveryBean.getPassword().trim();
 
-            query = new Query();
-
-            query.getConnection();
-
-            resultSetList = query.commonSelect(allColumn, "discovery", conditionStringHashMap, preparedStatementData);
-
-            if (resultSetList != null && !resultSetList.isEmpty())
+            if ((!trimmedName.isEmpty() && !trimmedIpHostname.isEmpty()) && (discoveryBean.getType().equals("ping") || (discoveryBean.getType().equals("ssh") && !trimmedUsername.isEmpty() && !trimmedPassword.trim().isEmpty())))
             {
-                discoveryBean.setDuplicateEntry(true);
-            }
-            else
-            {
-                int addedId = DiscoveryTableHelper.insertDiscoveryTableRow(query, discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType());
+                List<String> allColumn = new ArrayList<>();
 
-                if (addedId != 0)
+                HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
+
+                List<Object> preparedStatementData = new ArrayList<>();
+
+                allColumn.add("*");
+
+                preparedStatementData.add(trimmedIpHostname);
+
+                preparedStatementData.add(discoveryBean.getType());
+
+                conditionStringHashMap.put(Query.Condition.WHERE, "ip_hostname = ? and type = ?");
+
+                query = new Query();
+
+                query.getConnection();
+
+                resultSetList = query.commonSelect(allColumn, "discovery", conditionStringHashMap, preparedStatementData);
+
+                if (resultSetList != null && !resultSetList.isEmpty())          //duplication test
                 {
-                    operationSuccess = true;
+                    discoveryBean.setDuplicateEntry(true);
+                }
+                else
+                {
+                    int addedId = DiscoveryTableHelper.insertDiscoveryTableRow(query, trimmedName, trimmedIpHostname, discoveryBean.getType());
 
-                    discoveryBean.setId(addedId);
-
-                    resultSetList = query.commonSelect(allColumn, "discovery", null, null);
-
-                    if (resultSetList != null && !resultSetList.isEmpty())
+                    if (addedId != 0)
                     {
-                        discoveryBean.setDiscoveryTableData(DiscoveryTableHelper.createDiscoveryTableHtml(resultSetList));
+                        operationSuccess = true;
 
-                        if (discoveryBean.getType().equals("ssh"))
+                        discoveryBean.setId(addedId);
+
+                        resultSetList = query.commonSelect(allColumn, "discovery", null, null);
+
+                        if (resultSetList != null && !resultSetList.isEmpty())
                         {
-                            operationSuccess = CredentialTableHelper.insertCredentialTableRow(query, discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                            discoveryBean.setDiscoveryTableData(DiscoveryTableHelper.createDiscoveryTableHtml(resultSetList));
+
+                            if (discoveryBean.getType().equals("ssh"))
+                            {
+                                operationSuccess = CredentialTableHelper.insertCredentialTableRow(query, discoveryBean.getId(), trimmedUsername, trimmedPassword);
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                discoveryBean.setEmptyInputEntry(true);
             }
         }
         catch (Exception ex)
@@ -208,51 +220,66 @@ public class DiscoveryService
 
         Query query = null;
 
-        List<String> allColumn = new ArrayList<>();
-
-        HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
-
-        List<Object> preparedStatementData = new ArrayList<>();
-
         List<HashMap<String, Object>> resultList;
 
         try
         {
-            allColumn.add("*");
+            String trimmedName = discoveryBean.getName().trim();
 
-            preparedStatementData.add(discoveryBean.getIpHostname());
+            String trimmedIpHostname = discoveryBean.getIpHostname().trim();
 
-            preparedStatementData.add(discoveryBean.getType());
+            String trimmedUsername = discoveryBean.getUsername().trim();
 
-            preparedStatementData.add(discoveryBean.getId());
+            String trimmedPassword = discoveryBean.getPassword().trim();
 
-            conditionStringHashMap.put(Query.Condition.WHERE, "ip_hostname = ? and type = ? and id != ?");      //check except the selected device
-
-            query = new Query();
-
-            query.getConnection();
-
-            resultList = query.commonSelect(allColumn, "discovery", conditionStringHashMap, preparedStatementData);
-
-            if (resultList != null && !resultList.isEmpty())
+            if ((!trimmedName.isEmpty() && !trimmedIpHostname.isEmpty()) && (discoveryBean.getType().equals("ping") || (discoveryBean.getType().equals("ssh") && !trimmedUsername.isEmpty() && !trimmedPassword.trim().isEmpty())))
             {
-                discoveryBean.setDuplicateEntry(true);
+                List<String> allColumn = new ArrayList<>();
+
+                HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
+
+                List<Object> preparedStatementData = new ArrayList<>();
+
+                allColumn.add("*");
+
+                preparedStatementData.add(discoveryBean.getIpHostname());
+
+                preparedStatementData.add(discoveryBean.getType());
+
+                preparedStatementData.add(discoveryBean.getId());
+
+                conditionStringHashMap.put(Query.Condition.WHERE, "ip_hostname = ? and type = ? and id != ?");      //check except the selected device
+
+                query = new Query();
+
+                query.getConnection();
+
+                resultList = query.commonSelect(allColumn, "discovery", conditionStringHashMap, preparedStatementData);
+
+                if (resultList != null && !resultList.isEmpty())
+                {
+                    discoveryBean.setDuplicateEntry(true);
+                }
+                else
+                {
+                    if (DiscoveryTableHelper.updateDiscoveryTableRow(query, discoveryBean.getId(), discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
+                    {
+                        operationSuccess = true;
+
+                        DiscoveryTableHelper.setProvision(query, discoveryBean.getId(), 0);
+
+                        discoveryBean.setDiscoveryTableData(DiscoveryTableHelper.createDiscoveryTableHtml(query.commonSelect(allColumn, "discovery", null, null)));
+
+                        if (discoveryBean.getType().equals("ssh"))
+                        {
+                            operationSuccess = CredentialTableHelper.updateCredentialTableRow(query, discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
+                        }
+                    }
+                }
             }
             else
             {
-                if (DiscoveryTableHelper.updateDiscoveryTableRow(query, discoveryBean.getId(), discoveryBean.getName(), discoveryBean.getIpHostname(), discoveryBean.getType()))
-                {
-                    operationSuccess = true;
-
-                    DiscoveryTableHelper.setProvision(query, discoveryBean.getId(), 0);
-
-                    discoveryBean.setDiscoveryTableData(DiscoveryTableHelper.createDiscoveryTableHtml(query.commonSelect(allColumn, "discovery", null, null)));
-
-                    if (discoveryBean.getType().equals("ssh"))
-                    {
-                        operationSuccess = CredentialTableHelper.updateCredentialTableRow(query, discoveryBean.getId(), discoveryBean.getUsername(), discoveryBean.getPassword());
-                    }
-                }
+                discoveryBean.setEmptyInputEntry(true);
             }
         }
         catch (Exception ex)
@@ -339,37 +366,26 @@ public class DiscoveryService
 
                 if (discoveryTableData != null && !discoveryTableData.isEmpty())
                 {
-                    conditionStringHashMap.put(Query.Condition.WHERE, "map_discovery_id = ?");
+                    Object type = discoveryTableData.get("type");
 
-                    resultList = query.commonSelect(allColumn, "monitor", conditionStringHashMap, preparedStatementData);
+                    Object credentialTableId = null;
 
-                    if (resultList != null && !resultList.isEmpty())
+                    if (type != null && type.equals("ssh"))
                     {
-                        operationSuccess = MonitorTableHelper.updateMonitorTableRow(query, discoveryBean.getId(), discoveryTableData.get("name"), discoveryTableData.get("ip_hostname"));
-                    }
-                    else
-                    {
-                        Object type = discoveryTableData.get("type");
+                        conditionStringHashMap.put(Query.Condition.WHERE, "map_discovery_id=?");
 
-                        Object credentialTableId = null;
+                        List<String> columnList = new ArrayList<>();
 
-                        if (type != null && type.equals("ssh"))
+                        columnList.add("id");
+
+                        resultList = query.commonSelect(columnList, "credential", conditionStringHashMap, preparedStatementData);
+
+                        if (resultList != null && !resultList.isEmpty() && resultList.get(0) != null)
                         {
-                            conditionStringHashMap.put(Query.Condition.WHERE, "map_discovery_id=?");
-
-                            List<String> columnList = new ArrayList<>();
-
-                            columnList.add("id");
-
-                            resultList = query.commonSelect(columnList, "credential", conditionStringHashMap, preparedStatementData);
-
-                            if (resultList != null && !resultList.isEmpty() && resultList.get(0) != null)
-                            {
-                                credentialTableId = resultList.get(0).get("id");
-                            }
+                            credentialTableId = resultList.get(0).get("id");
                         }
-                        operationSuccess = MonitorTableHelper.insertDeviceMonitorTableRow(query, credentialTableId, discoveryBean.getId(), discoveryTableData.get("name"), discoveryTableData.get("ip_hostname"), type);
                     }
+                    operationSuccess = MonitorTableHelper.insertDeviceMonitorTableRow(query, credentialTableId, discoveryBean.getId(), discoveryTableData.get("name"), discoveryTableData.get("ip_hostname"), type);
                 }
             }
         }

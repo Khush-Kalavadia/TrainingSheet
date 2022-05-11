@@ -35,31 +35,32 @@ public class DashboardService
 
             if (resultList != null && !resultList.isEmpty())
             {
-                int rowCount = 0;
-
                 long totalDevice = 0;
+
+                dashboardBean.setUpDevice("0");
+
+                dashboardBean.setDownDevice("0");
 
                 for (HashMap<String, Object> resultRow : resultList)
                 {
                     Object availabilityStatus = resultRow.get("availability_status");
 
-                    Object deviceCount = resultList.get(rowCount).get("device_count");
+                    Object deviceCount = resultRow.get("device_count");
 
                     if (availabilityStatus != null && deviceCount != null)
                     {
                         if (availabilityStatus.equals("up"))
                         {
-                            dashboardBean.setUpDevice((Long) deviceCount);
+                            dashboardBean.setUpDevice(String.valueOf(deviceCount));
                         }
                         else if (availabilityStatus.equals("down"))
                         {
-                            dashboardBean.setDownDevice((Long) deviceCount);
+                            dashboardBean.setDownDevice(String.valueOf(deviceCount));
                         }
                         totalDevice += (Long) deviceCount;
                     }
-                    rowCount++;
                 }
-                dashboardBean.setTotalDevice(totalDevice);
+                dashboardBean.setTotalDevice(String.valueOf(totalDevice));
             }
 
             List<HashMap<String, Object>> topMemoryUsagePercentDevice = PollingTableHelper.getTopUsageDevice(query, "used_memory_gb/total_memory_gb", true, 3);

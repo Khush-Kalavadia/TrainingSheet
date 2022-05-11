@@ -13,7 +13,7 @@ let monitor = {
                 callback: monitor.monitorHtmlLoaderSuccess
             };
 
-        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>ID</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <hr> <h6 class="modalTitle">- Data of last polling time -</h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss (%)<hr /> <span>100</span></div> <div class="grid-item" id="rtt"> Average RTT (ms)<hr /> <span>16.345</span></div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item" id="pingAvailabilityDonutChartDiv"> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4" id="pingChartDiv"> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>Sr. No.</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <hr> <h6 class="modalTitle">- Data of last polling time -</h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss (%)<hr /> <span>100</span></div> <div class="grid-item" id="rtt"> Average RTT (ms)<hr /> <span>16.345</span></div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item" id="pingAvailabilityDonutChartDiv"> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4" id="pingChartDiv"> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
 
         ajaxCalls.ajaxPostCall(request);
 
@@ -139,20 +139,7 @@ let monitor = {
         {
             let deviceDetail = request.bean;
 
-            console.log(deviceDetail);
-
             monitor.pingUpdateIndices(deviceDetail.ipHostname, deviceDetail.type, deviceDetail.packetLoss, deviceDetail.rttAvg, deviceDetail.packetsTransmitted, deviceDetail.packetsReceived, deviceDetail.availability);
-
-            // if (deviceDetail.pastAvailabilityPercent === -1)
-            // {
-            //     $("#pingAvailabilityDonutChartDiv").html("<h6 style='color: #636363'>Donut chart is not available.</h6>");
-            // }
-            // else
-            // {
-            //     $("#pingAvailabilityDonutChartDiv").html('<canvas id="pingAvailabilityDonutChart"></canvas>');
-            //
-            //     monitor.loadPingAvailabilityDonutChart(deviceDetail.pastAvailabilityPercent);
-            // }
 
             monitor.commonDonutChart($("#pingAvailabilityDonutChartDiv"), "Availability of last 24 hours", "Available (%)", "Unavailable (%)", deviceDetail.pastAvailabilityPercent, 100 - deviceDetail.pastAvailabilityPercent);
 
@@ -172,15 +159,9 @@ let monitor = {
 
                     monitor.commonDonutChart($("#memoryDonutChartDiv"), "Memory", "Free (GB)", "Used (GB)", deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
 
-                    // monitor.loadMemoryUsageDonutChart(deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
-
                     monitor.commonDonutChart($("#diskDonutChartDiv"), "Disk", "Free (GB)", "Used (GB)", deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
 
-                    // monitor.loadDiskUsageDonutChart(deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
-
                     monitor.commonDonutChart($("#cpuUsageDonutChartDiv"), "CPU Usage", "Idle (%)", "Used (%)", deviceDetail.idleCpuPercentage, 100 - deviceDetail.idleCpuPercentage);
-
-                    // monitor.loadCpuUsageDonutChart(deviceDetail.idleCpuPercentage);
                 }
                 else
                 {
@@ -266,12 +247,6 @@ let monitor = {
                                 display: true,
                                 text: 'Occasions when packets send'
                             },
-                            // ticks: {
-                            //     autoSkip: false,
-                            //     minRotation: 45,
-                            //     maxRotation: 90
-                            // },
-                            // barPercentage: 0.2
                         }
                     },
                 },
@@ -282,47 +257,6 @@ let monitor = {
             $("#pingChartDiv").html('<h6 class="modalTitle unsuccessMessage">Not showing ping packet loss chart as still packets are not send.</h6>');
         }
     },
-
-    // loadPingAvailabilityDonutChart: function (pingAvailability)
-    // {
-    //     const selector = $("#pingAvailabilityDonutChart");
-    //     let pingAvailabilityDonutChart = new Chart(selector, {
-    //         type: 'doughnut',
-    //         data: {
-    //             labels: [
-    //                 'Available (%)',
-    //                 'Unavailable (%)'
-    //             ],
-    //             datasets: [{
-    //                 data: [pingAvailability, 100 - pingAvailability],
-    //                 backgroundColor: [
-    //                     'rgb(255, 205, 86)',
-    //                     'rgb(255, 99, 132)'
-    //                 ],
-    //                 hoverOffset: 4
-    //             }]
-    //         },
-    //         options: {
-    //             plugins: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'Availability of last 24 hours'
-    //                 }
-    //             }
-    //         }
-    //     });
-    // },
-
-    // destroyChartOnModalClose: function ()
-    // {
-    //     $(document).on('hide.bs.modal', '#pingMonitorDetailsModal', function ()
-    //     {
-    //         if (pingPacketLossBarChart !== null)                //it shows chart is being used if not destroyed
-    //         {
-    //             pingPacketLossBarChart.destroy();
-    //         }
-    //     });
-    // },
 
     pingUpdateIndices: function (ipHostname, type, packetLoss, rttAvg, packetsTransmitted, packetsReceived, availability)
     {
@@ -404,99 +338,6 @@ let monitor = {
             modalSelector.find("#currentAvailability span").html("Data unavailable");
         }
     },
-
-
-    // loadMemoryUsageDonutChart: function (freeMemory, usedMemory)
-    // {
-    //     const selector = $("#memoryDonutChart");
-    //     let memoryDonutChart = new Chart(selector, {
-    //         type: 'doughnut',
-    //         data: {
-    //             labels: [
-    //                 'Free (GB)',
-    //                 'Used (GB)'
-    //             ],
-    //             datasets: [{
-    //                 data: [freeMemory, usedMemory],
-    //                 backgroundColor: [
-    //                     'rgb(255, 205, 86)',
-    //                     'rgb(255, 99, 132)'
-    //                 ],
-    //                 hoverOffset: 4
-    //             }]
-    //         },
-    //         options: {
-    //             plugins: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'Memory'
-    //                 }
-    //             }
-    //         }
-    //     });
-    // },
-    //
-    //
-    // loadDiskUsageDonutChart: function (freeDisk, usedDisk)
-    // {
-    //     const selector = $("#diskDonutChart");
-    //     let diskDonutChart = new Chart(selector, {
-    //         type: 'doughnut',
-    //         data: {
-    //             labels: [
-    //                 'Free (GB)',
-    //                 'Used (GB)'
-    //             ],
-    //             datasets: [{
-    //                 data: [freeDisk, usedDisk],
-    //                 backgroundColor: [
-    //                     'rgb(255, 205, 86)',
-    //                     'rgb(255, 99, 132)'
-    //                 ],
-    //                 hoverOffset: 4
-    //             }]
-    //         },
-    //         options: {
-    //             plugins: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'Disk'
-    //                 }
-    //             }
-    //         }
-    //     });
-    // },
-    //
-    //
-    // loadCpuUsageDonutChart: function (idleCPUPercent)
-    // {
-    //     const selector = $("#cpuUsageDonutChart");
-    //     let cpuUsageDonutChart = new Chart(selector, {
-    //         type: 'doughnut',
-    //         data: {
-    //             labels: [
-    //                 'Idle (%)',
-    //                 'Used (%)'
-    //             ],
-    //             datasets: [{
-    //                 data: [idleCPUPercent, 100 - idleCPUPercent],
-    //                 backgroundColor: [
-    //                     'rgb(255, 205, 86)',
-    //                     'rgb(255, 99, 132)'
-    //                 ],
-    //                 hoverOffset: 4
-    //             }]
-    //         },
-    //         options: {
-    //             plugins: {
-    //                 title: {
-    //                     display: true,
-    //                     text: 'CPU'
-    //                 }
-    //             }
-    //         }
-    //     });
-    // },
 
     sshUpdateIndices: function (totalMemory, totalDisk, uptime)
     {

@@ -5,7 +5,7 @@ import helper.NetworkingCommandHelper;
 import java.util.HashMap;
 import java.util.concurrent.RecursiveTask;
 
-public class SSHPollingDeviceTask extends RecursiveTask<HashMap<String, Object>>
+public class SSHPollingDeviceTask extends RecursiveTask<HashMap<String, Object>>        //will return value
 {
     private String username;
 

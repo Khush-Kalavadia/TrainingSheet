@@ -23,6 +23,11 @@ public class LoginAction implements ModelDriven<LoginBean>, SessionAware
             if (loginBean.isLogin())
             {
                 session.put("user", loginBean.getUsername());
+
+                if (session.get("page") == null)
+                {
+                    session.put("page", "dashboard");
+                }
             }
         }
         catch (Exception ex)
@@ -36,9 +41,9 @@ public class LoginAction implements ModelDriven<LoginBean>, SessionAware
     {
         try
         {
-            session.remove("user");
-
             LoginService.logout(loginBean);
+
+            session.remove("user");
         }
         catch (Exception ex)
         {

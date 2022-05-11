@@ -7,6 +7,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class AddPollingDeviceJob implements Job
                                 }
                             }
                         }
-                        DataBlockingQueue.getMonitorPollingQueue().put(deviceDetail);
+                        ForkJoinPoolUtil.getMonitorForkJoinPool().execute(new MonitorPollingTask(deviceDetail));
                     }
                     catch (Exception ex)
                     {

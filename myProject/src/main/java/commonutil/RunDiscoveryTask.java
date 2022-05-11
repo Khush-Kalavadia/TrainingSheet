@@ -1,22 +1,18 @@
 package commonutil;
 
-import com.jcraft.jsch.HASH;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import dao.Query;
-import helper.CommonTableHelper;
 import helper.DiscoveryTableHelper;
-
 import javax.websocket.Session;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
-public class RunDiscoveryTask extends RecursiveAction
+public class RunDiscoveryTask extends RecursiveAction               //does not return any value
 {
     private HashMap<String, Object> discoveryDeviceInfo;
 
-    RunDiscoveryTask(HashMap<String, Object> discoveryDeviceInfo)
+    public RunDiscoveryTask(HashMap<String, Object> discoveryDeviceInfo)
     {
         this.discoveryDeviceInfo = discoveryDeviceInfo;
     }
@@ -63,7 +59,6 @@ public class RunDiscoveryTask extends RecursiveAction
                 if (resultList != null && !resultList.isEmpty())
                 {
                     HashMap<String, Object> discoveryDeviceData = resultList.get(0);
-//                HashMap<String, Object> discoveryDeviceData = CommonTableHelper.getTableRowUsingId("discovery", "id", id);
 
                     if (discoveryDeviceData != null && discoveryDeviceData.get("ip_hostname") != null && discoveryDeviceData.get("type") != null)
                     {
@@ -103,9 +98,7 @@ public class RunDiscoveryTask extends RecursiveAction
 
                                     if (resultList != null && !resultList.isEmpty())
                                     {
-
                                         HashMap<String, Object> deviceCredentialData = resultList.get(0);
-//                                    HashMap<String, Object> deviceCredentialData = CommonTableHelper.getTableRowUsingId("credential", "map_discovery_id", id);
 
                                         if (deviceCredentialData != null && !deviceCredentialData.isEmpty())
                                         {
@@ -123,7 +116,7 @@ public class RunDiscoveryTask extends RecursiveAction
                                             {
                                                 if (responseMap.get("error") == null)
                                                 {
-                                                    if (responseMap.get("uname")!=null && responseMap.get("uname").contains("Linux"))
+                                                    if (responseMap.get("uname") != null && responseMap.get("uname").contains("Linux"))
                                                     {
                                                         response = "success";
 
@@ -162,12 +155,10 @@ public class RunDiscoveryTask extends RecursiveAction
             {
                 query.releaseConnection();
             }
+
             try
             {
-                synchronized (RunDiscoveryTask.class)
-                {
-                    ((Session) discoveryDeviceInfo.get("session")).getBasicRemote().sendText(ipHostname + ";" + type + ";" + response);
-                }
+                ((Session) discoveryDeviceInfo.get("session")).getBasicRemote().sendText(ipHostname + ";" + type + ";" + response);
             }
             catch (Exception ex)
             {

@@ -89,13 +89,13 @@
                     <div class="horizontal-menu">
                         <nav>
                             <ul id="nav_menu">
-                                <li id="dashboardLi">
+                                <li id="dashboardLi" data-tab="dashboardTab">
                                     <i class="ti-map-alt"></i> <span>Dashboard</span>
                                 </li>
-                                <li id="discoveryLi">
+                                <li id="discoveryLi" data-tab="discoveryTab">
                                     <i class="ti-map-alt"></i> <span>Discovery</span>
                                 </li>
-                                <li id="monitorsLi">
+                                <li id="monitorsLi" data-tab="monitorsTab">
                                     <i class="ti-map-alt"></i> <span>Monitors</span>
                                 </li>
                             </ul>

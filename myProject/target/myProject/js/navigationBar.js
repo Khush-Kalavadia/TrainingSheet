@@ -2,11 +2,22 @@ let hoverLiColor;
 
 let websocket;
 
-let clickedObject = $("#dashboardLi");
+let clickedObject;
 
 let navigationBar = {
     horizontalMenuLoader: function ()
     {
+        let currentTab = sessionStorage.getItem("currentTab");
+
+        if (currentTab)
+        {
+            clickedObject = $('#' + currentTab + 'Li');
+        }
+        else
+        {
+            clickedObject = $("#dashboardLi");
+        }
+
         clickedObject.css("color", "var(--primary-color)");
 
         navigationBar.loadHtml(clickedObject);
@@ -57,28 +68,34 @@ let navigationBar = {
 
     loadHtml: function (clickedObject)
     {
-        switch (clickedObject.text().trim())
+        switch (clickedObject.data("tab"))
         {
-            case "Dashboard":
+            case "dashboardTab":
             {
                 dashboard.dashboardHtmlLoader();
 
+                sessionStorage.setItem("currentTab", "dashboard");
+
                 break;
             }
-            case "Discovery":
+            case "discoveryTab":
             {
-                if (typeof websocket === 'undefined' || websocket.readyState === WebSocket.CLOSE)
+                if (websocket === undefined || websocket.readyState === WebSocket.CLOSE)
                 {
                     discovery.webSocket();
                 }
 
                 discovery.discoveryHtmlLoader();
 
+                sessionStorage.setItem("currentTab", "discovery");
+
                 break;
             }
-            case "Monitors":
+            case "monitorsTab":
             {
                 monitor.monitorHtmlLoader();
+
+                sessionStorage.setItem("currentTab", "monitors");
 
                 break;
             }

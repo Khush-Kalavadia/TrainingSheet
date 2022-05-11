@@ -1,12 +1,14 @@
 package action;
 
-import commonutil.DataBlockingQueue;
+import commonutil.ForkJoinPoolUtil;
+import commonutil.RunDiscoveryTask;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+import java.util.HashMap;
 
 @ServerEndpoint("/server-endpoint")
-public class WebSocketHandler                   //testme why am i not able to see ws request on network inspect
+public class WebSocketHandler
 {
     private Session session;
 
@@ -31,6 +33,19 @@ public class WebSocketHandler                   //testme why am i not able to se
     @OnMessage
     public void handleMessage(Integer id)         //receiving request and storing the session as well to send reply back to same session.
     {
-        DataBlockingQueue.addDiscoveryDevice(id, session);
+        try
+        {
+            HashMap<String, Object> discoveryDeviceInfo = new HashMap<>();
+
+            discoveryDeviceInfo.put("id", id);
+
+            discoveryDeviceInfo.put("session", session);
+
+            ForkJoinPoolUtil.getDiscoveryForkJoinPool().execute(new RunDiscoveryTask(discoveryDeviceInfo));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

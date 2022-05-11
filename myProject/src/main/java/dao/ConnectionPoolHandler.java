@@ -1,4 +1,3 @@
-//testme in case when we have >max_connection - study rejection handler
 package dao;
 
 import java.io.FileInputStream;
@@ -22,7 +21,7 @@ public class ConnectionPoolHandler
 
     private static final LinkedBlockingQueue<Connection> CONNECTION_POOL;
 
-    private static final int MAX_CONNECTION_LIMIT = 150;        //allows 150 normal connections plus one connection from the SUPER account
+    private static final int MAX_CONNECTION_LIMIT = 6;
 
     static
     {
@@ -38,9 +37,7 @@ public class ConnectionPoolHandler
 
         try
         {
-            //todo sys.get sucurrent dir
-
-            FileInputStream fileInputStream = new FileInputStream("/home/khush/IdeaProjects/myProject/src/main/java/dao/connection.prop");
+            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir") + "/config/connection.prop");
 
             Properties properties = new Properties();
 
@@ -112,10 +109,6 @@ public class ConnectionPoolHandler
     {
         try
         {
-//            if (connection != null && !CONNECTION_POOL.contains(connection))
-//            {
-//                CONNECTION_POOL.put(connection);
-//            }
             if (connection == null)
             {
                 CONNECTION_POOL.put(DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD));

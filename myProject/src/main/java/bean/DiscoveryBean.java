@@ -1,8 +1,5 @@
 package bean;
 
-import java.util.HashMap;
-import java.util.List;
-
 public class DiscoveryBean
 {
     private int id;
@@ -22,6 +19,8 @@ public class DiscoveryBean
     private String[][] discoveryTableData;
 
     private boolean duplicateEntry;
+
+    private boolean emptyInputEntry;
 
     public int getId()
     {
@@ -111,5 +110,15 @@ public class DiscoveryBean
     public void setDuplicateEntry(boolean duplicateEntry)
     {
         this.duplicateEntry = duplicateEntry;
+    }
+
+    public boolean isEmptyInputEntry()
+    {
+        return emptyInputEntry;
+    }
+
+    public void setEmptyInputEntry(boolean emptyInputEntry)
+    {
+        this.emptyInputEntry = emptyInputEntry;
     }
 }
