@@ -13,7 +13,7 @@ let monitor = {
                 callback: monitor.monitorHtmlLoaderSuccess
             };
 
-        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>Sr. No.</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <hr> <h6 class="modalTitle">- Data of last polling time -</h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss (%)<hr /> <span>100</span></div> <div class="grid-item" id="rtt"> Average RTT (ms)<hr /> <span>16.345</span></div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item" id="pingAvailabilityDonutChartDiv"> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4" id="pingChartDiv"> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
+        $("#main-area").html('<div class="row"> <div class="col-12 mt-5"> <div class="card"> <div class="card-body"> <h4 class="header-title">Monitored Devices</h4> <div class="data-tables"> <div class="data-tables"> <table id="dataTableMonitor" class="text-center"> <thead class="bg-light text-capitalize"> <tr> <th>Sr. No.</th> <th>Name</th> <th>IP or Hostname</th> <th>Type</th> <th>Availability</th> <th>Operations</th> </tr> </thead> </table> </div> </div> <div class="modal fade" id="deleteMonitorPopupModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Delete confirmation</h5> <button type="button" class="close" data-dismiss="modal"> <span>&times;</span> </button> </div> <div class="modal-body"> <p>Would you like to definitely delete the device from monitoring?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="button" class="btn btn-primary" id="deleteDeviceConfirmationButton" > Delete device </button> </div> </div> </div> </div> </div> </div> </div> </div> <div class="modal fade" id="editMonitorModal"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <form id="editMonitorDeviceForm"> <div class="modal-header"> <h5 class="modal-title">Device details</h5> <button type="button" class="close" data-dismiss="modal" > <span>&times;</span> </button> </div> <div class="modal-body"> <input type="text" name="id" class="deviceId" style="display: none" /> <label>Name</label> <input type="text" name="name" class="deviceName" required /> <br /> <label>IP address or hostname</label> <input type="text" name="ipHostname" class="deviceIpHostname" required /> <br /> <label>Type</label> <select name="type" class="deviceType" disabled="disabled"> <option value="ping">Ping</option> <option value="ssh">SSH</option> </select> <div id="sshFields"> <label>Username</label> <input type="text" name="username" class="deviceUsername" /> <br /> <label>Password</label> <input type="password" name="password" /> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal" > Close </button> <button type="submit" class="btn btn-primary" id="editDeviceButton" > Edit device </button> </div> </form> </div> </div> </div> <div class="modal fade bd-example-modal-lg" id="pingMonitorDetailsModal"> <div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title">Monitor device details</h5> <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button> </div> <div class="modal-body"> <h6 id="ipHostname">Ip/Hostname: <span>#pingMonitorDetailsModal ipHostname span</span></h6> <h6 id="type">Type: <span>#pingMonitorDetailsModal type span</span></h6> <hr> <h6 class="modalTitle">- Data of last polling time -</h6> <div class="grid-container"> <div class="grid-item" id="packetLoss"> Packet loss (%)<hr /> <span>100</span></div> <div class="grid-item" id="rtt"> Average RTT (ms)<hr /> <span>16.345</span></div> <div class="grid-item" id="transmittedPackets"> Transmitted Packets <hr /> <span>3</span> </div> <div class="grid-item" id="receivedPackets"> Received Packets <hr /> <span>0</span> </div> </div>  <div class="grid-container-2-inline"> <div class="grid-item" id="pingAvailabilityDonutChartDiv"> </div> <div class="grid-item"> <div id="currentAvailability">Current Availablility <hr /> <span>Unknown</span></div> </div> </div>  <div class="col-lg-10 mt-4" id="pingChartDiv"> </div> <div id="sshDeviceDetailsContainer">  </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div> </div> </div> </div>');
 
         ajaxCalls.ajaxPostCall(request);
 
@@ -22,6 +22,10 @@ let monitor = {
         monitor.deleteDeviceConfirmationClick();
 
         monitor.monitorDetailIconClick();
+
+        monitor.editIconClick();
+
+        monitor.editDeviceButtonClick();
     },
 
     monitorHtmlLoaderSuccess: function (request)
@@ -151,22 +155,28 @@ let monitor = {
             }
             else if (request.bean.type === "ssh")
             {
+                let sshDetailContainer = $("#sshDeviceDetailsContainer");
+
                 if (deviceDetail.availability === "up")
                 {
-                    $("#sshDeviceDetailsContainer").html('<h6 class="modalTitle">- SSH device data of last polling time -</h6><div class="grid-container-3-inline"> <div class="grid-item" id="totalMemory">Total memory (GB)<hr /> <span>5.5</span></div> <div class="grid-item" id="totalDisk"> Total Disk (GB)<hr /> <span>64</span></div> <div class="grid-item" id="upTime"> System up time <hr /> <span>2 days, 4 hours, 13 minutes</span></div> </div> <div class="grid-container-3-chart-inline"> <div class="grid-item" id="memoryDonutChartDiv"> </div> <div class="grid-item" id="diskDonutChartDiv"> </div> <div class="grid-item" id="cpuUsageDonutChartDiv"> </div> </div>  ');
-
-                    monitor.sshUpdateIndices(deviceDetail.totalMemoryGb, deviceDetail.totalDiskGb, deviceDetail.uptime);
-
-                    monitor.commonDonutChart($("#memoryDonutChartDiv"), "Memory", "Free (GB)", "Used (GB)", deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
-
-                    monitor.commonDonutChart($("#diskDonutChartDiv"), "Disk", "Free (GB)", "Used (GB)", deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
-
-                    monitor.commonDonutChart($("#cpuUsageDonutChartDiv"), "CPU Usage", "Idle (%)", "Used (%)", deviceDetail.idleCpuPercentage, 100 - deviceDetail.idleCpuPercentage);
+                    sshDetailContainer.html('<h6 class="modalTitle">- SSH device data of last polling time -</h6>');
                 }
                 else
                 {
-                    $("#sshDeviceDetailsContainer").html("<h6 class='modalTitle unsuccessMessage' >Not showing SSH device details because the device is unavailable as per last pooling data.</h6>");
+                    sshDetailContainer.html("<h6 class='modalTitle unsuccessMessage' >- Showing last not null SSH device details at <span></span> -</h6>");
+
+                    sshDetailContainer.find("span").html(deviceDetail.lastNotNullSshTime);
                 }
+
+                sshDetailContainer.append('<div class="grid-container-3-inline"> <div class="grid-item" id="totalMemory">Total memory (GB)<hr /> <span>5.5</span></div> <div class="grid-item" id="totalDisk"> Total Disk (GB)<hr /> <span>64</span></div> <div class="grid-item" id="upTime"> System up time <hr /> <span>2 days, 4 hours, 13 minutes</span></div> </div> <div class="grid-container-3-chart-inline"> <div class="grid-item" id="memoryDonutChartDiv"> </div> <div class="grid-item" id="diskDonutChartDiv"> </div> <div class="grid-item" id="cpuUsageDonutChartDiv"> </div> </div>');
+
+                monitor.sshUpdateIndices(deviceDetail.totalMemoryGb, deviceDetail.totalDiskGb, deviceDetail.uptime);
+
+                monitor.commonDonutChart($("#memoryDonutChartDiv"), "Memory", "Free (GB)", "Used (GB)", deviceDetail.totalMemoryGb - deviceDetail.usedMemoryGb, deviceDetail.usedMemoryGb);
+
+                monitor.commonDonutChart($("#diskDonutChartDiv"), "Disk", "Free (GB)", "Used (GB)", deviceDetail.totalDiskGb - deviceDetail.usedDiskGb, deviceDetail.usedDiskGb);
+
+                monitor.commonDonutChart($("#cpuUsageDonutChartDiv"), "CPU Usage", "Idle (%)", "Used (%)", deviceDetail.idleCpuPercentage, 100 - deviceDetail.idleCpuPercentage);
             }
 
             $('#pingMonitorDetailsModal').modal('show');
@@ -404,5 +414,139 @@ let monitor = {
         {
             insertDivSelector.html("<h6 style='color: #636363'>Donut chart is not available.</h6>");
         }
-    }
+    },
+
+
+    editIconClick: function ()
+    {
+        $("#dataTableMonitor").on("click", ".fa-edit", function (event)
+        {
+            editEventTarget = event.target;
+
+            let editRowId = $(event.target).parent().data("database_table_id");
+
+            let param = {
+                id: editRowId
+            };
+
+            let request = {
+                url: "getMonitorData",
+
+                param: param,
+
+                callback: monitor.fetchEditRowSuccess
+            };
+
+            ajaxCalls.ajaxPostCall(request);
+        });
+    },
+
+    fetchEditRowSuccess: function (request)
+    {
+        if (request && request.bean && request.bean.operationSuccess)
+        {
+            let modalSelector = $("#editMonitorModal");
+
+            let sshFieldSelector = modalSelector.find("#sshFields");
+
+            let receivedBean = request.bean;
+
+            modalSelector.find('.deviceId').val(receivedBean.id);
+
+            modalSelector.find('.deviceName').val(receivedBean.name);
+
+            modalSelector.find('.deviceIpHostname').val(receivedBean.ipHostname);
+
+            if (receivedBean.type === "ping")
+            {
+                sshFieldSelector.hide();
+
+                sshFieldSelector.find("input").prop("required", false);
+            }
+            else
+            {
+                sshFieldSelector.show();
+
+                sshFieldSelector.find("input").prop("required", true);
+            }
+
+            modalSelector.find('.deviceType').val(receivedBean.type);
+
+            deviceType = receivedBean.type;
+
+            modalSelector.find('.deviceUsername').val(receivedBean.username);
+
+            modalSelector.find(':password').val(null);
+
+            modalSelector.modal('show');
+        }
+        else
+        {
+            toastr.error("Null device data returned")
+        }
+    },
+
+    editDeviceButtonClick: function ()
+    {
+        $("#editMonitorModal").find("form").submit(function (event)
+        {
+            event.preventDefault();
+
+            toastr.info("Please wait. Discovering the device before editing");
+
+            let param = $("#editMonitorModal").find("form").serialize() + "&type=" + deviceType;
+
+            let request = {
+                url: "editMonitorDevice",
+
+                param: param,
+
+                callback: monitor.editDeviceButtonClickSuccess
+            };
+
+            ajaxCalls.ajaxPostCall(request);
+        });
+    },
+
+    editDeviceButtonClickSuccess: function (request)
+    {
+        if (request && request.bean)
+        {
+            let requestBean = request.bean;
+
+            if (requestBean.operationSuccess)
+            {
+                let modalSelector = $("#editMonitorModal");
+
+                modalSelector.modal('hide');
+
+                monitor.tableLoader(requestBean.monitorTableData);
+
+                toastr.success("Device discovered and edited successfully");
+            }
+            else
+            {
+                if (requestBean.emptyInputEntry)
+                {
+                    toastr.error("All required fields should have non-space characters");
+                }
+                else if (requestBean.availability === "down")
+                {
+                    toastr.error("Edit unsuccessful. Cannot discover this monitor device");
+                }
+                else if (requestBean.duplicateEntry)
+                {
+                    toastr.error("Device having ip/hostname and type already present");
+                }
+                else
+                {
+                    toastr.error("Device edit unsuccessful");
+                }
+            }
+        }
+        else
+        {
+            toastr.error("Device edit unsuccessful");
+        }
+    },
 };

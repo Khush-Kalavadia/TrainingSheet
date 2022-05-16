@@ -97,6 +97,16 @@
             <result name="success" type="json"/>
         </action>
 
+        <action name="getMonitorData" class="action.MonitorAction" method="getMonitorDevice">
+            <interceptor-ref name="loginStack"/>
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="editMonitorDevice" class="action.MonitorAction" method="editMonitorDevice">
+            <interceptor-ref name="loginStack"/>
+            <result name="success" type="json"/>
+        </action>
+
     </package>
 
 </struts>

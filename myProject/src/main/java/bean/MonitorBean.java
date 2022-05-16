@@ -34,11 +34,23 @@ public class MonitorBean
 
     private String uptime;
 
+    private String name;
+
+    private String username;
+
+    private String password;
+
+    private boolean duplicateEntry;
+
+    private String lastNotNullSshTime;
+
     private float[] packetLossChartData;
 
     private String[] timeChartData;
 
     private String[][] monitorTableData;
+
+    private boolean emptyInputEntry;
 
     public int getId()
     {
@@ -140,6 +152,16 @@ public class MonitorBean
         this.packetLoss = packetLoss;
     }
 
+    public String getLastNotNullSshTime()
+    {
+        return lastNotNullSshTime;
+    }
+
+    public void setLastNotNullSshTime(String lastNotNullSshTime)
+    {
+        this.lastNotNullSshTime = lastNotNullSshTime;
+    }
+
     public String getRttAvg()
     {
         return rttAvg;
@@ -228,5 +250,55 @@ public class MonitorBean
     public void setTimeChartData(String[] timeChartData)
     {
         this.timeChartData = timeChartData;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public boolean isDuplicateEntry()
+    {
+        return duplicateEntry;
+    }
+
+    public void setDuplicateEntry(boolean duplicateEntry)
+    {
+        this.duplicateEntry = duplicateEntry;
+    }
+
+    public boolean isEmptyInputEntry()
+    {
+        return emptyInputEntry;
+    }
+
+    public void setEmptyInputEntry(boolean emptyInputEntry)
+    {
+        this.emptyInputEntry = emptyInputEntry;
     }
 }

@@ -69,7 +69,7 @@ public class MonitorPollingTask extends RecursiveAction             //will not r
                             sshPollingDeviceDetail = new HashMap<>();
                         }
 
-                        sshPollingDeviceDetail.put("map_discovery_id", deviceDetail.getId());
+                        sshPollingDeviceDetail.put("map_monitor_id", deviceDetail.getId());
 
                         sshPollingDeviceDetail.put("dateTime", timestamp);
                     }
@@ -87,7 +87,7 @@ public class MonitorPollingTask extends RecursiveAction             //will not r
                 MonitorTableHelper.updateMonitorAvailability(query, deviceDetail.getId(), "unknown");
             }
 
-            pingDeviceDetail.put("map_discovery_id", deviceDetail.getId());
+            pingDeviceDetail.put("map_monitor_id", deviceDetail.getId());
 
             pingDeviceDetail.put("dateTime", timestamp);
 

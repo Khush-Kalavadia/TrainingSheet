@@ -10,7 +10,7 @@ public class JobScheduler extends HttpServlet
 {
     public void init()
     {
-        int pollingTimeSec = 180;
+        int pollingTimeSec = 30;
 
         try
         {

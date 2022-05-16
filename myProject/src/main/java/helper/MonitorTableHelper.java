@@ -41,7 +41,7 @@ public class MonitorTableHelper
         return insertionStatus;
     }
 
-    public static boolean updateMonitorTableRow(Query query, Object map_discovery_id, Object name, Object ip_hostname)
+    public static boolean updateMonitorTableRow(Query query, Object id, Object name, Object ip_hostname)
     {
         boolean updateStatus = false;
 
@@ -53,9 +53,9 @@ public class MonitorTableHelper
 
             preparedStatementData.add(ip_hostname);
 
-            preparedStatementData.add(map_discovery_id);
+            preparedStatementData.add(id);
 
-            String sql = "UPDATE monitor SET name = ?, ip_hostname = ? WHERE map_discovery_id = ?";
+            String sql = "UPDATE monitor SET name = ?, ip_hostname = ? WHERE id = ?";
 
             if (query.executeUpdate(sql, preparedStatementData) != 0)
             {
@@ -117,7 +117,7 @@ public class MonitorTableHelper
 
                         rowHtml[4] = (String) tableRow.get("availability_status");
 
-                        rowHtml[5] = "<div class='monitorOperationsCell' data-database_table_id = " + tableRow.get("id") + "> <i class='fa fa-desktop' title='Show monitor details'></i> <i class='fa fa-archive' title='Delete monitor'></i> </div>";
+                        rowHtml[5] = "<div class='monitorOperationsCell' data-database_table_id = " + tableRow.get("id") + "> <i class='fa fa-desktop' title='Show monitor details'></i> <i class='fa fa-edit' title='Edit device'></i> <i class='fa fa-archive' title='Delete monitor'></i> </div>";
 
                         monitorTableHtml[rowNumber - 1] = rowHtml;
 

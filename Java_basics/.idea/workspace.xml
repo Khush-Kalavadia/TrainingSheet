@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c18a0e60-e6c8-4ed6-aab5-607a60d6a22f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/java/language/basics/Trial.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javaBasics/com/java/language/basics/SSHDevice.class" afterPath="$PROJECT_DIR$/out/production/javaBasics/com/java/language/basics/SSHDevice.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/java/concurrency/ForkJoinException.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/java/language/basics/Trial.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nsqPrograms/nsqPrograms.iml" afterPath="$PROJECT_DIR$/nsqPrograms/nsqPrograms.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/java/language/basics/SSHDevice.java" afterPath="$PROJECT_DIR$/src/com/java/language/basics/SSHDevice.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../myProject/myProject.iml" afterPath="$PROJECT_DIR$/../myProject/myProject.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/nsqclient/target/" />
@@ -61,9 +57,10 @@
       <file leaf-file-name="SSHDevice.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/SSHDevice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
+            <state relative-caret-position="600">
               <caret line="466" column="37" lean-forward="false" selection-start-line="466" selection-start-column="37" selection-end-line="466" selection-end-column="37" />
               <folding>
+                <element signature="imports" expanded="false" />
                 <element signature="method#fireExecSSHCommand#0;class#SSHDevice#0" expanded="false" />
                 <element signature="e#1363#1456#0" expanded="false" />
                 <element signature="e#1847#1938#0" expanded="false" />
@@ -112,17 +109,29 @@
         <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/PasswordEncryption.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="99" column="83" lean-forward="true" selection-start-line="99" selection-start-column="83" selection-end-line="99" selection-end-column="83" />
+              <caret line="99" column="83" lean-forward="false" selection-start-line="99" selection-start-column="83" selection-end-line="99" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Trial.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/Trial.java">
+      <file leaf-file-name="ForkJoinException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/java/concurrency/ForkJoinException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+            <state relative-caret-position="122">
+              <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ForkJoinFibonacci.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/java/concurrency/ForkJoinFibonacci.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="40">
+              <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -131,8 +140,20 @@
       <file leaf-file-name="CryptoUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/CryptoUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+            <state relative-caret-position="460">
+              <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ForkJoinPool.java" pinned="false" current-in-tab="true">
+        <entry file="jar://$USER_HOME$/Downloads/jdk/src.zip!/java/util/concurrent/ForkJoinPool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="797" column="47" lean-forward="false" selection-start-line="797" selection-start-column="25" selection-end-line="797" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -152,9 +173,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>session.connect(10000);</find>
-      <find>error</find>
-      <find>error w</find>
       <find>error whi</find>
       <find>error whil</find>
       <find>error while</find>
@@ -182,6 +200,9 @@
       <find>bufferedo</find>
       <find>buffered</find>
       <find>buffere</find>
+      <find>fork</find>
+      <find>forkjoinpool(</find>
+      <find>1 &lt;&lt; 26</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -202,7 +223,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/java/socket/programming/dateTimeTCPManyToOne/Server.java" />
         <option value="$PROJECT_DIR$/src/com/java/socket/programming/dateTimeTCPOneToManyClients/Client.java" />
         <option value="$PROJECT_DIR$/src/com/java/socket/programming/echoObjectUDPOneToManyClients/Client.java" />
         <option value="$PROJECT_DIR$/nsqPrograms/src/main/java/oneToOne/ConsumerRunnable.java" />
@@ -253,6 +273,7 @@
         <option value="$PROJECT_DIR$/src/com/java/language/basics/CryptoUtils.java" />
         <option value="$PROJECT_DIR$/src/com/java/language/basics/SSHDevice.java" />
         <option value="$PROJECT_DIR$/src/com/java/language/basics/Trial.java" />
+        <option value="$PROJECT_DIR$/src/com/java/concurrency/ForkJoinException.java" />
       </list>
     </option>
   </component>
@@ -664,8 +685,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -719,8 +738,58 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java_basics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java_basics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="concurrency" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java_basics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java_basics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="concurrency" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ForkJoinException.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -728,7 +797,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
     <property name="SearchEverywhereHistoryKey" value="file&#9;PSI&#9;JAVA://com.java.language.basics.ByteStreamCopyFile&#10;hash&#9;PSI&#9;JAVA://com.java.collections.HashSetApplicationObject&#10;server&#9;FILE&#9;file:///home/khush/IdeaProjects/Java_basics/src/com/java/socket/programming/chatApplication/Server.java&#10;client1&#9;FILE&#9;file:///home/khush/IdeaProjects/Java_basics/src/com/java/socket/programming/chatApplication/Client1Main.java&#10;client1\&#9;FILE&#9;file:///home/khush/IdeaProjects/Java_basics/src/com/java/socket/programming/chatApplication/Client1Main.java&#10;ser&#9;FILE&#9;file:///home/khush/IdeaProjects/Java_basics/src/com/java/socket/programming/chatApplication/ClientSenderRunnable.java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -761,7 +830,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Trial">
+  <component name="RunManager" selected="Application.ForkJoinException">
     <configuration default="false" name="PingDevice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -802,26 +871,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Member1Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="chatApp.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="chatApp.Member1Main" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="nsqPrograms" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="PasswordEncryption" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -850,6 +899,26 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="com.java.language.basics.Trial" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="javaBasics" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="ForkJoinException" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.java.concurrency.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.java.concurrency.ForkJoinException" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -2065,17 +2134,17 @@
       <item index="0" class="java.lang.String" itemvalue="Jetty Server.Jetty" />
       <item index="1" class="java.lang.String" itemvalue="Application.PingDevice" />
       <item index="2" class="java.lang.String" itemvalue="Application.SSHDevice" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Member1Main" />
-      <item index="4" class="java.lang.String" itemvalue="Application.PasswordEncryption" />
-      <item index="5" class="java.lang.String" itemvalue="Application.Trial" />
+      <item index="3" class="java.lang.String" itemvalue="Application.PasswordEncryption" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Trial" />
+      <item index="5" class="java.lang.String" itemvalue="Application.ForkJoinException" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.Trial" />
-        <item index="1" class="java.lang.String" itemvalue="Application.PasswordEncryption" />
-        <item index="2" class="java.lang.String" itemvalue="Application.SSHDevice" />
-        <item index="3" class="java.lang.String" itemvalue="Application.PingDevice" />
-        <item index="4" class="java.lang.String" itemvalue="Application.Member1Main" />
+        <item index="0" class="java.lang.String" itemvalue="Application.ForkJoinException" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Trial" />
+        <item index="2" class="java.lang.String" itemvalue="Application.PasswordEncryption" />
+        <item index="3" class="java.lang.String" itemvalue="Application.SSHDevice" />
+        <item index="4" class="java.lang.String" itemvalue="Application.PingDevice" />
       </list>
     </recent_temporary>
   </component>
@@ -2141,11 +2210,12 @@
       <workItem from="1651858688210" duration="2635000" />
       <workItem from="1652001177015" duration="3083000" />
       <workItem from="1652076070031" duration="3452000" />
+      <workItem from="1652273006772" duration="2357000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="914274000" />
+    <option name="totallyTimeSpent" value="916631000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2179,12 +2249,13 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48615918" sideWeight="0.49049127" order="13" side_tool="false" content_ui="tabs" x="289" y="632" width="197" height="136" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32931036" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15172414" sideWeight="0.49366087" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25435817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25832012" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6758621" sideWeight="0.52773374" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2194,7 +2265,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25356576" sideWeight="0.50344825" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32931036" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6758621" sideWeight="0.52773374" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -2288,20 +2358,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/Downloads/jdk/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1376">
-          <caret line="269" column="48" lean-forward="true" selection-start-line="269" selection-start-column="48" selection-end-line="269" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk/src.zip!/java/sql/ResultSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="1272" column="12" lean-forward="false" selection-start-line="1272" selection-start-column="12" selection-end-line="1272" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/jdk/jre/lib/rt.jar!/com/sun/rowset/CachedRowSetImpl.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2524">
@@ -2525,13 +2581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/java/concurrency/ForkJoinFibonacci.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/java/socket/programming/dateTimeTCPOneToOne/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -2603,9 +2652,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/SSHDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
+        <state relative-caret-position="600">
           <caret line="466" column="37" lean-forward="false" selection-start-line="466" selection-start-column="37" selection-end-line="466" selection-end-column="37" />
           <folding>
+            <element signature="imports" expanded="false" />
             <element signature="method#fireExecSSHCommand#0;class#SSHDevice#0" expanded="false" />
             <element signature="e#1363#1456#0" expanded="false" />
             <element signature="e#1847#1938#0" expanded="false" />
@@ -2619,8 +2669,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/CryptoUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+        <state relative-caret-position="460">
+          <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/Trial.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/java/concurrency/ForkJoinFibonacci.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -2628,15 +2696,25 @@
     <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/PasswordEncryption.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
-          <caret line="99" column="83" lean-forward="true" selection-start-line="99" selection-start-column="83" selection-end-line="99" selection-end-column="83" />
+          <caret line="99" column="83" lean-forward="false" selection-start-line="99" selection-start-column="83" selection-end-line="99" selection-end-column="83" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/java/language/basics/Trial.java">
+    <entry file="file://$PROJECT_DIR$/src/com/java/concurrency/ForkJoinException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+        <state relative-caret-position="122">
+          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/jdk/src.zip!/java/util/concurrent/ForkJoinPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="797" column="47" lean-forward="false" selection-start-line="797" selection-start-column="25" selection-end-line="797" selection-end-column="47" />
           <folding />
         </state>
       </provider>

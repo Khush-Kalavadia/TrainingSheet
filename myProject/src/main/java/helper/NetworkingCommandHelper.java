@@ -205,46 +205,76 @@ public class NetworkingCommandHelper
 
                 if (commandOutput.get("error") == null)
                 {
-                    String commandOutputString = commandOutput.get(commandList.get(0));
-
                     String splitedOutput[];
 
-                    if (commandOutputString != null && commandOutputString.contains("up "))
+                    String commandOutputString;
+
+                    try
                     {
-                        parsedDeviceDetailResponse.put("upTime", commandOutputString.substring(3, commandOutputString.length()).trim());
+                        commandOutputString = commandOutput.get(commandList.get(0));
+
+                        if (commandOutputString != null && commandOutputString.contains("up "))
+                        {
+                            parsedDeviceDetailResponse.put("upTime", commandOutputString.substring(3, commandOutputString.length()).trim());
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
                     }
 
-                    commandOutputString = commandOutput.get(commandList.get(1));
-
-                    if (commandOutputString != null && commandOutputString.contains("Cpu"))
+                    try
                     {
-                        splitedOutput = commandOutputString.substring(commandOutputString.lastIndexOf("Cpu"), commandOutputString.length()).split(", ");
+                        commandOutputString = commandOutput.get(commandList.get(1));
 
-                        parsedDeviceDetailResponse.put("idleCpuPercent", Float.parseFloat(splitedOutput[3].substring(0, splitedOutput[3].indexOf(" id"))));
+                        if (commandOutputString != null && commandOutputString.contains("Cpu"))
+                        {
+                            splitedOutput = commandOutputString.substring(commandOutputString.lastIndexOf("Cpu"), commandOutputString.length()).split(",");
+
+                            parsedDeviceDetailResponse.put("idleCpuPercent", Float.parseFloat(splitedOutput[3].substring(0, splitedOutput[3].indexOf(" id"))));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
                     }
 
                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-                    commandOutputString = commandOutput.get(commandList.get(2));
-
-                    if (commandOutputString != null && commandOutputString.contains("total"))
+                    try
                     {
-                        splitedOutput = commandOutputString.substring(commandOutputString.indexOf("total"), commandOutputString.length()).split("\\s+");
+                        commandOutputString = commandOutput.get(commandList.get(2));
 
-                        parsedDeviceDetailResponse.put("totalDiskGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
+                        if (commandOutputString != null && commandOutputString.contains("total"))
+                        {
+                            splitedOutput = commandOutputString.substring(commandOutputString.indexOf("total"), commandOutputString.length()).split("\\s+");
 
-                        parsedDeviceDetailResponse.put("usedDiskPercent", Float.parseFloat(splitedOutput[4].replaceAll("[^\\d.]", "")));
+                            parsedDeviceDetailResponse.put("totalDiskGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
+
+                            parsedDeviceDetailResponse.put("usedDiskPercent", Float.parseFloat(splitedOutput[4].replaceAll("[^\\d.]", "")));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
                     }
 
-                    commandOutputString = commandOutput.get(commandList.get(3));
-
-                    if (commandOutputString != null && commandOutputString.contains("Mem:"))
+                    try
                     {
-                        splitedOutput = commandOutputString.substring(commandOutputString.indexOf("Mem:"), commandOutputString.length()).split("\\s+");
+                        commandOutputString = commandOutput.get(commandList.get(3));
 
-                        parsedDeviceDetailResponse.put("totalMemoryGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
+                        if (commandOutputString != null && commandOutputString.contains("Mem:"))
+                        {
+                            splitedOutput = commandOutputString.substring(commandOutputString.indexOf("Mem:"), commandOutputString.length()).split("\\s+");
 
-                        parsedDeviceDetailResponse.put("usedMemoryGB", Float.parseFloat(decimalFormat.format((Float.parseFloat(splitedOutput[1]) - Float.parseFloat(splitedOutput[3]) - Float.parseFloat(splitedOutput[4]) - Float.parseFloat(splitedOutput[5])) / (1024 * 1024))));
+                            parsedDeviceDetailResponse.put("totalMemoryGB", Float.parseFloat(decimalFormat.format(Float.parseFloat(splitedOutput[1]) / (1024 * 1024))));
+
+                            parsedDeviceDetailResponse.put("usedMemoryGB", Float.parseFloat(decimalFormat.format((Float.parseFloat(splitedOutput[2])) / (1024 * 1024))));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
                     }
                 }
                 else

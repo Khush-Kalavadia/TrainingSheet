@@ -3,7 +3,9 @@ package service;
 import bean.MonitorBean;
 import dao.Query;
 import helper.CommonTableHelper;
+import helper.CredentialTableHelper;
 import helper.MonitorTableHelper;
+import helper.NetworkingCommandHelper;
 import sun.text.resources.cldr.bn.FormatData_bn_IN;
 
 import java.math.BigDecimal;
@@ -54,13 +56,11 @@ public class MonitorService
 
         List<String> allColumnList = new ArrayList<>();
 
-        List<HashMap<String, Object>> resultSetList = null;
+        List<HashMap<String, Object>> resultSetList;
 
         try
         {
             allColumnList.add("*");
-
-            query = new Query();
 
             query.getConnection();
 
@@ -88,9 +88,11 @@ public class MonitorService
 
                     if (monitorDeviceData.get("type") != null && monitorDeviceData.get("type").equals("ssh"))
                     {
-                        preparedStatementList.add(monitorBean.getId());
+                        conditionStringHashMap.put(Query.Condition.WHERE, "map_monitor_id = ? and idle_cpu_percent is not null and total_memory_gb is not null and used_memory_gb is not null and total_disk_gb is not null and used_disk_gb is not null and uptime is not null");
 
-                        conditionStringHashMap.put(Query.Condition.WHERE, "map_monitor_id = ? AND time = (SELECT  MAX(time) FROM ssh_polling WHERE map_monitor_id = ?)");
+                        conditionStringHashMap.put(Query.Condition.ORDER_BY, "time desc");
+
+                        conditionStringHashMap.put(Query.Condition.LIMIT, "1");
 
                         resultSetList = query.commonSelect(allColumnList, "ssh_polling", conditionStringHashMap, preparedStatementList);
 
@@ -100,6 +102,10 @@ public class MonitorService
 
                             if (sshDevicePollingData != null && !sshDevicePollingData.isEmpty())
                             {
+                                monitorBean.setUptime((String) sshDevicePollingData.get("uptime"));
+
+                                monitorBean.setLastNotNullSshTime(sshDevicePollingData.get("time").toString());
+
                                 if (sshDevicePollingData.get("total_memory_gb") != null)
                                 {
                                     monitorBean.setTotalMemoryGb((float) sshDevicePollingData.get("total_memory_gb"));
@@ -117,8 +123,6 @@ public class MonitorService
                                 {
                                     monitorBean.setTotalDiskGb(-1);
                                 }
-
-                                monitorBean.setUptime((String) sshDevicePollingData.get("uptime"));
 
                                 if (sshDevicePollingData.get("used_memory_gb") != null)
                                 {
@@ -329,7 +333,7 @@ public class MonitorService
 
             query.getConnection();
 
-            if (CommonTableHelper.deleteTableRowUsingId(query,"monitor", "id", monitorBean.getId()))
+            if (CommonTableHelper.deleteTableRowUsingId(query, "monitor", "id", monitorBean.getId()))
             {
                 monitorBean.setOperationSuccess(true);
 
@@ -349,5 +353,218 @@ public class MonitorService
                 query.releaseConnection();
             }
         }
+    }
+
+    public static void getMonitorCredentialTableData(MonitorBean monitorBean)
+    {
+        boolean operationSuccess = false;
+
+        Query query = null;
+
+        try
+        {
+            List<String> columnList = new ArrayList<>();
+
+            columnList.add("*");
+
+            HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
+
+            conditionStringHashMap.put(Query.Condition.WHERE, "id = ?");
+
+            List<Object> preparedStatementData = new ArrayList<>();
+
+            preparedStatementData.add(monitorBean.getId());
+
+            query = new Query();
+
+            query.getConnection();
+
+            List<HashMap<String, Object>> resultSetList = query.commonSelect(columnList, "monitor", conditionStringHashMap, preparedStatementData);
+
+            if (resultSetList != null && !resultSetList.isEmpty())
+            {
+                HashMap<String, Object> monitorRow = resultSetList.get(0);
+
+                if (monitorRow != null && !monitorRow.isEmpty())
+                {
+                    Object type = monitorRow.get("type");
+
+                    monitorBean.setName((String) monitorRow.get("name"));
+
+                    monitorBean.setIpHostname((String) monitorRow.get("ip_hostname"));
+
+                    monitorBean.setType((String) type);
+
+                    operationSuccess = true;
+
+                    if (type != null && type.equals("ssh") && monitorRow.get("map_credential_id") != null)
+                    {
+                        preparedStatementData.clear();
+
+                        preparedStatementData.add(monitorRow.get("map_credential_id"));
+
+                        resultSetList = query.commonSelect(columnList, "credential", conditionStringHashMap, preparedStatementData);
+
+                        if (resultSetList != null && !resultSetList.isEmpty())
+                        {
+                            HashMap<String, Object> credentialRow = resultSetList.get(0);
+
+                            if (credentialRow != null && !credentialRow.isEmpty())
+                            {
+                                monitorBean.setPassword((String) credentialRow.get("password"));
+
+                                monitorBean.setUsername((String) credentialRow.get("username"));
+
+                                operationSuccess = true;
+                            }
+                            else
+                            {
+                                operationSuccess = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            operationSuccess = false;
+        }
+        finally
+        {
+            if (query != null)
+            {
+                query.releaseConnection();
+            }
+        }
+        monitorBean.setOperationSuccess(operationSuccess);
+    }
+
+    public static void editMonitorCredentialTableRow(MonitorBean monitorBean)
+    {
+        boolean operationSuccess = false;
+
+        Query query = null;
+
+        List<HashMap<String, Object>> resultList;
+
+        String availability = "down";
+
+        try
+        {
+            String trimmedName = monitorBean.getName().trim();
+
+            String trimmedIpHostname = monitorBean.getIpHostname().trim();
+
+            String trimmedUsername = monitorBean.getUsername().trim();
+
+            String trimmedPassword = monitorBean.getPassword().trim();
+
+            String type = monitorBean.getType();
+
+            if ((!trimmedName.isEmpty() && !trimmedIpHostname.isEmpty()) && (type.equals("ping") || (type.equals("ssh") && !trimmedUsername.isEmpty() && !trimmedPassword.trim().isEmpty())))
+            {
+                HashMap<String, Object> pingOutput = NetworkingCommandHelper.getParsedPingDeviceDetail(trimmedIpHostname);
+
+                if (pingOutput != null && pingOutput.get("packetLoss") != null && (float) pingOutput.get("packetLoss") <= 50)
+                {
+                    if (type.equals("ping"))
+                    {
+                        availability = "up";
+                    }
+                    else if (type.equals("ssh"))
+                    {
+                        List<String> commandList = new ArrayList<>();
+
+                        commandList.add("uname");
+
+                        HashMap<String, String> sshOutput = NetworkingCommandHelper.fireSSHCommands(trimmedUsername, trimmedPassword, trimmedIpHostname, commandList);
+
+                        if (sshOutput != null && !sshOutput.isEmpty() && sshOutput.get("error") == null && sshOutput.get("uname") != null && sshOutput.get("uname").equals("Linux"))
+                        {
+                            availability = "up";
+                        }
+                    }
+                }
+
+                monitorBean.setAvailability(availability);
+
+                if (availability.equals("up"))
+                {
+                    List<String> allColumn = new ArrayList<>();
+
+                    HashMap<Query.Condition, String> conditionStringHashMap = new HashMap<>();
+
+                    List<Object> preparedStatementData = new ArrayList<>();
+
+                    allColumn.add("*");
+
+                    preparedStatementData.add(monitorBean.getIpHostname());
+
+                    preparedStatementData.add(type);
+
+                    preparedStatementData.add(monitorBean.getId());
+
+                    conditionStringHashMap.put(Query.Condition.WHERE, "ip_hostname = ? and type = ? and id != ?");      //check except the selected device
+
+                    query = new Query();
+
+                    query.getConnection();
+
+                    resultList = query.commonSelect(allColumn, "monitor", conditionStringHashMap, preparedStatementData);
+
+                    if (resultList != null && !resultList.isEmpty())
+                    {
+                        monitorBean.setDuplicateEntry(true);
+                    }
+                    else
+                    {
+                        if (MonitorTableHelper.updateMonitorTableRow(query, monitorBean.getId(), monitorBean.getName(), monitorBean.getIpHostname()))
+                        {
+                            monitorBean.setMonitorTableData(MonitorTableHelper.createMonitorHtmlTable(query.commonSelect(allColumn, "monitor", null, null)));
+
+                            operationSuccess = true;
+
+                            if (type.equals("ssh"))
+                            {
+                                List<String> columnList = new ArrayList<>();
+
+                                columnList.add("map_credential_id");
+
+                                conditionStringHashMap.put(Query.Condition.WHERE, "id=?");
+
+                                preparedStatementData.clear();
+
+                                preparedStatementData.add(monitorBean.getId());
+
+                                resultList = query.commonSelect(columnList, "monitor", conditionStringHashMap, preparedStatementData);
+
+                                operationSuccess = resultList != null && !resultList.isEmpty() && resultList.get(0) != null && resultList.get(0).get("map_credential_id") != null && CredentialTableHelper.updateCredentialTableRow(query, resultList.get(0).get("map_credential_id"), monitorBean.getUsername(), monitorBean.getPassword());
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                monitorBean.setEmptyInputEntry(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            operationSuccess = false;
+        }
+        finally
+        {
+            if (query != null)
+            {
+                query.releaseConnection();
+            }
+        }
+        monitorBean.setOperationSuccess(operationSuccess);
     }
 }

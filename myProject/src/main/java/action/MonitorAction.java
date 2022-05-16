@@ -29,6 +29,20 @@ public class MonitorAction implements ModelDriven<MonitorBean>
         return "success";
     }
 
+    public String getMonitorDevice()
+    {
+        MonitorService.getMonitorCredentialTableData(monitorBean);
+
+        return "success";
+    }
+
+    public String editMonitorDevice()
+    {
+        MonitorService.editMonitorCredentialTableRow(monitorBean);
+
+        return "success";
+    }
+
     @Override
     public MonitorBean getModel()
     {

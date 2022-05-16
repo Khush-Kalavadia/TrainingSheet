@@ -18,7 +18,7 @@ public class PollingTableHelper
         {
             preparedStatementData = new ArrayList<>();
 
-            preparedStatementData.add(pingDeviceDetail.get("map_discovery_id"));
+            preparedStatementData.add(pingDeviceDetail.get("map_monitor_id"));
 
             preparedStatementData.add(pingDeviceDetail.get("dateTime"));
 
@@ -47,7 +47,7 @@ public class PollingTableHelper
             {
                 preparedStatementData = new ArrayList<>();
 
-                preparedStatementData.add(sshPollingDeviceDetail.get("map_discovery_id"));
+                preparedStatementData.add(sshPollingDeviceDetail.get("map_monitor_id"));
 
                 preparedStatementData.add(sshPollingDeviceDetail.get("dateTime"));
 
