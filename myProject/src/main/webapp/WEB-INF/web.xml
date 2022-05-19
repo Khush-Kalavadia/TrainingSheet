@@ -28,10 +28,10 @@
   <!--1 thread for scheduler-->
   <!--1 ui-->
 
-  <!--<servlet>-->
-    <!--<servlet-name>JobSchedulerStartup</servlet-name>-->
-    <!--<servlet-class>commonutil.JobScheduler</servlet-class>-->
-    <!--<load-on-startup>2</load-on-startup>-->
-  <!--</servlet>-->
+  <servlet>
+    <servlet-name>JobSchedulerStartup</servlet-name>
+    <servlet-class>commonutil.JobScheduler</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
 
 </web-app>
