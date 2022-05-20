@@ -10,9 +10,9 @@ public class ForkJoinPoolUtil
 
     static
     {
-        DISCOVERY_FORK_JOIN_POOL = new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);
+        DISCOVERY_FORK_JOIN_POOL = new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2, ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
 
-        MONITOR_FORK_JOIN_POOL = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
+        MONITOR_FORK_JOIN_POOL = new ForkJoinPool(Runtime.getRuntime().availableProcessors(), ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
     }
 
     public static ForkJoinPool getDiscoveryForkJoinPool()

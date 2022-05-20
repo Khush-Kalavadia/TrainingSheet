@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class SSHDevice
 {
@@ -466,7 +467,17 @@ public class SSHDevice
             long shellTime = (System.nanoTime() - shellCurrentTime) / 1000000;
             System.out.println(shellTime);
 
-            System.out.println("\n" + (execTime - shellTime));
+            System.out.println("\n" + (execTime - shellTime));      //+ve means exec greater and -vs means shell greater
+            //1127
+            //-2168
+            //910
+            //1172
+            //-2920
+            //936
+            //250
+            //1180
+            //1176
+
         }
         catch (Exception ex)
         {

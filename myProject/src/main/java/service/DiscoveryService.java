@@ -386,6 +386,8 @@ public class DiscoveryService
                             {
                                 conditionStringHashMap.put(Query.Condition.WHERE, "map_discovery_id=?");
 
+                                columnList.clear();
+
                                 columnList.add("id");
 
                                 resultList = query.commonSelect(columnList, "credential", conditionStringHashMap, preparedStatementData);
