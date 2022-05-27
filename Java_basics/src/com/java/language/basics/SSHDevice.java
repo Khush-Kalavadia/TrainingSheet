@@ -476,7 +476,7 @@ public class SSHDevice
             //936
             //250
             //1180
-            //1176
+            //1176OUTPUT_FORMAT, "Key (hex)", CryptoUtils.hex(secretKey.getEncoded())
 
         }
         catch (Exception ex)

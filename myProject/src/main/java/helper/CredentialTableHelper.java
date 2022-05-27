@@ -49,7 +49,7 @@ public class CredentialTableHelper
 
             preparedStatementData.add(id);
 
-            String sql = "UPDATE credential SET username = ?, password = ? WHERE id = ?";
+            String sql = "UPDATE credential SET username = ?, password = ? WHERE map_discovery_id = ?";
 
             if (query.executeUpdate(sql, preparedStatementData) != 0)
             {
